@@ -1,0 +1,9 @@
+node_modules/
+dist/
+backend/dist/
+frontend/dist/
+*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+.DS_Store
+.sites-runtime/
