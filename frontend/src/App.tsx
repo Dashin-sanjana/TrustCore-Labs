@@ -9,7 +9,6 @@ import {
   ChevronRight,
   Cpu,
   DatabaseZap,
-  Fingerprint,
   Globe2,
   Layers3,
   LockKeyhole,
@@ -129,7 +128,7 @@ function App() {
       <header className="nav">
         <a className="brand" href="#top" aria-label="TrustCore Labs home">
           <span className="brand-mark">
-            <Fingerprint size={20} />
+            <img src="/trustcore-logo.jpg" alt="" />
           </span>
           <span>{company.name}</span>
         </a>
@@ -183,6 +182,7 @@ function App() {
           </motion.div>
 
           <motion.div className="hero-visual" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
+            <img className="hero-logo" src="/trustcore-logo.jpg" alt="TrustCore Labs logo" />
             <div className="orbit orbit-large" />
             <div className="orbit orbit-small" />
             <div className="signal-card main-signal">
