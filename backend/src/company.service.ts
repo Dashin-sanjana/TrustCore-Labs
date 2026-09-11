@@ -12,12 +12,10 @@ export class CompanyService {
         { label: 'Launch Rhythm', value: '30d' },
       ],
       services: [
-        'React product interfaces',
-        'Nest API platforms',
-        'AI workflow automation',
-        'Blockchain integrations',
-        'CRM and SaaS systems',
-        'Security-first cloud builds',
+        'Custom Software Development',
+        'Web & Mobile Development',
+        'ERP & Business Solutions',
+        'Digital Marketing',
       ],
     };
   }
