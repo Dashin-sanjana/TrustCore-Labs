@@ -427,6 +427,68 @@ function App() {
           </motion.div>
         </section>
       </main>
+
+      <footer className="site-footer">
+        <div className="footer-glow" />
+        <div className="footer-shell">
+          <div className="footer-brand">
+            <a className="footer-logo" href="#top" aria-label="TrustCore Labs home">
+              <img src="/trustcore-logo.jpg" alt="" />
+              <span>{company.name}</span>
+            </a>
+            <p>
+              Secure digital products, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
+            </p>
+            <a className="footer-mail" href={`mailto:${contactEmail}`}>
+              <Mail size={18} />
+              {contactEmail}
+            </a>
+          </div>
+
+          <div className="footer-links">
+            <div>
+              <span>Company</span>
+              {navItems.map((item) => (
+                <a key={item} href={`#${item.toLowerCase()}`}>
+                  {item}
+                </a>
+              ))}
+            </div>
+            <div>
+              <span>Services</span>
+              {serviceCards.map((service) => (
+                <a key={service.title} href="#services">
+                  {service.title}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="footer-action">
+            <p className="eyebrow">Built for you. Secured by us.</p>
+            <h2>Let's build something trusted.</h2>
+            <a className="primary-button footer-cta" href="#contact">
+              Start a project
+              <ArrowUpRight size={18} />
+            </a>
+            <div className="footer-socials" aria-label="TrustCore Labs social links">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCore Labs ${social.label}`}>
+                    <Icon size={19} />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span>&copy; {new Date().getFullYear()} TrustCore Labs. All rights reserved.</span>
+          <span>Custom software | Web & mobile | ERP | Digital marketing</span>
+        </div>
+      </footer>
     </div>
   );
 }
