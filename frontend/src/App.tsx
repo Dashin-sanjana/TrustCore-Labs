@@ -76,12 +76,29 @@ const serviceCards = [
 ];
 
 const portfolio = [
+  'Dash Fashion',
+  'New Zealankanz',
   'Business portals',
   'ERP systems',
   'Mobile apps',
   'CRM platforms',
   'POS systems',
   'Brand campaigns',
+];
+
+const featuredProjects = [
+  {
+    name: 'Dash Fashion',
+    type: 'Fashion commerce website',
+    text: 'A polished online fashion storefront built for browsing, brand presentation, and customer engagement.',
+    href: 'https://dash-fashion-ruby.vercel.app',
+  },
+  {
+    name: 'New Zealankanz',
+    type: 'Business web platform',
+    text: 'A live business-focused web experience shaped for service discovery, listings, and digital reach.',
+    href: 'https://new-zealankanz-frontend.vercel.app',
+  },
 ];
 
 const projectTypes = [
@@ -278,6 +295,34 @@ function App() {
         <section className="work-band" id="work">
           <div className="section-heading">
             <p className="eyebrow">Work</p>
+            <h2>Live projects built by TrustCore Labs.</h2>
+          </div>
+          <div className="featured-projects">
+            {featuredProjects.map((project, index) => (
+              <motion.a
+                className="featured-project"
+                key={project.name}
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{ delay: index * 0.08 }}
+              >
+                <span>0{index + 1}</span>
+                <div>
+                  <p>{project.type}</p>
+                  <h3>{project.name}</h3>
+                  <small>{project.text}</small>
+                </div>
+                <ArrowUpRight size={24} />
+              </motion.a>
+            ))}
+          </div>
+          <div className="section-heading project-directions-heading">
+            <p className="eyebrow">What we build</p>
             <h2>Project directions we can shape for your business.</h2>
           </div>
           <div className="project-grid">
