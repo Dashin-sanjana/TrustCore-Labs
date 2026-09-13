@@ -492,7 +492,7 @@ function App() {
               Your growth, powered by practical tech teams.
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-              Extend your business with software that works.
+              Software that helps your business grow.
             </motion.h1>
             <motion.p className="hero-text" initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}>
               {company.name} helps growing companies build custom software, websites, mobile apps, ERP workflows, and digital growth systems with one focused delivery partner.
@@ -581,9 +581,9 @@ function App() {
 
         <section className="page-directory" aria-labelledby="page-directory-title">
           <div className="section-heading story-heading">
-            <p className="eyebrow">Multi-page view</p>
+            <p className="eyebrow">Explore</p>
             <h2 id="page-directory-title">Explore TrustCore Labs by page.</h2>
-            <p>Each area has its own focused view, direct URL, and navigation state so visitors can move through the site like a complete company website.</p>
+            <p>Move through the company, work, services, process, answers, and contact details from one clean starting point.</p>
           </div>
           <div className="page-card-grid">
             {pageCards.map((page, index) => {
