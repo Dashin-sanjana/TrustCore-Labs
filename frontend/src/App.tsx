@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
@@ -121,7 +121,7 @@ const faqs = [
   ['Can marketing be included with software work?', 'Yes. Digital marketing, social media, brand promotion, and campaigns can be planned beside the product so launch and growth move together.'],
 ];
 
-const contactEmail = 'hello@trustcorelabs.com';
+const contactEmail = 'trustcorelabs@gmail.com';
 
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
@@ -134,6 +134,94 @@ const fadeUp = {
   hidden: { opacity: 0, y: 34 },
   show: { opacity: 1, y: 0 },
 };
+
+function InteractiveCursor() {
+  const ringRef = useRef<HTMLSpanElement>(null);
+  const dotRef = useRef<HTMLSpanElement>(null);
+  const target = useRef({ x: -120, y: -120 });
+  const follower = useRef({ x: -120, y: -120 });
+  const frame = useRef<number | null>(null);
+  const [visible, setVisible] = useState(false);
+  const [interactive, setInteractive] = useState(false);
+  const [pressed, setPressed] = useState(false);
+
+  useEffect(() => {
+    const canUseCustomCursor = window.matchMedia('(pointer: fine)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!canUseCustomCursor || prefersReducedMotion) {
+      return undefined;
+    }
+
+    const moveCursor = () => {
+      follower.current.x += (target.current.x - follower.current.x) * 0.18;
+      follower.current.y += (target.current.y - follower.current.y) * 0.18;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${follower.current.x}px, ${follower.current.y}px, 0)`;
+      }
+
+      frame.current = window.requestAnimationFrame(moveCursor);
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      target.current = { x: event.clientX, y: event.clientY };
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+      }
+
+      setVisible(true);
+    };
+
+    const handlePointerOver = (event: PointerEvent) => {
+      const targetElement = event.target instanceof Element ? event.target : null;
+      setInteractive(Boolean(targetElement?.closest('a, button, input, textarea, select, [role="button"]')));
+    };
+
+    const handlePointerLeave = () => {
+      setVisible(false);
+      setInteractive(false);
+      setPressed(false);
+    };
+    const handlePointerDown = () => setPressed(true);
+    const handlePointerUp = () => setPressed(false);
+
+    frame.current = window.requestAnimationFrame(moveCursor);
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerover', handlePointerOver);
+    window.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointerup', handlePointerUp);
+    document.documentElement.addEventListener('mouseleave', handlePointerLeave);
+
+    return () => {
+      if (frame.current) {
+        window.cancelAnimationFrame(frame.current);
+      }
+
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerover', handlePointerOver);
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      document.documentElement.removeEventListener('mouseleave', handlePointerLeave);
+    };
+  }, []);
+
+  return (
+    <div
+      className={[
+        'interactive-cursor',
+        visible ? 'is-visible' : '',
+        interactive ? 'is-interactive' : '',
+        pressed ? 'is-pressed' : '',
+      ].join(' ')}
+      aria-hidden="true"
+    >
+      <span className="cursor-ring" ref={ringRef} />
+      <span className="cursor-dot" ref={dotRef} />
+    </div>
+  );
+}
 
 function App() {
   const [company, setCompany] = useState<Company>(fallbackCompany);
@@ -154,6 +242,7 @@ function App() {
 
   return (
     <div className="site-shell">
+      <InteractiveCursor />
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <div className="noise" />
       <div className="cyber-grid" />
