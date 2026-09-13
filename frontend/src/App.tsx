@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
@@ -7,6 +7,7 @@ import {
   Check,
   ChevronRight,
   CircleHelp,
+  Cpu,
   Facebook,
   Globe2,
   Instagram,
@@ -34,13 +35,15 @@ type Company = {
   services: string[];
 };
 
+type RoutePath = '/' | '/about' | '/work' | '/services' | '/process' | '/faq' | '/contact';
+
 const fallbackCompany: Company = {
   name: 'TrustCore Labs',
-  tagline: 'Secure digital products for ambitious teams.',
+  tagline: 'Growth-focused software teams for ambitious businesses.',
   metrics: [
-    { label: 'Delivery Pods', value: '04' },
-    { label: 'Security Layers', value: '9+' },
-    { label: 'Launch Rhythm', value: '30d' },
+    { label: 'Core service lines', value: '04' },
+    { label: 'Live project portfolio', value: '5+' },
+    { label: 'Team extension mindset', value: '1' },
   ],
   services: [
     'Custom Software Development',
@@ -50,34 +53,89 @@ const fallbackCompany: Company = {
   ],
 };
 
-const navItems = ['Work', 'Services', 'Process', 'FAQ', 'Contact'];
+const navItems: { label: string; path: RoutePath }[] = [
+  { label: 'About', path: '/about' },
+  { label: 'Work', path: '/work' },
+  { label: 'Services', path: '/services' },
+  { label: 'Process', path: '/process' },
+  { label: 'FAQ', path: '/faq' },
+  { label: 'Contact', path: '/contact' },
+];
+
+const pageCards = [
+  {
+    path: '/about' as RoutePath,
+    eyebrow: 'Company',
+    title: 'About TrustCore Labs',
+    text: 'Meet the team model, standards, and delivery approach behind each build.',
+    icon: ShieldCheck,
+  },
+  {
+    path: '/work' as RoutePath,
+    eyebrow: 'Portfolio',
+    title: 'Recent Work',
+    text: 'Browse public projects, outcomes, scopes, and business categories.',
+    icon: Globe2,
+  },
+  {
+    path: '/services' as RoutePath,
+    eyebrow: 'Capabilities',
+    title: 'Services',
+    text: 'Explore software, web, mobile, ERP, business systems, and growth support.',
+    icon: Cpu,
+  },
+  {
+    path: '/process' as RoutePath,
+    eyebrow: 'Delivery',
+    title: 'Process',
+    text: 'See how ideas move from business problem to working product release.',
+    icon: Layers3,
+  },
+  {
+    path: '/faq' as RoutePath,
+    eyebrow: 'Answers',
+    title: 'FAQ',
+    text: 'Get quick answers about scope, marketing, systems, and project estimates.',
+    icon: CircleHelp,
+  },
+  {
+    path: '/contact' as RoutePath,
+    eyebrow: 'Start',
+    title: 'Contact',
+    text: 'Send the project idea, timeline, business context, and reference direction.',
+    icon: Mail,
+  },
+];
 
 const serviceCards = [
   {
     icon: Braces,
-    title: 'Custom Software Development',
-    text: 'Business-specific software, enterprise applications, workflow systems, and custom platforms shaped around your operations.',
+    title: 'Product & Software Engineering',
+    text: 'Custom platforms, workflow systems, SaaS products, portals, and enterprise applications shaped around your business operations.',
   },
   {
     icon: Globe2,
-    title: 'Web & Mobile Development',
-    text: 'Modern, secure websites, web applications, portals, and iOS or Android mobile applications built for real users.',
+    title: 'Web & Mobile Solutions',
+    text: 'Modern websites, web applications, booking flows, customer portals, and iOS or Android applications built for real users.',
   },
   {
     icon: Blocks,
-    title: 'ERP & Business Solutions',
-    text: 'ERP, CRM, POS, HRM, inventory, finance, and other customized business management systems for growing teams.',
+    title: 'ERP & Business Systems',
+    text: 'ERP, CRM, POS, HRM, inventory, finance, and customized management systems that make daily operations easier to run.',
   },
   {
     icon: ShieldCheck,
-    title: 'Digital Marketing',
-    text: 'Digital strategy, social media marketing, online brand promotion, and campaigns that grow your online presence.',
+    title: 'Digital Growth & Support',
+    text: 'Digital strategy, social media marketing, brand promotion, launch support, and maintenance that keep the business moving.',
   },
 ];
 
 const portfolio = [
   'Dash Fashion',
   'New Zealankanz',
+  'Fatbis',
+  'Focus Fitness',
+  'Togo and Friends',
   'Business portals',
   'ERP systems',
   'Mobile apps',
@@ -89,15 +147,43 @@ const portfolio = [
 const featuredProjects = [
   {
     name: 'Dash Fashion',
-    type: 'Fashion commerce website',
-    text: 'A polished online fashion storefront built for browsing, brand presentation, and customer engagement.',
+    type: 'Retail launch',
+    text: 'A fashion storefront shaped around browsing, brand confidence, and easy customer engagement.',
+    result: 'Commerce presence',
+    scope: 'Frontend, product flow, visual system',
     href: 'https://dash-fashion-ruby.vercel.app',
   },
   {
     name: 'New Zealankanz',
-    type: 'Business web platform',
-    text: 'A live business-focused web experience shaped for service discovery, listings, and digital reach.',
+    type: 'Service platform',
+    text: 'A business web experience built for service discovery, structured listings, and stronger digital reach.',
+    result: 'Public platform',
+    scope: 'Web app, content flow, launch support',
     href: 'https://new-zealankanz-frontend.vercel.app',
+  },
+  {
+    name: 'Fatbis',
+    type: 'Food business website',
+    text: 'A lively web presence shaped for product discovery, customer interest, and brand visibility.',
+    result: 'Brand website',
+    scope: 'Website experience, visual presentation, launch support',
+    href: 'https://fatbis.net/',
+  },
+  {
+    name: 'Focus Fitness',
+    type: 'Fitness web experience',
+    text: 'A sharp fitness-focused website built around motivation, service clarity, and conversion.',
+    result: 'Fitness presence',
+    scope: 'Frontend experience, responsive layout, content flow',
+    href: 'https://focusfitness.waveloop.dev/',
+  },
+  {
+    name: 'Togo and Friends',
+    type: 'Community brand platform',
+    text: 'A playful public website shaped for storytelling, browsing, and audience connection.',
+    result: 'Public website',
+    scope: 'Brand storytelling, web pages, user journey',
+    href: 'https://togoandfriends.com/home',
   },
 ];
 
@@ -108,17 +194,101 @@ const projectTypes = [
   ['Growth Presence', 'Websites, social channels, campaigns, and digital brand launches.'],
 ];
 
+const serviceDetails = [
+  ['Discovery & Product Planning', 'Requirements, user journeys, launch priorities, data flow, and a practical delivery roadmap.'],
+  ['Interface Design', 'Responsive web and mobile screens that make services, dashboards, and workflows easy to understand.'],
+  ['Frontend Engineering', 'React experiences, portals, customer journeys, landing pages, dashboards, and admin surfaces.'],
+  ['Backend & API Development', 'Nest APIs, authentication, business logic, integrations, and deployment-ready server architecture.'],
+  ['Business System Modules', 'ERP, CRM, POS, HRM, inventory, finance, reporting, and role-based management tools.'],
+  ['Launch & Growth Support', 'Content flow, campaign support, SEO foundations, maintenance, and practical post-launch iteration.'],
+];
+
+const industries = [
+  ['Retail & ecommerce', 'Product discovery, catalog flows, storefronts, POS, stock, and customer management.'],
+  ['Service companies', 'Booking, inquiry, listings, CRM, staff workflows, and public service pages.'],
+  ['Fitness & wellness', 'Membership experiences, program discovery, lead capture, and operational dashboards.'],
+  ['Food & local brands', 'Brand websites, menus, product launches, marketing pages, and customer engagement.'],
+];
+
+const engagementModels = [
+  ['Project build', 'A focused website, system, portal, or mobile release with a clear scope and launch path.'],
+  ['Dedicated product pod', 'A compact team covering design, frontend, backend, QA thinking, and delivery coordination.'],
+  ['Ongoing improvement', 'Post-launch feature work, fixes, marketing updates, performance improvements, and support.'],
+];
+
+const standards = [
+  ['Responsive first', 'Layouts are planned for mobile, tablet, and desktop from the beginning.'],
+  ['Security-aware', 'Authentication, admin access, data handling, and deployment details are considered early.'],
+  ['Business-readable', 'Owners and operators can understand the roadmap, scope, and outcome without technical fog.'],
+  ['Growth ready', 'The first release leaves room for new modules, integrations, and campaigns.'],
+];
+
 const process = [
-  ['01', 'Discovery', 'Map the product, users, constraints, risks, and launch shape.'],
-  ['02', 'Prototype', 'Turn the core journey into a clickable, testable interface.'],
-  ['03', 'Build', 'Ship React, Nest, data, integrations, and secure deployment paths.'],
-  ['04', 'Scale', 'Measure, optimize, automate, and evolve the platform after launch.'],
+  ['01', 'Listen', 'Understand how the business actually works before drawing screens or writing code.'],
+  ['02', 'Assemble', 'Match the right design, frontend, backend, systems, and marketing skills to the work ahead.'],
+  ['03', 'Build', 'Develop the interface, API, business logic, integrations, content, and launch setup in one rhythm.'],
+  ['04', 'Scale', 'Improve performance, support, growth content, and next-phase features after the first release.'],
+];
+
+const platformCards = [
+  {
+    icon: Braces,
+    title: 'Software foundation',
+    text: 'Custom platforms, workflow systems, and business tools designed around the way your company works.',
+  },
+  {
+    icon: Globe2,
+    title: 'Digital experience',
+    text: 'Websites, portals, and mobile journeys that make services easier to understand, trust, and use.',
+  },
+  {
+    icon: Blocks,
+    title: 'Business operations',
+    text: 'ERP, CRM, POS, HRM, inventory, and finance systems connected into one clearer operating rhythm.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Growth presence',
+    text: 'Campaigns, social content, and online brand systems that help the product reach the right audience.',
+  },
+];
+
+const trustReasons = [
+  {
+    icon: Layers3,
+    title: 'A wide range of delivery skills',
+    text: 'From product engineering and business systems to mobile apps and launch marketing, the work can stay connected under one direction.',
+  },
+  {
+    icon: Check,
+    title: 'Talent matched to the business',
+    text: 'Each project is shaped around the real roles needed, whether that is design, frontend, backend, ERP thinking, or growth support.',
+  },
+  {
+    icon: LockKeyhole,
+    title: 'Security-aware foundations',
+    text: 'Authentication, data handling, admin flows, and deployment details are planned early so the product feels trustworthy at launch.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Built to scale after launch',
+    text: 'Start with a focused product, then extend into new modules, channels, integrations, and support as the business grows.',
+  },
+];
+
+const homeProof = [
+  ['5+', 'live company projects'],
+  ['4', 'core service lines'],
+  ['1', 'connected delivery partner'],
 ];
 
 const faqs = [
   ['Can you build a full business system?', 'Yes. TrustCore Labs can shape custom software, ERP, CRM, POS, HRM, inventory, finance, and connected web or mobile portals around the business workflow.'],
   ['Do you handle both design and development?', 'Yes. The work can cover interface design, frontend, backend, deployment, and launch support so the product feels consistent end to end.'],
   ['Can marketing be included with software work?', 'Yes. Digital marketing, social media, brand promotion, and campaigns can be planned beside the product so launch and growth move together.'],
+  ['Can we start small first?', 'Yes. A first release can focus on the highest-value workflow or public page, then grow into more modules after launch.'],
+  ['Do you work with existing businesses?', 'Yes. We can improve an existing website, rebuild a workflow, or add a new business system beside current operations.'],
+  ['What do you need to estimate a project?', 'A short description of the business, the users, the required features, current tools, deadline, and any examples you like is enough to begin the conversation.'],
 ];
 
 const contactEmail = 'trustcorelabs@gmail.com';
@@ -134,6 +304,13 @@ const fadeUp = {
   hidden: { opacity: 0, y: 34 },
   show: { opacity: 1, y: 0 },
 };
+
+const routes: RoutePath[] = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'];
+
+function getCurrentRoute(): RoutePath {
+  const path = window.location.pathname as RoutePath;
+  return routes.includes(path) ? path : '/';
+}
 
 function InteractiveCursor() {
   const ringRef = useRef<HTMLSpanElement>(null);
@@ -226,6 +403,7 @@ function InteractiveCursor() {
 function App() {
   const [company, setCompany] = useState<Company>(fallbackCompany);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [route, setRoute] = useState<RoutePath>(() => getCurrentRoute());
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 24 });
   const heroY = useTransform(scrollYProgress, [0, 0.45], [0, -120]);
@@ -237,6 +415,28 @@ function App() {
       .then(setCompany)
       .catch(() => setCompany(fallbackCompany));
   }, []);
+
+  useEffect(() => {
+    const syncRoute = () => setRoute(getCurrentRoute());
+    window.addEventListener('popstate', syncRoute);
+    return () => window.removeEventListener('popstate', syncRoute);
+  }, []);
+
+  const navigateTo = (path: RoutePath) => (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    event.preventDefault();
+    setMenuOpen(false);
+
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+      setRoute(path);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const marqueeItems = useMemo(() => [...portfolio, ...portfolio], []);
 
@@ -251,7 +451,7 @@ function App() {
       <motion.div className="ambient ambient-three" style={{ y: glowY }} />
 
       <header className="nav">
-        <a className="brand" href="#top" aria-label="TrustCore Labs home">
+        <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
           <span className="brand-mark">
             <img src="/trustcore-logo.jpg" alt="" />
           </span>
@@ -259,12 +459,12 @@ function App() {
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`}>
-              {item}
+            <a key={item.path} href={item.path} onClick={navigateTo(item.path)} aria-current={route === item.path ? 'page' : undefined}>
+              {item.label}
             </a>
           ))}
         </nav>
-        <a className="nav-cta" href="#contact">
+        <a className="nav-cta" href="/contact" onClick={navigateTo('/contact')}>
           Start a build
           <ArrowUpRight size={17} />
         </a>
@@ -276,74 +476,85 @@ function App() {
       {menuOpen && (
         <motion.div className="mobile-nav" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}>
           {navItems.map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}>
-              {item}
+            <a key={item.path} href={item.path} onClick={navigateTo(item.path)} aria-current={route === item.path ? 'page' : undefined}>
+              {item.label}
             </a>
           ))}
         </motion.div>
       )}
 
-      <main id="top">
+      <main className="page-main">
+        {route === '/' && (
+          <>
         <section className="hero section-grid">
           <motion.div className="hero-copy" style={{ y: heroY }}>
             <motion.p className="eyebrow" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
-              Built for you. Secured by us.
+              Your growth, powered by practical tech teams.
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-              {company.name}
+              Extend your business with software that works.
             </motion.h1>
             <motion.p className="hero-text" initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}>
-              {company.tagline} We create custom software, websites, mobile apps, ERP systems, and digital campaigns with sharp design and security-minded delivery.
+              {company.name} helps growing companies build custom software, websites, mobile apps, ERP workflows, and digital growth systems with one focused delivery partner.
             </motion.p>
             <motion.div className="hero-proof" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <span>
                 <ShieldCheck size={16} />
-                Built for you
+                Secure foundations
               </span>
               <span>
                 <LockKeyhole size={16} />
-                Secured by us
+                Matched delivery team
               </span>
               <span>
                 <Layers3 size={16} />
-                Shipped as one system
+                Scalable product flow
               </span>
             </motion.div>
             <motion.div className="hero-actions" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.24 }}>
-              <a className="primary-button" href="#services">
-                Explore services
+              <a className="primary-button" href="/services" onClick={navigateTo('/services')}>
+                Build your team
                 <ChevronRight size={18} />
               </a>
-              <a className="secondary-button" href="#contact">
+              <a className="secondary-button" href="/contact" onClick={navigateTo('/contact')}>
                 Talk to us
               </a>
             </motion.div>
           </motion.div>
 
           <motion.div className="hero-visual" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
-            <img className="hero-logo" src="/trustcore-logo.jpg" alt="TrustCore Labs logo" />
-            <div className="logo-halo" />
-            <div className="scan-beam" />
-            <div className="orbit orbit-large" />
-            <div className="orbit orbit-small" />
-            <div className="signal-card main-signal">
-              <LockKeyhole size={36} />
-              <span>Core secured</span>
+            <div className="story-window">
+              <div className="window-bar">
+                <span />
+                <span />
+                <span />
+              </div>
+              <img className="story-logo" src="/trustcore-logo.jpg" alt="TrustCore Labs logo" />
+              <div className="story-caption">
+                <span>TrustCore Labs</span>
+                <strong>Dedicated delivery shaped around your business.</strong>
+              </div>
+            </div>
+            <div className="insight-card insight-main">
+              <span>01</span>
+              <strong>Team extension</strong>
+              <p>We add the skills your in-house team needs to move faster.</p>
+            </div>
+            <div className="insight-card insight-side">
+              <span>02</span>
+              <strong>Full-stack build</strong>
+              <p>Interfaces, APIs, systems, content, and launch work together.</p>
             </div>
             <div className="node node-a" />
             <div className="node node-b" />
             <div className="node node-c" />
-            <div className="signal-card signal-a">
-              <Globe2 size={24} />
-              <span>Web Apps</span>
-            </div>
-            <div className="signal-card signal-b">
-              <Blocks size={24} />
-              <span>ERP Systems</span>
-            </div>
-            <div className="signal-card signal-c">
-              <Layers3 size={24} />
-              <span>Growth Stack</span>
+            <div className="story-pill story-pill-a">Product teams</div>
+            <div className="story-pill story-pill-b">ERP systems</div>
+            <div className="story-pill story-pill-c">Growth support</div>
+            <div className="story-thread">
+              <span />
+              <span />
+              <span />
             </div>
           </motion.div>
         </section>
@@ -351,17 +562,87 @@ function App() {
         <section className="agency-intro">
           <motion.div className="intro-copy" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
             <p className="eyebrow">Digital partner</p>
-            <h2>Stylish design, useful systems, and marketing that moves together.</h2>
+            <h2>Made like a studio. Delivered like an expert tech team.</h2>
             <p>
-              TrustCore Labs helps businesses move from scattered tools to one polished digital presence: the software that runs the work, the apps that serve customers, and the campaigns that bring attention.
+              TrustCore Labs helps businesses move from scattered tools to one polished digital presence. Strategy, product design, engineering, business systems, and launch support are shaped together so each release has a clear commercial purpose.
             </p>
           </motion.div>
-          <motion.div className="keyword-stack" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
-            <span>SOFTWARE.</span>
-            <span>ERP.</span>
-            <span>MOBILE.</span>
-            <span>MARKETING.</span>
+          <motion.div className="studio-notes" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+            <div>
+              <span>Delivery note</span>
+              <p>Start with one specialist or a compact product pod, then scale when the work proves itself.</p>
+            </div>
+            <div>
+              <span>Engineering note</span>
+              <p>Clean interfaces, reliable APIs, business logic, and deployment are treated as one product.</p>
+            </div>
           </motion.div>
+        </section>
+
+        <section className="page-directory" aria-labelledby="page-directory-title">
+          <div className="section-heading story-heading">
+            <p className="eyebrow">Multi-page view</p>
+            <h2 id="page-directory-title">Explore TrustCore Labs by page.</h2>
+            <p>Each area has its own focused view, direct URL, and navigation state so visitors can move through the site like a complete company website.</p>
+          </div>
+          <div className="page-card-grid">
+            {pageCards.map((page, index) => {
+              const Icon = page.icon;
+              return (
+                <motion.a
+                  className="page-card"
+                  key={page.path}
+                  href={page.path}
+                  onClick={navigateTo(page.path)}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ delay: index * 0.04 }}
+                >
+                  <span className="page-card-icon">
+                    <Icon size={22} />
+                  </span>
+                  <span className="page-card-eyebrow">{page.eyebrow}</span>
+                  <h3>{page.title}</h3>
+                  <p>{page.text}</p>
+                  <span className="page-card-link">
+                    Open page
+                    <ArrowUpRight size={17} />
+                  </span>
+                </motion.a>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="why-band">
+          <div className="section-heading story-heading">
+            <p className="eyebrow">Why trust us</p>
+            <h2>Practical breadth with a team model that can grow.</h2>
+            <p>Get the right delivery skills, a clearer build plan, and a software foundation that can keep improving after launch.</p>
+          </div>
+          <div className="why-grid">
+            {trustReasons.map((reason, index) => {
+              const Icon = reason.icon;
+              return (
+                <motion.article
+                  className="why-card"
+                  key={reason.title}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ delay: index * 0.06 }}
+                >
+                  <Icon size={28} />
+                  <span>0{index + 1}</span>
+                  <h3>{reason.title}</h3>
+                  <p>{reason.text}</p>
+                </motion.article>
+              );
+            })}
+          </div>
         </section>
 
         <section className="metric-strip" aria-label="Company metrics">
@@ -373,6 +654,45 @@ function App() {
           ))}
         </section>
 
+        <section className="platform-band">
+          <motion.div className="platform-copy" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+            <p className="eyebrow">End-to-end expertise</p>
+            <h2>Reliable digital foundations built around your needs.</h2>
+            <p>
+              We bring the public website, internal systems, mobile touchpoints, support flow, and growth channels into one planned product direction so the business can move with less friction.
+            </p>
+            <div className="proof-row" aria-label="TrustCore Labs proof points">
+              {homeProof.map(([value, label]) => (
+                <span key={label}>
+                  <strong>{value}</strong>
+                  {label}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+          <div className="platform-grid">
+            {platformCards.map((platform, index) => {
+              const Icon = platform.icon;
+              return (
+                <motion.article
+                  className="platform-card"
+                  key={platform.title}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ delay: index * 0.06 }}
+                >
+                  <Icon size={28} />
+                  <span>0{index + 1}</span>
+                  <h3>{platform.title}</h3>
+                  <p>{platform.text}</p>
+                </motion.article>
+              );
+            })}
+          </div>
+        </section>
+
         <section className="marquee-section" aria-label="Portfolio categories">
           <div className="marquee-track">
             {marqueeItems.map((item, index) => (
@@ -380,111 +700,253 @@ function App() {
             ))}
           </div>
         </section>
+          </>
+        )}
 
-        <section className="work-band" id="work">
-          <div className="section-heading">
-            <p className="eyebrow">Work</p>
-            <h2>Live projects built by TrustCore Labs.</h2>
-          </div>
-          <div className="featured-projects">
-            {featuredProjects.map((project, index) => (
-              <motion.a
-                className="featured-project"
-                key={project.name}
-                href={project.href}
-                target="_blank"
-                rel="noreferrer"
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ delay: index * 0.08 }}
-              >
-                <span>0{index + 1}</span>
-                <div>
-                  <p>{project.type}</p>
-                  <h3>{project.name}</h3>
-                  <small>{project.text}</small>
-                </div>
-                <ArrowUpRight size={24} />
-              </motion.a>
-            ))}
-          </div>
-          <div className="section-heading project-directions-heading">
-            <p className="eyebrow">What we build</p>
-            <h2>Project directions we can shape for your business.</h2>
-          </div>
-          <div className="project-grid">
-            {projectTypes.map(([title, text], index) => (
-              <motion.article
-                className="project-card"
-                key={title}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ delay: index * 0.06 }}
-              >
-                <span>0{index + 1}</span>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </motion.article>
-            ))}
-          </div>
-        </section>
+        {route === '/about' && (
+          <>
+            <section className="page-hero about-hero page-section">
+              <motion.div variants={fadeUp} initial="hidden" animate="show">
+                <p className="eyebrow">About TrustCore Labs</p>
+                <h1>Software partner for businesses that want to move cleaner.</h1>
+                <p>
+                  TrustCore Labs is built for companies that need practical technology without losing sight of the business. We connect strategy, design, software engineering, business systems, and launch support into one clear delivery path.
+                </p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+                <ShieldCheck size={30} />
+                <strong>{company.tagline}</strong>
+                <span>Built around useful releases, clear communication, and systems that can grow after launch.</span>
+              </motion.div>
+            </section>
 
-        <section className="content-band" id="services">
-          <div className="section-heading">
-            <p className="eyebrow">Services</p>
-            <h2>Builds that move from idea to trusted product.</h2>
-          </div>
-          <motion.div className="lab-console" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
-            <span className="console-dot" />
-              <p>Software, mobile, ERP, and marketing work together as one practical growth system for your business.</p>
-            <span className="console-status">Business ready</span>
+            <section className="content-band">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">How we work</p>
+                <h2>A compact team model for practical business outcomes.</h2>
+                <p>We help owners and teams turn product ideas, manual workflows, and growth plans into software people can actually use.</p>
+              </div>
+              <div className="detail-grid three">
+                {engagementModels.map(([title, text], index) => (
+                  <motion.article className="detail-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.06 }}>
+                    <span>0{index + 1}</span>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </motion.article>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band">
+              <div className="section-heading">
+                <p className="eyebrow">Standards</p>
+                <h2>The parts we keep consistent across every build.</h2>
+              </div>
+              <div className="mini-grid">
+                {standards.map(([title, text]) => (
+                  <article className="mini-card" key={title}>
+                    <Check size={18} />
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        {route === '/work' && (
+          <>
+            <section className="page-hero work-hero page-section">
+              <motion.div variants={fadeUp} initial="hidden" animate="show">
+                <p className="eyebrow">Customer stories</p>
+                <h1>Recent work with real business shape.</h1>
+                <p>Each project is presented by context, role, and outcome so prospects can understand the work quickly.</p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+                <Globe2 size={30} />
+                <strong>5+ live public projects</strong>
+                <span>Retail, service, fitness, food, community, and business-platform work across web and operational systems.</span>
+              </motion.div>
+            </section>
+
+            <section className="work-band" id="work">
+              <div className="featured-projects">
+                {featuredProjects.map((project, index) => (
+                  <motion.a
+                    className="featured-project"
+                    key={project.name}
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ delay: index * 0.08 }}
+                  >
+                    <span className="project-number">0{index + 1}</span>
+                    <div>
+                      <p>{project.type}</p>
+                      <h3>{project.name}</h3>
+                      <small>{project.text}</small>
+                    </div>
+                    <dl>
+                      <div>
+                        <dt>Result</dt>
+                        <dd>{project.result}</dd>
+                      </div>
+                      <div>
+                        <dt>Scope</dt>
+                        <dd>{project.scope}</dd>
+                      </div>
+                    </dl>
+                    <ArrowUpRight size={24} />
+                  </motion.a>
+                ))}
+              </div>
+              <div className="section-heading project-directions-heading">
+                <p className="eyebrow">What we build</p>
+                <h2>Project directions we can shape for your business.</h2>
+              </div>
+              <div className="project-grid">
+                {projectTypes.map(([title, text], index) => (
+                  <motion.article
+                    className="project-card"
+                    key={title}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.35 }}
+                    transition={{ delay: index * 0.06 }}
+                  >
+                    <span>0{index + 1}</span>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </motion.article>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        {route === '/services' && (
+          <>
+            <section className="page-hero services-hero page-section">
+              <motion.div variants={fadeUp} initial="hidden" animate="show">
+                <p className="eyebrow">Services</p>
+                <h1>Services that extend your team and accelerate delivery.</h1>
+                <p>Choose a focused build or combine services into a full digital product team for your business.</p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+                <Cpu size={30} />
+                <strong>Software, systems, mobile, and growth support.</strong>
+                <span>One delivery flow from discovery to launch and post-release improvement.</span>
+              </motion.div>
+            </section>
+
+            <section className="content-band" id="services">
+              <motion.div className="lab-console" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+                <span className="console-dot" />
+                <p>Software engineering, mobile, ERP, support, and digital growth work together as one practical delivery system.</p>
+                <span className="console-status">Scale ready</span>
+              </motion.div>
+              <div className="service-lanes">
+                {serviceCards.map((service, index) => {
+                  const Icon = service.icon;
+                  return (
+                    <motion.article
+                      className="service-card service-lane"
+                      key={service.title}
+                      variants={fadeUp}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true, amount: 0.35 }}
+                      transition={{ delay: index * 0.08 }}
+                    >
+                      <span>0{index + 1}</span>
+                      <div className="service-icon">
+                        <Icon size={28} />
+                      </div>
+                      <div>
+                        <h3>{service.title}</h3>
+                        <p>{service.text}</p>
+                      </div>
+                      <ArrowUpRight size={24} />
+                    </motion.article>
+                  );
+                })}
+              </div>
+              <div className="capability-row">
+                {company.services.map((service) => (
+                  <span key={service}>
+                    <Check size={15} />
+                    {service}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Capabilities</p>
+                <h2>Everything needed to move from idea to operating product.</h2>
+                <p>Use one capability for a focused need, or combine several into a complete product delivery path.</p>
+              </div>
+              <div className="detail-grid two">
+                {serviceDetails.map(([title, text], index) => (
+                  <motion.article className="detail-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.04 }}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </motion.article>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band">
+              <div className="section-heading">
+                <p className="eyebrow">Industries</p>
+                <h2>Business categories we can support.</h2>
+              </div>
+              <div className="mini-grid">
+                {industries.map(([title, text]) => (
+                  <article className="mini-card" key={title}>
+                    <Globe2 size={18} />
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        {route === '/process' && (
+          <>
+        <section className="page-hero process-hero page-section">
+          <motion.div variants={fadeUp} initial="hidden" animate="show">
+            <p className="eyebrow">Process</p>
+            <h1>Designed for momentum, engineered for scale.</h1>
+            <p>Our process keeps the product vision, delivery team, business workflow, and launch plan connected from the first conversation.</p>
           </motion.div>
-          <div className="service-lanes">
-            {serviceCards.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <motion.article
-                  className="service-card service-lane"
-                  key={service.title}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.35 }}
-                  transition={{ delay: index * 0.08 }}
-                >
-                  <span>0{index + 1}</span>
-                  <div className="service-icon">
-                    <Icon size={28} />
-                  </div>
-                  <div>
-                    <h3>{service.title}</h3>
-                    <p>{service.text}</p>
-                  </div>
-                  <ArrowUpRight size={24} />
-                </motion.article>
-              );
-            })}
-          </div>
-          <div className="capability-row">
-            {company.services.map((service) => (
-              <span key={service}>
-                <Check size={15} />
-                {service}
-              </span>
-            ))}
-          </div>
+          <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+            <Layers3 size={30} />
+            <strong>Clear scope. Focused build. Practical launch.</strong>
+            <span>Each step is designed to reduce confusion and keep the work moving toward a usable release.</span>
+          </motion.div>
         </section>
 
         <section className="split-band" id="process">
           <div className="sticky-copy">
-            <p className="eyebrow">Process</p>
-            <h2>Designed for momentum, engineered for confidence.</h2>
+            <p className="eyebrow">Delivery rhythm</p>
+            <h2>From business problem to working product.</h2>
             <p>
-              TrustCore Labs keeps strategy, interface, backend, and deployment in one build rhythm, so the product feels cohesive from first prototype to production.
+              TrustCore Labs keeps strategy, interface, backend, deployment, and growth support in one build rhythm, so the product feels cohesive from first prototype to production.
             </p>
           </div>
           <div className="process-list">
@@ -504,74 +966,143 @@ function App() {
           <motion.div className="trust-card" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
             <MessageCircle size={30} />
             <p>
-              “Every project should feel clear for the business owner: what we are building, why it matters, and how it helps the company grow.”
+              “Every project should feel clear for the business owner: what we are building, who is responsible, why it matters, and how it helps the company grow.”
             </p>
             <span>TrustCore Labs delivery approach</span>
           </motion.div>
           <motion.div className="trust-card accent" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} transition={{ delay: 0.08 }}>
             <Sparkles size={30} />
-            <p>More solutions for the uniqueness of your business.</p>
-            <a href="#contact">Discuss the project</a>
+            <p>Let’s map the team, technologies, and timeline your next release needs.</p>
+            <a href="/contact" onClick={navigateTo('/contact')}>Discuss the project</a>
           </motion.div>
         </section>
 
-        <section className="faq-band" id="faq">
+        <section className="content-band compact-band">
           <div className="section-heading">
-            <p className="eyebrow">FAQ</p>
-            <h2>Questions businesses usually ask first.</h2>
+            <p className="eyebrow">What you get</p>
+            <h2>A delivery path that keeps decisions visible.</h2>
           </div>
-          <div className="faq-list">
-            {faqs.map(([question, answer], index) => (
-              <motion.article className="faq-item" key={question} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.05 }}>
-                <CircleHelp size={22} />
-                <div>
-                  <h3>{question}</h3>
-                  <p>{answer}</p>
-                </div>
+          <div className="detail-grid three">
+            {[
+              ['Product direction', 'A clear view of what should be built first, what can wait, and how each feature supports the business.'],
+              ['Technical foundation', 'A practical architecture for frontend, backend, data, deployment, and future integrations.'],
+              ['Launch support', 'Content, fixes, polish, and next-step improvements once real users begin using the product.'],
+            ].map(([title, text], index) => (
+              <motion.article className="detail-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.06 }}>
+                <span>0{index + 1}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </motion.article>
             ))}
           </div>
         </section>
+          </>
+        )}
 
-        <section className="contact-band" id="contact">
-          <motion.div className="contact-panel" initial={{ opacity: 0, y: 38 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }}>
-            <div className="contact-copy">
-              <p className="eyebrow">Contact</p>
-              <h2>Ready to shape the next secure product?</h2>
-              <p>Use these sample contact links for now. We can replace them with the real TrustCore Labs profiles anytime.</p>
-            </div>
-            <div className="contact-links" aria-label="Temporary contact links">
-              <a className="primary-button light contact-email" href={`mailto:${contactEmail}`}>
-                <Mail size={18} />
-                {contactEmail}
-                <Sparkles size={18} />
-              </a>
-              <div className="social-row">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCore Labs ${social.label}`}>
-                      <Icon size={20} />
-                      <span>{social.label}</span>
-                    </a>
-                  );
-                })}
+        {route === '/faq' && (
+          <>
+            <section className="page-hero faq-hero page-section">
+              <motion.div variants={fadeUp} initial="hidden" animate="show">
+                <p className="eyebrow">FAQ</p>
+                <h1>Questions businesses usually ask first.</h1>
+                <p>Clear answers before we talk scope, timeline, budget, or technology choices.</p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+                <CircleHelp size={30} />
+                <strong>Start with the business problem.</strong>
+                <span>The technical solution becomes easier once the workflow, users, and launch goal are clear.</span>
+              </motion.div>
+            </section>
+
+            <section className="faq-band" id="faq">
+              <div className="faq-list">
+                {faqs.map(([question, answer], index) => (
+                  <motion.article className="faq-item" key={question} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.05 }}>
+                    <CircleHelp size={22} />
+                    <div>
+                      <h3>{question}</h3>
+                      <p>{answer}</p>
+                    </div>
+                  </motion.article>
+                ))}
               </div>
-            </div>
-          </motion.div>
-        </section>
+            </section>
+          </>
+        )}
+
+        {route === '/contact' && (
+          <>
+            <section className="page-hero contact-hero page-section">
+              <motion.div variants={fadeUp} initial="hidden" animate="show">
+                <p className="eyebrow">Contact</p>
+                <h1>Ready to map your team, technology, and timeline?</h1>
+                <p>Tell us what you want to build, improve, or launch. We will help shape the right software, systems, and growth path for the business.</p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+                <Mail size={30} />
+                <strong>Send the project idea.</strong>
+                <span>Include your business type, the problem, preferred timeline, and any reference websites you like.</span>
+              </motion.div>
+            </section>
+
+            <section className="contact-band" id="contact">
+              <motion.div className="contact-panel" initial={{ opacity: 0, y: 38 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }}>
+                <div className="contact-copy">
+                  <p className="eyebrow">Start a conversation</p>
+                  <h2>Share the build you have in mind.</h2>
+                  <p>We can begin with a website, business system, mobile app, ERP module, or a complete product delivery plan.</p>
+                </div>
+                <div className="contact-links" aria-label="TrustCore Labs contact links">
+                  <a className="primary-button light contact-email" href={`mailto:${contactEmail}`}>
+                    <Mail size={18} />
+                    {contactEmail}
+                    <Sparkles size={18} />
+                  </a>
+                  <div className="social-row">
+                    {socialLinks.map((social) => {
+                      const Icon = social.icon;
+                      return (
+                        <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCore Labs ${social.label}`}>
+                          <Icon size={20} />
+                          <span>{social.label}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="mini-grid contact-prep">
+                {[
+                  ['Project type', 'Website, software platform, ERP, CRM, POS, mobile app, or digital growth support.'],
+                  ['Business context', 'Who uses it, what currently feels slow, and what needs to improve first.'],
+                  ['Timeline', 'Target launch date, urgent milestones, and whether the first release can be phased.'],
+                  ['Reference style', 'Any websites, apps, or competitors that help explain the expected direction.'],
+                ].map(([title, text]) => (
+                  <article className="mini-card" key={title}>
+                    <Check size={18} />
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
       </main>
 
       <footer className="site-footer">
         <div className="footer-glow" />
         <div className="footer-shell">
           <div className="footer-brand">
-            <a className="footer-logo" href="#top" aria-label="TrustCore Labs home">
+            <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
               <img src="/trustcore-logo.jpg" alt="" />
               <span>{company.name}</span>
             </a>
             <p>
-              Secure digital products, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
+              Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
             </p>
             <a className="footer-mail" href={`mailto:${contactEmail}`}>
               <Mail size={18} />
@@ -583,15 +1114,15 @@ function App() {
             <div>
               <span>Company</span>
               {navItems.map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`}>
-                  {item}
+                <a key={item.path} href={item.path} onClick={navigateTo(item.path)}>
+                  {item.label}
                 </a>
               ))}
             </div>
             <div>
               <span>Services</span>
               {serviceCards.map((service) => (
-                <a key={service.title} href="#services">
+                <a key={service.title} href="/services" onClick={navigateTo('/services')}>
                   {service.title}
                 </a>
               ))}
@@ -599,9 +1130,9 @@ function App() {
           </div>
 
           <div className="footer-action">
-            <p className="eyebrow">Built for you. Secured by us.</p>
-            <h2>Let's build something trusted.</h2>
-            <a className="primary-button footer-cta" href="#contact">
+            <p className="eyebrow">Built for growth. Secured by practice.</p>
+            <h2>Let's build your next release.</h2>
+            <a className="primary-button footer-cta" href="/contact" onClick={navigateTo('/contact')}>
               Start a project
               <ArrowUpRight size={18} />
             </a>
@@ -620,7 +1151,7 @@ function App() {
 
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} TrustCore Labs. All rights reserved.</span>
-          <span>Custom software | Web & mobile | ERP | Digital marketing</span>
+          <span>Product engineering | Web & mobile | ERP | Digital growth</span>
         </div>
       </footer>
     </div>

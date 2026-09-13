@@ -5,17 +5,17 @@ export class CompanyService {
   getCompany() {
     return {
       name: 'TrustCore Labs',
-      tagline: 'Secure digital products for ambitious teams.',
+      tagline: 'Growth-focused software teams for ambitious businesses.',
       metrics: [
-        { label: 'Delivery Pods', value: '04' },
-        { label: 'Security Layers', value: '9+' },
-        { label: 'Launch Rhythm', value: '30d' },
+        { label: 'Core service lines', value: '04' },
+        { label: 'Live project portfolio', value: '5+' },
+        { label: 'Team extension mindset', value: '1' },
       ],
       services: [
-        'Custom Software Development',
-        'Web & Mobile Development',
-        'ERP & Business Solutions',
-        'Digital Marketing',
+        'Product & Software Engineering',
+        'Web & Mobile Solutions',
+        'ERP & Business Systems',
+        'Digital Growth & Support',
       ],
     };
   }
