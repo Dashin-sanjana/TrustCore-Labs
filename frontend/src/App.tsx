@@ -22,6 +22,7 @@ import {
   X,
   Youtube,
 } from 'lucide-react';
+import { ParticleBackground } from './ParticleBackground';
 
 type Metric = {
   label: string;
@@ -442,6 +443,7 @@ function App() {
 
   return (
     <div className="site-shell">
+      <ParticleBackground />
       <InteractiveCursor />
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <div className="noise" />
@@ -492,7 +494,9 @@ function App() {
               Your growth, powered by practical tech teams.
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-              Software that helps your business grow.
+              <span>Software that</span>
+              <span>helps your</span>
+              <span>business grow.</span>
             </motion.h1>
             <motion.p className="hero-text" initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}>
               {company.name} helps growing companies build custom software, websites, mobile apps, ERP workflows, and digital growth systems with one focused delivery partner.
