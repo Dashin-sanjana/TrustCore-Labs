@@ -4250,3 +4250,253 @@ body,
   outline: 3px solid rgba(244, 180, 0, 0.58);
   outline-offset: 3px;
 }
+
+::selection {
+  background: rgba(244, 180, 0, 0.34);
+  color: #17120a;
+}
+
+/* Page directory: gold icons only, with quiet white labels and actions. */
+.page-directory .page-card-icon {
+  border-color: rgba(244, 180, 0, 0.42);
+  background: rgba(244, 180, 0, 0.1);
+  color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.page-directory .page-card-eyebrow {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.page-directory .page-card-link {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.68rem;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.page-directory .page-card-link svg {
+  width: 0.78rem;
+  height: 0.78rem;
+  color: inherit;
+}
+
+.page-directory .page-card-link:hover,
+.page-directory .page-card:hover {
+  border-color: rgba(255, 255, 255, 0.52);
+}
+
+.page-directory .page-card:hover {
+  box-shadow:
+    0 26px 68px rgba(10, 14, 20, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.page-directory .page-card-link:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+/* Final neutral-canvas guard: no blue/cyan remains in active UI chrome. */
+body {
+  background: #f1f2ef;
+}
+
+.particle-background {
+  background:
+    radial-gradient(ellipse at 72% 52%, rgba(20, 20, 18, 0.12), transparent 28%),
+    radial-gradient(circle at center, #fafaf8, #e7e8e4);
+}
+
+.particle-background--fallback {
+  background:
+    linear-gradient(rgba(241, 242, 239, 0.76), rgba(241, 242, 239, 0.76)),
+    url("../../public/hero.png") 72% center / cover no-repeat;
+}
+
+.scroll-progress {
+  background: linear-gradient(90deg, #d99b00, #ffd45f);
+}
+
+.cursor-ring,
+.cursor-ring::before,
+.cursor-ring::after {
+  border-color: rgba(244, 180, 0, 0.58);
+}
+
+.cursor-ring {
+  background: radial-gradient(circle, rgba(244, 180, 0, 0.16), transparent 64%);
+  box-shadow: 0 0 34px rgba(244, 180, 0, 0.26);
+}
+
+.cursor-dot {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.72);
+}
+
+.studio-notes p {
+  border-left-color: var(--accent);
+  background: rgba(20, 24, 30, 0.07);
+  color: rgba(24, 24, 22, 0.74);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.story-thread {
+  border-color: rgba(244, 180, 0, 0.42);
+}
+
+.console-dot {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.58);
+}
+
+.footer-logo img {
+  border-color: rgba(244, 180, 0, 0.42);
+  box-shadow: 0 0 24px rgba(244, 180, 0, 0.18);
+}
+
+.noise,
+.cyber-grid,
+.ambient {
+  display: none;
+}
+
+/* Final alignment and asset sizing overrides. */
+.particle-background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+}
+
+.agency-intro {
+  grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
+  align-items: center;
+  column-gap: clamp(2.5rem, 6vw, 5.5rem);
+  row-gap: 2rem;
+}
+
+.agency-intro .intro-copy,
+.agency-intro .studio-notes,
+.agency-intro .studio-notes > div,
+.agency-intro .studio-notes span,
+.agency-intro .studio-notes p {
+  min-width: 0;
+}
+
+.agency-intro .studio-notes {
+  align-content: center;
+}
+
+.agency-intro .studio-notes > div {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.brand-mark {
+  width: clamp(8.5rem, 11vw, 10.5rem);
+  height: 3.2rem;
+  padding: 0.15rem 0.35rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+
+@media (max-width: 980px) {
+  .agency-intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .agency-intro .studio-notes {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .brand-mark {
+    width: 8rem;
+    height: 2.75rem;
+    padding-inline: 0.25rem;
+  }
+}
+
+/* Crop only the logo file's transparent canvas; keep all visible artwork. */
+.brand-mark {
+  position: relative;
+  width: 9rem;
+  height: 3.55rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.brand-mark img {
+  position: absolute;
+  top: 49.3%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  object-fit: unset;
+  transform: translateY(-49.3%);
+}
+
+@media (max-width: 720px) {
+  .brand-mark {
+    width: 8.25rem;
+    height: 3.25rem;
+    padding: 0;
+  }
+}
+
+/* Scroll-linked 3D handoff between the hero copy and agency section. */
+.page-main {
+  perspective: 1200px;
+  perspective-origin: 50% 38vh;
+}
+
+.hero-swap-face,
+.agency-swap-face {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.hero-swap-face {
+  transform-origin: 50% 100%;
+}
+
+.agency-swap-face {
+  transform-origin: 50% 0%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-swap-face,
+  .agency-swap-face {
+    transform: none;
+    opacity: 1;
+  }
+}
