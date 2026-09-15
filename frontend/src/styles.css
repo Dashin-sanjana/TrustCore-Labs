@@ -3906,3 +3906,347 @@ h3 {
 .mobile-nav a {
   color: rgba(255, 255, 255, 0.94);
 }
+
+/* Directory cards share the navbar's smoked-glass surface. */
+.page-card {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(20, 24, 30, 0.3);
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 18px 52px rgba(12, 16, 22, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+
+.page-card::before {
+  display: none;
+}
+
+.page-card h3,
+.page-card strong {
+  color: #ffffff;
+}
+
+.page-card p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.page-card-icon {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffd36a;
+}
+
+.page-card:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(20, 24, 30, 0.46);
+  box-shadow:
+    0 24px 64px rgba(12, 16, 22, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+/* Remove the redundant glass layer nested inside the desktop navbar. */
+.desktop-nav {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Site-wide graphite glass and gold design system. */
+:root {
+  --page-bg: #f8f8f6;
+  --text: #181816;
+  --muted: rgba(24, 24, 22, 0.72);
+  --soft: rgba(24, 24, 22, 0.58);
+  --accent: #f4b400;
+  --accent-blue: #ffd45f;
+  --gold-strong: #e6a500;
+  --gold-soft: #ffd45f;
+  --glass: rgba(20, 24, 30, 0.42);
+  --glass-hover: rgba(20, 24, 30, 0.56);
+  --glass-line: rgba(255, 255, 255, 0.32);
+  --glass-text: rgba(255, 255, 255, 0.96);
+  --glass-muted: rgba(255, 255, 255, 0.7);
+  --line: rgba(29, 27, 22, 0.14);
+  --line-strong: rgba(244, 180, 0, 0.62);
+  --shadow-soft: 0 20px 56px rgba(10, 14, 20, 0.18);
+}
+
+body,
+.site-shell,
+.page-main {
+  background: transparent;
+}
+
+/* Keep content bands transparent instead of stacking tinted background layers. */
+.agency-intro,
+.page-directory,
+.why-band,
+.metric-strip,
+.platform-band,
+.marquee-section,
+.content-band,
+.work-band,
+.split-band,
+.faq-band,
+.contact-band,
+.trust-band,
+.compact-band,
+.page-section {
+  background: transparent;
+  box-shadow: none;
+}
+
+.agency-intro::before,
+.page-directory::before,
+.why-band::before,
+.metric-strip::before,
+.platform-band::before,
+.marquee-section::before,
+.content-band::before,
+.work-band::before,
+.split-band::before,
+.faq-band::before,
+.contact-band::before,
+.trust-band::before,
+.compact-band::before,
+.page-section::before {
+  display: none;
+}
+
+/* One shared glass surface for every information container. */
+.story-window,
+.insight-card,
+.page-hero-panel,
+.detail-card,
+.mini-card,
+.why-card,
+.platform-card,
+.trust-card,
+.faq-item,
+.page-card,
+.featured-project,
+.project-card,
+.service-card,
+.process-card,
+.metric,
+.lab-console,
+.footer-action,
+.site-footer {
+  border: 1px solid var(--glass-line);
+  border-radius: 1rem;
+  background: var(--glass);
+  color: var(--glass-text);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.35);
+}
+
+.page-card:hover,
+.featured-project:hover,
+.project-card:hover,
+.service-card:hover,
+.why-card:hover,
+.platform-card:hover,
+.detail-card:hover,
+.mini-card:hover {
+  border-color: rgba(244, 180, 0, 0.64);
+  background: var(--glass-hover);
+  box-shadow:
+    0 26px 68px rgba(10, 14, 20, 0.24),
+    0 0 0 1px rgba(244, 180, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Consistent high-contrast typography inside glass surfaces. */
+.story-window h2,
+.story-window h3,
+.story-window strong,
+.insight-card h2,
+.insight-card h3,
+.insight-card strong,
+.page-hero-panel h2,
+.page-hero-panel h3,
+.page-hero-panel strong,
+.detail-card h2,
+.detail-card h3,
+.detail-card strong,
+.mini-card h2,
+.mini-card h3,
+.mini-card strong,
+.why-card h2,
+.why-card h3,
+.why-card strong,
+.platform-card h2,
+.platform-card h3,
+.platform-card strong,
+.trust-card:not(.accent) h2,
+.trust-card:not(.accent) h3,
+.trust-card:not(.accent) strong,
+.faq-item h2,
+.faq-item h3,
+.faq-item strong,
+.page-card h3,
+.featured-project h3,
+.project-card h3,
+.service-card h3,
+.process-card h3,
+.metric strong,
+.lab-console h2,
+.lab-console h3,
+.footer-action h2,
+.site-footer h2,
+.site-footer h3,
+.site-footer strong,
+.site-footer a {
+  color: var(--glass-text);
+}
+
+.story-window p,
+.story-caption,
+.insight-card p,
+.insight-card span,
+.page-hero-panel p,
+.detail-card p,
+.mini-card p,
+.why-card p,
+.platform-card p,
+.trust-card:not(.accent) p,
+.faq-item p,
+.page-card p,
+.featured-project small,
+.featured-project dt,
+.featured-project dd,
+.project-card p,
+.service-card p,
+.process-card p,
+.metric p,
+.lab-console p,
+.footer-action p,
+.site-footer p,
+.site-footer small,
+.footer-bottom,
+.footer-links a {
+  color: var(--glass-muted);
+}
+
+/* Gold is the only primary accent: icons, numbers and status details. */
+.hero-proof svg,
+.service-card svg,
+.why-card svg,
+.platform-card svg,
+.detail-card svg,
+.mini-card svg,
+.trust-card svg,
+.faq-item svg,
+.footer-mail svg,
+.footer-socials a,
+.page-card-icon,
+.service-icon,
+.project-number,
+.process-card > span,
+.service-card > span,
+.project-card > span,
+.featured-project > span,
+.metric span,
+.console-status,
+.page-card-eyebrow,
+.page-card-link,
+.footer-links span,
+.footer-action .eyebrow,
+.node,
+.node-b,
+.node-c {
+  color: var(--accent);
+}
+
+.page-card-icon,
+.service-icon,
+.story-logo,
+.footer-socials a {
+  border-color: rgba(244, 180, 0, 0.34);
+  background: rgba(244, 180, 0, 0.1);
+}
+
+.node,
+.node-b,
+.node-c,
+.console-dot,
+.window-bar span,
+.window-bar span:nth-child(2),
+.window-bar span:nth-child(3) {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.56);
+}
+
+/* Gold primary actions; subdued glass for secondary actions and pills. */
+.nav-cta,
+.primary-button,
+.primary-button.light,
+.contact-panel .primary-button,
+.trust-card.accent a {
+  border: 1px solid rgba(255, 224, 132, 0.72);
+  background: linear-gradient(135deg, var(--gold-strong), var(--gold-soft));
+  color: #241900;
+  box-shadow:
+    0 14px 34px rgba(188, 132, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.nav-cta:hover,
+.primary-button:hover,
+.primary-button.light:hover,
+.contact-panel .primary-button:hover,
+.trust-card.accent a:hover {
+  border-color: #ffe293;
+  background: linear-gradient(135deg, #f7ba13, #ffdc72);
+  color: #1d1400;
+  box-shadow:
+    0 18px 40px rgba(188, 132, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.56);
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"],
+.mobile-nav a:hover,
+.mobile-nav a[aria-current="page"],
+.secondary-button:hover,
+.page-card-link:hover,
+.footer-mail:hover,
+.footer-socials a:hover,
+.social-row a:hover {
+  border-color: rgba(244, 180, 0, 0.62);
+  background: rgba(244, 180, 0, 0.14);
+  color: #ffd45f;
+}
+
+.contact-panel,
+.trust-card.accent {
+  border-color: rgba(255, 224, 132, 0.72);
+  background: linear-gradient(135deg, rgba(230, 165, 0, 0.94), rgba(255, 212, 95, 0.92));
+  color: #211700;
+  box-shadow: 0 22px 60px rgba(188, 132, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.46);
+}
+
+.contact-panel h2,
+.contact-panel h3,
+.contact-panel p,
+.contact-panel .eyebrow,
+.trust-card.accent h2,
+.trust-card.accent h3,
+.trust-card.accent p,
+.trust-card.accent svg {
+  color: #211700;
+}
+
+*:focus-visible {
+  outline: 3px solid rgba(244, 180, 0, 0.58);
+  outline-offset: 3px;
+}
