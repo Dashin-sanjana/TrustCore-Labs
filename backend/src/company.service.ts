@@ -8,7 +8,7 @@ export class CompanyService {
       tagline: 'Growth-focused software teams for ambitious businesses.',
       metrics: [
         { label: 'Core service lines', value: '04' },
-        { label: 'Live project portfolio', value: '5+' },
+        { label: 'Live project portfolio', value: '6+' },
         { label: 'Team extension mindset', value: '1' },
       ],
       services: [

@@ -43,7 +43,7 @@ const fallbackCompany: Company = {
   tagline: 'Growth-focused software teams for ambitious businesses.',
   metrics: [
     { label: 'Core service lines', value: '04' },
-    { label: 'Live project portfolio', value: '5+' },
+    { label: 'Live project portfolio', value: '6+' },
     { label: 'Team extension mindset', value: '1' },
   ],
   services: [
@@ -136,6 +136,7 @@ const portfolio = [
   'New Zealankanz',
   'Fatbis',
   'Focus Fitness',
+  'AI Hub',
   'Togo and Friends',
   'Business portals',
   'ERP systems',
@@ -177,6 +178,14 @@ const featuredProjects = [
     result: 'Fitness presence',
     scope: 'Frontend experience, responsive layout, content flow',
     href: 'https://focusfitness.waveloop.dev/',
+  },
+  {
+    name: 'AI Hub',
+    type: 'AI tools & web platform',
+    text: 'A curated discovery platform with 500+ free AI tools, custom AI playground apps, and practical creator utilities.',
+    result: 'AI platform & directory',
+    scope: 'Full-stack platform, tool directory, AI playground apps',
+    href: 'https://ai-hub.live',
   },
   {
     name: 'Togo and Friends',
@@ -278,7 +287,7 @@ const trustReasons = [
 ];
 
 const homeProof = [
-  ['5+', 'live company projects'],
+  ['6+', 'live company projects'],
   ['4', 'core service lines'],
   ['1', 'connected delivery partner'],
 ];
@@ -324,7 +333,7 @@ const routeSeo: Record<RoutePath, { title: string; description: string }> = {
   '/work': {
     title: 'TrustCore Labs Work | Software, Web, Mobile, and Business Platforms',
     description:
-      'Explore TrustCore Labs project work across retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
+      'Explore TrustCore Labs project work across AI platforms, retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
   },
   '/services': {
     title: 'TrustCore Labs Services | Software, ERP, Web, Mobile, and Growth',
@@ -858,8 +867,8 @@ function App() {
               </motion.div>
               <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
                 <Globe2 size={30} />
-                <strong>5+ live public projects</strong>
-                <span>Retail, service, fitness, food, community, and business-platform work across web and operational systems.</span>
+                <strong>6+ live public projects</strong>
+                <span>AI platforms, retail, service, fitness, food, community, and business-platform work across web and operational systems.</span>
               </motion.div>
             </section>
 
