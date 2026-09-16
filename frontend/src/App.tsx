@@ -293,6 +293,8 @@ const faqs = [
 ];
 
 const contactEmail = 'trustcorelabs@gmail.com';
+const siteUrl = 'https://www.trustcorelabs.com';
+const defaultSeoImage = `${siteUrl}/trustcore-logo.jpg`;
 
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
@@ -308,9 +310,55 @@ const fadeUp = {
 
 const routes: RoutePath[] = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'];
 
+const routeSeo: Record<RoutePath, { title: string; description: string }> = {
+  '/': {
+    title: 'TrustCore Labs | Custom Software, Web, Mobile, ERP, and Growth',
+    description:
+      'TrustCore Labs designs and builds secure custom software, web and mobile apps, ERP systems, business platforms, and digital growth experiences.',
+  },
+  '/about': {
+    title: 'About TrustCore Labs | Software Partner for Growing Businesses',
+    description:
+      'Learn how TrustCore Labs connects strategy, design, software engineering, business systems, and launch support into one practical delivery path.',
+  },
+  '/work': {
+    title: 'TrustCore Labs Work | Software, Web, Mobile, and Business Platforms',
+    description:
+      'Explore TrustCore Labs project work across retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
+  },
+  '/services': {
+    title: 'TrustCore Labs Services | Software, ERP, Web, Mobile, and Growth',
+    description:
+      'Explore TrustCore Labs services for custom software, web and mobile development, ERP and business systems, launch support, and digital growth.',
+  },
+  '/process': {
+    title: 'TrustCore Labs Process | From Business Problem to Product Launch',
+    description:
+      'See how TrustCore Labs moves from discovery and product planning to design, engineering, launch, support, and scalable improvement.',
+  },
+  '/faq': {
+    title: 'TrustCore Labs FAQ | Software Project Questions and Answers',
+    description:
+      'Find answers about TrustCore Labs software builds, design and development, marketing support, business systems, timelines, and project estimates.',
+  },
+  '/contact': {
+    title: 'Contact TrustCore Labs | Start a Software or Digital Product Build',
+    description:
+      'Contact TrustCore Labs to discuss a website, software platform, ERP system, CRM, POS, mobile app, or digital growth project.',
+  },
+};
+
 function getCurrentRoute(): RoutePath {
   const path = window.location.pathname as RoutePath;
   return routes.includes(path) ? path : '/';
+}
+
+function setMetaTag(selector: string, attribute: 'content' | 'href', value: string) {
+  const element = document.head.querySelector<HTMLMetaElement | HTMLLinkElement>(selector);
+
+  if (element) {
+    element.setAttribute(attribute, value);
+  }
 }
 
 function InteractiveCursor() {
@@ -432,6 +480,22 @@ function App() {
     window.addEventListener('popstate', syncRoute);
     return () => window.removeEventListener('popstate', syncRoute);
   }, []);
+
+  useEffect(() => {
+    const metadata = routeSeo[route];
+    const canonicalUrl = `${siteUrl}${route === '/' ? '/' : route}`;
+
+    document.title = metadata.title;
+    setMetaTag('meta[name="description"]', 'content', metadata.description);
+    setMetaTag('link[rel="canonical"]', 'href', canonicalUrl);
+    setMetaTag('meta[property="og:title"]', 'content', metadata.title);
+    setMetaTag('meta[property="og:description"]', 'content', metadata.description);
+    setMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
+    setMetaTag('meta[property="og:image"]', 'content', defaultSeoImage);
+    setMetaTag('meta[name="twitter:title"]', 'content', metadata.title);
+    setMetaTag('meta[name="twitter:description"]', 'content', metadata.description);
+    setMetaTag('meta[name="twitter:image"]', 'content', defaultSeoImage);
+  }, [route]);
 
   const navigateTo = (path: RoutePath) => (event: MouseEvent<HTMLAnchorElement>) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
