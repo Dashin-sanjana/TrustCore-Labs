@@ -155,8 +155,7 @@ button {
 .noise,
 .cyber-grid,
 .ambient {
-  pointer-events: none;
-  position: fixed;
+  display: none;
 }
 
 .noise {
@@ -2448,6 +2447,103 @@ h3 {
   }
 }
 
+.nav-cta {
+  border: 1px solid rgba(255, 255, 255, 0.84);
+  background: rgba(255, 255, 255, 0.5);
+  color: #30281b;
+  box-shadow:
+    0 10px 28px rgba(38, 45, 54, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+/* Neutral white frosted-glass navigation and label system. */
+.nav {
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  background: rgba(255, 255, 255, 0.48);
+  box-shadow:
+    0 20px 60px rgba(40, 48, 58, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(28px) saturate(1.45);
+  backdrop-filter: blur(28px) saturate(1.45);
+}
+
+.desktop-nav {
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(20px) saturate(1.35);
+  backdrop-filter: blur(20px) saturate(1.35);
+}
+
+.desktop-nav a {
+  background: transparent;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"] {
+  border-color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.52);
+  box-shadow:
+    0 8px 22px rgba(38, 45, 54, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.nav-cta {
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.5);
+  color: #30281b;
+  box-shadow:
+    0 10px 28px rgba(38, 45, 54, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.mobile-nav {
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.54);
+  box-shadow:
+    0 22px 58px rgba(38, 45, 54, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(28px) saturate(1.45);
+  backdrop-filter: blur(28px) saturate(1.45);
+}
+
+.mobile-nav a,
+.mobile-nav a[aria-current="page"] {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.page-main .eyebrow,
+.page-card-eyebrow,
+.hero-proof span,
+.capability-row span,
+.proof-row span,
+.console-status,
+.story-pill,
+.marquee-track span {
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.44);
+  box-shadow:
+    0 10px 28px rgba(38, 45, 54, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.page-main .eyebrow,
+.page-card-eyebrow,
+.console-status {
+  padding: 0.45rem 0.72rem;
+}
+
 /* Responsive refinement: desktop, tablet, and phone layouts. */
 .section-grid,
 .agency-intro,
@@ -2911,25 +3007,46 @@ h3 {
 
 /* Clean UI refinement layer. */
 :root {
-  --page-bg: #050914;
-  --panel: rgba(9, 17, 31, 0.78);
-  --panel-strong: rgba(13, 24, 42, 0.9);
-  --line: rgba(198, 226, 238, 0.14);
-  --line-strong: rgba(135, 211, 230, 0.3);
-  --text: #f4fbff;
-  --muted: rgba(225, 239, 246, 0.7);
-  --soft: rgba(225, 239, 246, 0.52);
-  --accent: #7ef0d0;
-  --accent-blue: #83b8ff;
-  --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.26);
+  color-scheme: light;
+  --page-bg: #ffffff;
+  --panel: rgba(255, 255, 255, 0.78);
+  --panel-strong: rgba(255, 255, 255, 0.88);
+  --line: rgba(35, 30, 20, 0.18);
+  --line-strong: rgba(184, 122, 0, 0.48);
+  --text: #1a1814;
+  --muted: rgba(26, 24, 20, 0.78);
+  --soft: rgba(26, 24, 20, 0.64);
+  --accent: #805200;
+  --accent-blue: #bd7f00;
+  --shadow-soft: 0 18px 60px rgba(38, 31, 18, 0.14);
 }
 
 body {
-  background:
-    radial-gradient(circle at 52% 0%, rgba(126, 240, 208, 0.12), transparent 28rem),
-    radial-gradient(circle at 100% 8%, rgba(131, 184, 255, 0.14), transparent 30rem),
-    linear-gradient(180deg, #050914 0%, #07101d 48%, #050914 100%);
+  background: var(--page-bg);
   color: var(--text);
+}
+
+.particle-background {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 72% 52%, rgba(20, 20, 20, 0.12), transparent 28%),
+    radial-gradient(circle at center, #ffffff, #f2f0eb);
+  opacity: 0.52;
+}
+
+.particle-background--fallback {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)),
+    url("../../public/hero.png") 72% center / cover no-repeat;
+}
+
+.contact-hero h1 {
+  color: #000000;
 }
 
 .noise {
@@ -2945,6 +3062,17 @@ body {
   filter: blur(46px);
 }
 
+.cursor-ring {
+  border-color: rgba(255, 176, 0, 0.58);
+  background: radial-gradient(circle, rgba(255, 176, 0, 0.18), transparent 64%);
+  box-shadow: 0 0 34px rgba(255, 176, 0, 0.3);
+}
+
+.cursor-dot {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(255, 176, 0, 0.82);
+}
+
 .scroll-progress {
   height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent-blue));
@@ -2952,12 +3080,17 @@ body {
 
 .nav {
   top: 0.85rem;
+  display: grid;
+  grid-template-columns: minmax(13rem, 1fr) auto minmax(10rem, 1fr);
   width: min(1160px, calc(100% - 2rem));
-  padding: 0.55rem 0.6rem;
+  gap: 1.25rem;
+  padding: 0.5rem 0.55rem 0.5rem 0.7rem;
   border-color: var(--line);
-  border-radius: 0.75rem;
-  background: rgba(5, 11, 22, 0.82);
-  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.22);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 18px 60px rgba(38, 31, 18, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.35);
 }
 
 .brand {
@@ -2973,15 +3106,30 @@ body {
   box-shadow: none;
 }
 
+.brand-mark img,
+.story-logo {
+  filter: grayscale(1) sepia(1) saturate(7) hue-rotate(356deg) brightness(1.08);
+}
+
 .desktop-nav {
-  gap: 0.35rem;
+  justify-self: center;
+  gap: 0.2rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(255, 190, 35, 0.14);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
   color: var(--soft);
   font-size: 0.88rem;
 }
 
 .desktop-nav a {
   min-height: 2.25rem;
-  padding: 0.55rem 0.72rem;
+  padding: 0.55rem 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.6rem;
 }
 
 .desktop-nav a:hover,
@@ -2992,8 +3140,9 @@ body {
 }
 
 .desktop-nav a[aria-current="page"] {
-  background: rgba(126, 240, 208, 0.1);
-  box-shadow: inset 0 0 0 1px rgba(126, 240, 208, 0.18);
+  border-color: rgba(255, 190, 35, 0.28);
+  background: rgba(255, 176, 0, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .nav-cta,
@@ -3003,20 +3152,24 @@ body {
 }
 
 .nav-cta {
+  justify-self: end;
   min-height: 2.5rem;
-  background: rgba(126, 240, 208, 0.1);
-  color: var(--text);
+  padding-inline: 1.05rem;
+  border: 1px solid rgba(255, 209, 90, 0.5);
+  background: linear-gradient(135deg, rgba(255, 176, 0, 0.92), rgba(255, 209, 90, 0.88));
+  color: #211600;
+  box-shadow: 0 10px 30px rgba(255, 176, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
 .primary-button {
-  background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-  color: #04101b;
-  box-shadow: 0 16px 40px rgba(56, 192, 168, 0.18);
+  background: linear-gradient(135deg, #f0b21d, #ffd86b);
+  color: #211600;
+  box-shadow: 0 16px 40px rgba(255, 176, 0, 0.2);
 }
 
 .secondary-button {
   border-color: var(--line);
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.52);
 }
 
 .nav-cta:hover,
@@ -3074,9 +3227,11 @@ h3 {
 .console-status,
 .marquee-track span {
   border-color: var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.84);
   color: var(--muted);
-  box-shadow: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 10px 28px rgba(0, 0, 0, 0.16);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.3);
 }
 
 .hero-proof svg,
@@ -3100,15 +3255,31 @@ h3 {
   border-color: var(--line);
   border-radius: 0.9rem;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    rgba(7, 16, 30, 0.72);
+    linear-gradient(rgba(25, 22, 16, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25, 22, 16, 0.05) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.76);
   background-size: 44px 44px;
   box-shadow: var(--shadow-soft);
 }
 
 .hero-visual::after {
   opacity: 0.22;
+  background: conic-gradient(from 0deg, transparent, rgba(255, 176, 0, 0.78), transparent, rgba(255, 209, 90, 0.68), transparent);
+}
+
+.window-bar span,
+.window-bar span:nth-child(2) {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(255, 176, 0, 0.72);
+}
+
+.window-bar span:nth-child(3) {
+  background: var(--accent-blue);
+  box-shadow: 0 0 18px rgba(255, 209, 90, 0.58);
+}
+
+.story-thread {
+  border-color: rgba(255, 176, 0, 0.34);
 }
 
 .story-window,
@@ -3130,9 +3301,11 @@ h3 {
 .footer-action,
 .site-footer {
   border-color: var(--line);
-  border-radius: 0.75rem;
-  background: var(--panel);
-  box-shadow: var(--shadow-soft);
+  border-radius: 1rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(247, 242, 232, 0.76));
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  backdrop-filter: blur(22px) saturate(1.3);
 }
 
 .story-window::before,
@@ -3151,8 +3324,10 @@ h3 {
 .footer-socials a {
   border-radius: 0.6rem;
   border-color: var(--line);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  backdrop-filter: blur(14px) saturate(1.25);
 }
 
 .story-caption {
@@ -3170,9 +3345,11 @@ h3 {
 }
 
 .insight-card {
-  background: var(--panel-strong);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(245, 239, 225, 0.78));
   border: 1px solid var(--line);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  backdrop-filter: blur(20px) saturate(1.3);
 }
 
 .insight-card strong {
@@ -3195,14 +3372,21 @@ h3 {
 
 .story-pill {
   border-color: var(--line);
-  background: rgba(9, 17, 31, 0.86);
+  background: rgba(255, 255, 255, 0.86);
   color: var(--muted);
-  box-shadow: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 10px 28px rgba(0, 0, 0, 0.16);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.3);
 }
 
 .node {
   background: var(--accent);
-  box-shadow: 0 0 18px rgba(126, 240, 208, 0.6);
+  box-shadow: 0 0 18px rgba(255, 176, 0, 0.62);
+}
+
+.node-b {
+  background: var(--accent-blue);
+  box-shadow: 0 0 20px rgba(255, 209, 90, 0.68);
 }
 
 .agency-intro,
@@ -3231,7 +3415,8 @@ h3 {
 .project-card:hover,
 .service-card:hover {
   border-color: var(--line-strong);
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(244, 237, 219, 0.62));
+  box-shadow: 0 24px 72px rgba(38, 31, 18, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .page-card-eyebrow,
@@ -3264,7 +3449,7 @@ h3 {
 .featured-project > span,
 .project-card span,
 .service-card > span {
-  color: rgba(126, 240, 208, 0.34);
+  color: rgba(255, 176, 0, 0.48);
 }
 
 .featured-project small,
@@ -3291,8 +3476,10 @@ h3 {
 
 .contact-panel,
 .trust-card.accent {
-  background: linear-gradient(135deg, rgba(126, 240, 208, 0.95), rgba(131, 184, 255, 0.95));
-  color: #04101b;
+  background: linear-gradient(135deg, rgba(255, 176, 0, 0.78), rgba(255, 209, 90, 0.72));
+  color: #211600;
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  backdrop-filter: blur(22px) saturate(1.3);
 }
 
 .contact-panel .eyebrow,
@@ -3300,13 +3487,33 @@ h3 {
 .contact-panel h2,
 .trust-card.accent p,
 .trust-card.accent svg {
-  color: #04101b;
+  color: #211600;
 }
 
 .social-row a {
   border-radius: 0.6rem;
   border-color: rgba(4, 16, 27, 0.16);
   background: rgba(4, 16, 27, 0.08);
+}
+
+.mobile-nav {
+  border-color: var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 22px 60px rgba(38, 31, 18, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.35);
+}
+
+.mobile-nav a {
+  border: 1px solid rgba(255, 190, 35, 0.12);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.mobile-nav a[aria-current="page"] {
+  border-color: rgba(255, 190, 35, 0.32);
+  background: rgba(255, 176, 0, 0.18);
+  color: var(--text);
 }
 
 .site-footer {
@@ -3323,6 +3530,18 @@ h3 {
 }
 
 @media (max-width: 980px) {
+  .nav {
+    display: flex;
+  }
+
+  .menu-button {
+    margin-left: auto;
+    border: 1px solid rgba(255, 190, 35, 0.3);
+    background: rgba(255, 176, 0, 0.14);
+    color: var(--accent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
   .hero {
     grid-template-columns: 1fr;
   }
@@ -3393,5 +3612,891 @@ h3 {
   .featured-project,
   .project-card {
     min-height: auto;
+  }
+}
+
+/* Final accessible color hierarchy for the light particle theme. */
+.page-main,
+.site-footer,
+.nav,
+.mobile-nav {
+  color: var(--text);
+}
+
+.page-main h1,
+.page-main h2,
+.page-main h3,
+.page-main strong,
+.site-footer h2,
+.site-footer h3,
+.site-footer strong,
+.site-footer a {
+  color: var(--text);
+}
+
+.page-main p,
+.page-main small,
+.page-main dt,
+.page-main dd,
+.site-footer p,
+.site-footer small {
+  color: var(--muted);
+}
+
+.page-main .eyebrow,
+.page-card-eyebrow,
+.project-number,
+.console-status,
+.footer-links span,
+.footer-action .eyebrow,
+.metric span,
+.process-card > span,
+.service-card > span,
+.project-card > span,
+.featured-project > span {
+  color: var(--accent);
+}
+
+.hero-proof span,
+.capability-row span,
+.proof-row span,
+.story-pill,
+.marquee-track span,
+.console-status {
+  color: #332c20;
+}
+
+.page-hero-panel span,
+.story-caption > span,
+.trust-card:not(.accent) > span,
+.footer-bottom,
+.footer-links a {
+  color: var(--muted);
+}
+
+.page-hero-panel svg,
+.detail-card > span,
+.page-card-link {
+  color: var(--accent);
+}
+
+.story-window,
+.page-hero-panel,
+.detail-card,
+.mini-card,
+.why-card,
+.platform-card,
+.trust-card,
+.faq-item,
+.page-card,
+.featured-project,
+.project-card,
+.service-card,
+.process-card,
+.metric,
+.lab-console,
+.footer-action,
+.site-footer {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(247, 242, 232, 0.78));
+}
+
+.contact-panel,
+.trust-card.accent {
+  background: linear-gradient(135deg, rgba(240, 178, 29, 0.94), rgba(255, 216, 107, 0.92));
+}
+
+.contact-panel,
+.contact-panel h2,
+.contact-panel h3,
+.contact-panel p,
+.contact-panel .eyebrow,
+.trust-card.accent,
+.trust-card.accent h2,
+.trust-card.accent h3,
+.trust-card.accent p,
+.trust-card.accent svg,
+.trust-card.accent a {
+  color: #211600;
+}
+
+.primary-button,
+.primary-button.light {
+  background: linear-gradient(135deg, #f0b21d, #ffd86b);
+  color: #211600;
+}
+
+.secondary-button,
+.footer-mail {
+  border-color: rgba(53, 43, 25, 0.22);
+  background: rgba(255, 255, 255, 0.88);
+  color: #211e18;
+}
+
+.desktop-nav,
+.desktop-nav a,
+.mobile-nav,
+.mobile-nav a {
+  color: #4b4438;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"],
+.mobile-nav a:hover,
+.mobile-nav a[aria-current="page"] {
+  color: #19150f;
+}
+
+@media (max-width: 720px) {
+  .particle-background {
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(20, 20, 20, 0.1), transparent 34%),
+      linear-gradient(#ffffff, #f3f1ec);
+    opacity: 0.34;
+  }
+
+  .particle-background--fallback {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.78)),
+      url("../../public/hero.png") center / cover no-repeat;
+  }
+}
+
+/* Minimal homepage opening viewport: navigation, headline, and particle character only. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+  width: min(1180px, calc(100% - 2rem));
+  min-height: 100svh;
+  align-items: stretch;
+  padding-top: 7rem;
+  padding-bottom: 2rem;
+}
+
+.hero-copy {
+  display: grid;
+  grid-column: 1;
+  width: 100%;
+  max-width: none;
+  place-items: center start;
+  padding: 2rem 1.5rem 0 0;
+}
+
+.hero-copy h1 {
+  position: relative;
+  top: -80.55px;
+  width: 100%;
+  max-width: 11ch;
+  margin: 0;
+  color: #17140f;
+  font-size: clamp(4.5rem, 6.8vw, 6.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-align: left;
+}
+
+.hero-copy h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-copy > .eyebrow,
+.hero-text,
+.hero-proof,
+.hero-actions,
+.hero-visual {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 100svh;
+    align-items: stretch;
+    padding-top: 6.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-copy {
+    grid-column: 1;
+    width: 100%;
+    place-items: center start;
+    padding: 1.5rem 0.5rem 0;
+  }
+
+  .hero-copy h1 {
+    top: 0;
+    max-width: 10ch;
+    font-size: clamp(3.6rem, 15vw, 5.4rem);
+    line-height: 0.94;
+    text-align: left;
+  }
+
+  .hero-copy h1 span {
+    white-space: normal;
+  }
+}
+
+/* Universal white-glass treatment for every navigation and pill control. */
+.nav,
+.desktop-nav,
+.mobile-nav {
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(20, 24, 30, 0.3);
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 18px 52px rgba(12, 16, 22, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+
+.desktop-nav a,
+.mobile-nav a,
+.nav-cta,
+.primary-button,
+.primary-button.light,
+.secondary-button,
+.menu-button,
+.page-main .eyebrow,
+.page-card-eyebrow,
+.hero-proof span,
+.capability-row span,
+.proof-row span,
+.console-status,
+.story-pill,
+.marquee-track span,
+.footer-mail,
+.trust-card.accent a,
+.page-card-link,
+.social-row a,
+.footer-socials a {
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(20, 24, 30, 0.32);
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 10px 28px rgba(12, 16, 22, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"],
+.mobile-nav a:hover,
+.mobile-nav a[aria-current="page"],
+.nav-cta:hover,
+.primary-button:hover,
+.secondary-button:hover,
+.footer-mail:hover,
+.trust-card.accent a:hover,
+.page-card-link:hover {
+  border-color: rgba(255, 255, 255, 0.52);
+  background: rgba(20, 24, 30, 0.48);
+  color: #ffffff;
+  box-shadow:
+    0 14px 34px rgba(12, 16, 22, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46);
+}
+
+.brand,
+.desktop-nav a,
+.mobile-nav a {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* Directory cards share the navbar's smoked-glass surface. */
+.page-card {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(20, 24, 30, 0.3);
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 18px 52px rgba(12, 16, 22, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+
+.page-card::before {
+  display: none;
+}
+
+.page-card h3,
+.page-card strong {
+  color: #ffffff;
+}
+
+.page-card p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.page-card-icon {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffd36a;
+}
+
+.page-card:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(20, 24, 30, 0.46);
+  box-shadow:
+    0 24px 64px rgba(12, 16, 22, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+/* Remove the redundant glass layer nested inside the desktop navbar. */
+.desktop-nav {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Site-wide graphite glass and gold design system. */
+:root {
+  --page-bg: #f8f8f6;
+  --text: #181816;
+  --muted: rgba(24, 24, 22, 0.72);
+  --soft: rgba(24, 24, 22, 0.58);
+  --accent: #f4b400;
+  --accent-blue: #ffd45f;
+  --gold-strong: #e6a500;
+  --gold-soft: #ffd45f;
+  --glass: rgba(20, 24, 30, 0.42);
+  --glass-hover: rgba(20, 24, 30, 0.56);
+  --glass-line: rgba(255, 255, 255, 0.32);
+  --glass-text: rgba(255, 255, 255, 0.96);
+  --glass-muted: rgba(255, 255, 255, 0.7);
+  --line: rgba(29, 27, 22, 0.14);
+  --line-strong: rgba(244, 180, 0, 0.62);
+  --shadow-soft: 0 20px 56px rgba(10, 14, 20, 0.18);
+}
+
+body,
+.site-shell,
+.page-main {
+  background: transparent;
+}
+
+/* Keep content bands transparent instead of stacking tinted background layers. */
+.agency-intro,
+.page-directory,
+.why-band,
+.metric-strip,
+.platform-band,
+.marquee-section,
+.content-band,
+.work-band,
+.split-band,
+.faq-band,
+.contact-band,
+.trust-band,
+.compact-band,
+.page-section {
+  background: transparent;
+  box-shadow: none;
+}
+
+.agency-intro::before,
+.page-directory::before,
+.why-band::before,
+.metric-strip::before,
+.platform-band::before,
+.marquee-section::before,
+.content-band::before,
+.work-band::before,
+.split-band::before,
+.faq-band::before,
+.contact-band::before,
+.trust-band::before,
+.compact-band::before,
+.page-section::before {
+  display: none;
+}
+
+/* One shared glass surface for every information container. */
+.story-window,
+.insight-card,
+.page-hero-panel,
+.detail-card,
+.mini-card,
+.why-card,
+.platform-card,
+.trust-card,
+.faq-item,
+.page-card,
+.featured-project,
+.project-card,
+.service-card,
+.process-card,
+.metric,
+.lab-console,
+.footer-action,
+.site-footer {
+  border: 1px solid var(--glass-line);
+  border-radius: 1rem;
+  background: var(--glass);
+  color: var(--glass-text);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.35);
+}
+
+.page-card:hover,
+.featured-project:hover,
+.project-card:hover,
+.service-card:hover,
+.why-card:hover,
+.platform-card:hover,
+.detail-card:hover,
+.mini-card:hover {
+  border-color: rgba(244, 180, 0, 0.64);
+  background: var(--glass-hover);
+  box-shadow:
+    0 26px 68px rgba(10, 14, 20, 0.24),
+    0 0 0 1px rgba(244, 180, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Consistent high-contrast typography inside glass surfaces. */
+.story-window h2,
+.story-window h3,
+.story-window strong,
+.insight-card h2,
+.insight-card h3,
+.insight-card strong,
+.page-hero-panel h2,
+.page-hero-panel h3,
+.page-hero-panel strong,
+.detail-card h2,
+.detail-card h3,
+.detail-card strong,
+.mini-card h2,
+.mini-card h3,
+.mini-card strong,
+.why-card h2,
+.why-card h3,
+.why-card strong,
+.platform-card h2,
+.platform-card h3,
+.platform-card strong,
+.trust-card:not(.accent) h2,
+.trust-card:not(.accent) h3,
+.trust-card:not(.accent) strong,
+.faq-item h2,
+.faq-item h3,
+.faq-item strong,
+.page-card h3,
+.featured-project h3,
+.project-card h3,
+.service-card h3,
+.process-card h3,
+.metric strong,
+.lab-console h2,
+.lab-console h3,
+.footer-action h2,
+.site-footer h2,
+.site-footer h3,
+.site-footer strong,
+.site-footer a {
+  color: var(--glass-text);
+}
+
+.story-window p,
+.story-caption,
+.insight-card p,
+.insight-card span,
+.page-hero-panel p,
+.detail-card p,
+.mini-card p,
+.why-card p,
+.platform-card p,
+.trust-card:not(.accent) p,
+.faq-item p,
+.page-card p,
+.featured-project small,
+.featured-project dt,
+.featured-project dd,
+.project-card p,
+.service-card p,
+.process-card p,
+.metric p,
+.lab-console p,
+.footer-action p,
+.site-footer p,
+.site-footer small,
+.footer-bottom,
+.footer-links a {
+  color: var(--glass-muted);
+}
+
+/* Gold is the only primary accent: icons, numbers and status details. */
+.hero-proof svg,
+.service-card svg,
+.why-card svg,
+.platform-card svg,
+.detail-card svg,
+.mini-card svg,
+.trust-card svg,
+.faq-item svg,
+.footer-mail svg,
+.footer-socials a,
+.page-card-icon,
+.service-icon,
+.project-number,
+.process-card > span,
+.service-card > span,
+.project-card > span,
+.featured-project > span,
+.metric span,
+.console-status,
+.page-card-eyebrow,
+.page-card-link,
+.footer-links span,
+.footer-action .eyebrow,
+.node,
+.node-b,
+.node-c {
+  color: var(--accent);
+}
+
+.page-card-icon,
+.service-icon,
+.story-logo,
+.footer-socials a {
+  border-color: rgba(244, 180, 0, 0.34);
+  background: rgba(244, 180, 0, 0.1);
+}
+
+.node,
+.node-b,
+.node-c,
+.console-dot,
+.window-bar span,
+.window-bar span:nth-child(2),
+.window-bar span:nth-child(3) {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.56);
+}
+
+/* Gold primary actions; subdued glass for secondary actions and pills. */
+.nav-cta,
+.primary-button,
+.primary-button.light,
+.contact-panel .primary-button,
+.trust-card.accent a {
+  border: 1px solid rgba(255, 224, 132, 0.72);
+  background: linear-gradient(135deg, var(--gold-strong), var(--gold-soft));
+  color: #241900;
+  box-shadow:
+    0 14px 34px rgba(188, 132, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.nav-cta:hover,
+.primary-button:hover,
+.primary-button.light:hover,
+.contact-panel .primary-button:hover,
+.trust-card.accent a:hover {
+  border-color: #ffe293;
+  background: linear-gradient(135deg, #f7ba13, #ffdc72);
+  color: #1d1400;
+  box-shadow:
+    0 18px 40px rgba(188, 132, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.56);
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"],
+.mobile-nav a:hover,
+.mobile-nav a[aria-current="page"],
+.secondary-button:hover,
+.page-card-link:hover,
+.footer-mail:hover,
+.footer-socials a:hover,
+.social-row a:hover {
+  border-color: rgba(244, 180, 0, 0.62);
+  background: rgba(244, 180, 0, 0.14);
+  color: #ffd45f;
+}
+
+.contact-panel,
+.trust-card.accent {
+  border-color: rgba(255, 224, 132, 0.72);
+  background: linear-gradient(135deg, rgba(230, 165, 0, 0.94), rgba(255, 212, 95, 0.92));
+  color: #211700;
+  box-shadow: 0 22px 60px rgba(188, 132, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.46);
+}
+
+.contact-panel h2,
+.contact-panel h3,
+.contact-panel p,
+.contact-panel .eyebrow,
+.trust-card.accent h2,
+.trust-card.accent h3,
+.trust-card.accent p,
+.trust-card.accent svg {
+  color: #211700;
+}
+
+*:focus-visible {
+  outline: 3px solid rgba(244, 180, 0, 0.58);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(244, 180, 0, 0.34);
+  color: #17120a;
+}
+
+/* Page directory: gold icons only, with quiet white labels and actions. */
+.page-directory .page-card-icon {
+  border-color: rgba(244, 180, 0, 0.42);
+  background: rgba(244, 180, 0, 0.1);
+  color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.page-directory .page-card-eyebrow {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.page-directory .page-card-link {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.68rem;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.page-directory .page-card-link svg {
+  width: 0.78rem;
+  height: 0.78rem;
+  color: inherit;
+}
+
+.page-directory .page-card-link:hover,
+.page-directory .page-card:hover {
+  border-color: rgba(255, 255, 255, 0.52);
+}
+
+.page-directory .page-card:hover {
+  box-shadow:
+    0 26px 68px rgba(10, 14, 20, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.page-directory .page-card-link:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+/* Final neutral-canvas guard: no blue/cyan remains in active UI chrome. */
+body {
+  background: #f1f2ef;
+}
+
+.particle-background {
+  background:
+    radial-gradient(ellipse at 72% 52%, rgba(20, 20, 18, 0.12), transparent 28%),
+    radial-gradient(circle at center, #fafaf8, #e7e8e4);
+}
+
+.particle-background--fallback {
+  background:
+    linear-gradient(rgba(241, 242, 239, 0.76), rgba(241, 242, 239, 0.76)),
+    url("../../public/hero.png") 72% center / cover no-repeat;
+}
+
+.scroll-progress {
+  background: linear-gradient(90deg, #d99b00, #ffd45f);
+}
+
+.cursor-ring,
+.cursor-ring::before,
+.cursor-ring::after {
+  border-color: rgba(244, 180, 0, 0.58);
+}
+
+.cursor-ring {
+  background: radial-gradient(circle, rgba(244, 180, 0, 0.16), transparent 64%);
+  box-shadow: 0 0 34px rgba(244, 180, 0, 0.26);
+}
+
+.cursor-dot {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.72);
+}
+
+.studio-notes p {
+  border-left-color: var(--accent);
+  background: rgba(20, 24, 30, 0.07);
+  color: rgba(24, 24, 22, 0.74);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.story-thread {
+  border-color: rgba(244, 180, 0, 0.42);
+}
+
+.console-dot {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.58);
+}
+
+.footer-logo img {
+  border-color: rgba(244, 180, 0, 0.42);
+  box-shadow: 0 0 24px rgba(244, 180, 0, 0.18);
+}
+
+.noise,
+.cyber-grid,
+.ambient {
+  display: none;
+}
+
+/* Final alignment and asset sizing overrides. */
+.particle-background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+}
+
+.agency-intro {
+  grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.92fr);
+  align-items: center;
+  column-gap: clamp(2.5rem, 6vw, 5.5rem);
+  row-gap: 2rem;
+}
+
+.agency-intro .intro-copy,
+.agency-intro .studio-notes,
+.agency-intro .studio-notes > div,
+.agency-intro .studio-notes span,
+.agency-intro .studio-notes p {
+  min-width: 0;
+}
+
+.agency-intro .studio-notes {
+  align-content: center;
+}
+
+.agency-intro .studio-notes > div {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.brand-mark {
+  width: clamp(8.5rem, 11vw, 10.5rem);
+  height: 3.2rem;
+  padding: 0.15rem 0.35rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+
+@media (max-width: 980px) {
+  .agency-intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .agency-intro .studio-notes {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .brand-mark {
+    width: 8rem;
+    height: 2.75rem;
+    padding-inline: 0.25rem;
+  }
+}
+
+/* Crop only the logo file's transparent canvas; keep all visible artwork. */
+.brand-mark {
+  position: relative;
+  width: 9rem;
+  height: 3.55rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.brand-mark img {
+  position: absolute;
+  top: 49.3%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  object-fit: unset;
+  transform: translateY(-49.3%);
+}
+
+@media (max-width: 720px) {
+  .brand-mark {
+    width: 8.25rem;
+    height: 3.25rem;
+    padding: 0;
+  }
+}
+
+/* Scroll-linked 3D handoff between the hero copy and agency section. */
+.page-main {
+  perspective: 1200px;
+  perspective-origin: 50% 38vh;
+}
+
+.hero-swap-face,
+.agency-swap-face {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.hero-swap-face {
+  transform-origin: 50% 100%;
+}
+
+.agency-swap-face {
+  transform-origin: 50% 0%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-swap-face,
+  .agency-swap-face {
+    transform: none;
+    opacity: 1;
   }
 }

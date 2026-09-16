@@ -1,5 +1,5 @@
 import { type MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
   Blocks,
@@ -22,6 +22,7 @@ import {
   X,
   Youtube,
 } from 'lucide-react';
+import { ParticleBackground } from './ParticleBackground';
 
 type Metric = {
   label: string;
@@ -452,10 +453,20 @@ function App() {
   const [company, setCompany] = useState<Company>(fallbackCompany);
   const [menuOpen, setMenuOpen] = useState(false);
   const [route, setRoute] = useState<RoutePath>(() => getCurrentRoute());
+  const agencyIntroRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
+  const { scrollYProgress: sectionSwapProgress } = useScroll({
+    target: agencyIntroRef,
+    offset: ['start end', 'start 20%'],
+  });
   const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 24 });
   const heroY = useTransform(scrollYProgress, [0, 0.45], [0, -120]);
   const glowY = useTransform(scrollYProgress, [0, 0.45], [0, 90]);
+  const heroSwapRotate = useTransform(sectionSwapProgress, [0, 0.5, 1], [0, -22, -90]);
+  const heroSwapOpacity = useTransform(sectionSwapProgress, [0, 0.72, 1], [1, 0.92, 0]);
+  const agencySwapRotate = useTransform(sectionSwapProgress, [0, 0.38, 1], [90, 72, 0]);
+  const agencySwapOpacity = useTransform(sectionSwapProgress, [0, 0.28, 0.72, 1], [0, 0.08, 0.78, 1]);
 
   useEffect(() => {
     fetch('/api/company')
@@ -506,6 +517,7 @@ function App() {
 
   return (
     <div className="site-shell">
+      <ParticleBackground />
       <InteractiveCursor />
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <div className="noise" />
@@ -517,9 +529,8 @@ function App() {
       <header className="nav">
         <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
           <span className="brand-mark">
-            <img src="/trustcore-logo.jpg" alt="" />
+            <img src="/navbar%20logo.png" alt="TrustCore Labs" />
           </span>
-          <span>{company.name}</span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
@@ -551,12 +562,21 @@ function App() {
         {route === '/' && (
           <>
         <section className="hero section-grid">
-          <motion.div className="hero-copy" style={{ y: heroY }}>
+          <motion.div
+            className="hero-copy hero-swap-face"
+            style={{
+              y: heroY,
+              rotateX: reduceMotion ? 0 : heroSwapRotate,
+              opacity: reduceMotion ? 1 : heroSwapOpacity,
+            }}
+          >
             <motion.p className="eyebrow" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
               Your growth, powered by practical tech teams.
             </motion.p>
             <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-              Software that helps your business grow.
+              <span>Software that</span>
+              <span>helps your</span>
+              <span>business grow.</span>
             </motion.h1>
             <motion.p className="hero-text" initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}>
               {company.name} helps growing companies build custom software, websites, mobile apps, ERP workflows, and digital growth systems with one focused delivery partner.
@@ -593,7 +613,7 @@ function App() {
                 <span />
                 <span />
               </div>
-              <img className="story-logo" src="/trustcore-logo.jpg" alt="TrustCore Labs logo" />
+              <img className="story-logo" src="/faviconl.png" alt="TrustCore Labs logo" />
               <div className="story-caption">
                 <span>TrustCore Labs</span>
                 <strong>Dedicated delivery shaped around your business.</strong>
@@ -623,7 +643,14 @@ function App() {
           </motion.div>
         </section>
 
-        <section className="agency-intro">
+        <motion.section
+          ref={agencyIntroRef}
+          className="agency-intro agency-swap-face"
+          style={{
+            rotateX: reduceMotion ? 0 : agencySwapRotate,
+            opacity: reduceMotion ? 1 : agencySwapOpacity,
+          }}
+        >
           <motion.div className="intro-copy" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
             <p className="eyebrow">Digital partner</p>
             <h2>Made like a studio. Delivered like an expert tech team.</h2>
@@ -641,7 +668,7 @@ function App() {
               <p>Clean interfaces, reliable APIs, business logic, and deployment are treated as one product.</p>
             </div>
           </motion.div>
-        </section>
+        </motion.section>
 
         <section className="page-directory" aria-labelledby="page-directory-title">
           <div className="section-heading story-heading">
@@ -1162,7 +1189,7 @@ function App() {
         <div className="footer-shell">
           <div className="footer-brand">
             <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
-              <img src="/trustcore-logo.jpg" alt="" />
+              <img src="/faviconl.png" alt="" />
               <span>{company.name}</span>
             </a>
             <p>
