@@ -17,6 +17,16 @@ export class CompanyService {
         'ERP & Business Systems',
         'Digital Growth & Support',
       ],
+      contact: {
+        address: 'No.257/3, Old Road, Moraketiya, Pannipitiya, Sri Lanka, 10230.',
+        email: 'info@trustcorelabs.com',
+        phones: [
+          { label: 'Office Number', number: '+94 11 208 8358' },
+          { label: 'Hashan Amarasinghe', number: '+94 77 200 9665' },
+          { label: 'Dashin Sanjana', number: '+94 78 841 8981' },
+        ],
+      },
     };
   }
 }
+

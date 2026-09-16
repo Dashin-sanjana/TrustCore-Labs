@@ -15,8 +15,10 @@ import {
   Linkedin,
   LockKeyhole,
   Mail,
+  MapPin,
   Menu,
   MessageCircle,
+  Phone,
   ShieldCheck,
   Sparkles,
   X,
@@ -301,7 +303,17 @@ const faqs = [
   ['What do you need to estimate a project?', 'A short description of the business, the users, the required features, current tools, deadline, and any examples you like is enough to begin the conversation.'],
 ];
 
-const contactEmail = 'trustcorelabs@gmail.com';
+const contactEmail = 'info@trustcorelabs.com';
+const contactAddress = 'No.257/3, Old Road, Moraketiya, Pannipitiya, Sri Lanka, 10230.';
+const googleMapsUrl =
+  'https://maps.google.com/?q=No.257/3,+Old+Road,+Moraketiya,+Pannipitiya,+Sri+Lanka,+10230';
+
+const contactPhones = [
+  { label: 'Office Number', number: '+94 11 208 8358', tel: '+94112088358' },
+  { label: 'Hashan Amarasinghe', number: '+94 77 200 9665', tel: '+94772009665' },
+  { label: 'Dashin Sanjana', number: '+94 78 841 8981', tel: '+94788418981' },
+];
+
 const siteUrl = 'https://www.trustcorelabs.com';
 const defaultSeoImage = `${siteUrl}/trustcore-logo.jpg`;
 
@@ -1150,6 +1162,94 @@ function App() {
             </section>
 
             <section className="contact-band" id="contact">
+              <div className="contact-channels-grid">
+                <motion.article
+                  className="contact-channel-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                >
+                  <div>
+                    <div className="contact-channel-badge">
+                      <MapPin size={20} />
+                      <span>Office Location</span>
+                    </div>
+                    <h3>Visit Our Office</h3>
+                    <p className="contact-channel-address">{contactAddress}</p>
+                  </div>
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-action-link"
+                  >
+                    <span>View on Google Maps</span>
+                    <ArrowUpRight size={15} />
+                  </a>
+                </motion.article>
+
+                <motion.article
+                  className="contact-channel-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: 0.08 }}
+                >
+                  <div>
+                    <div className="contact-channel-badge">
+                      <Phone size={20} />
+                      <span>Direct Lines</span>
+                    </div>
+                    <h3>Call Our Team</h3>
+                    <div className="contact-phone-list">
+                      {contactPhones.map((phone) => (
+                        <a
+                          key={phone.number}
+                          href={`tel:${phone.tel}`}
+                          className="contact-phone-row"
+                        >
+                          <div className="contact-phone-meta">
+                            <span className="contact-phone-label">{phone.label}</span>
+                            <strong className="contact-phone-num">{phone.number}</strong>
+                          </div>
+                          <ArrowUpRight size={15} className="contact-phone-arrow" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </motion.article>
+
+                <motion.article
+                  className="contact-channel-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: 0.16 }}
+                >
+                  <div>
+                    <div className="contact-channel-badge">
+                      <Mail size={20} />
+                      <span>Electronic Mail</span>
+                    </div>
+                    <h3>Email Inquiries</h3>
+                    <p className="contact-channel-desc">
+                      Send project scopes, RFPs, or general questions anytime. We respond promptly.
+                    </p>
+                  </div>
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className="contact-email-link"
+                  >
+                    <Mail size={16} />
+                    <span>{contactEmail}</span>
+                    <Sparkles size={16} />
+                  </a>
+                </motion.article>
+              </div>
+
               <motion.div className="contact-panel" initial={{ opacity: 0, y: 38 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }}>
                 <div className="contact-copy">
                   <p className="eyebrow">Start a conversation</p>
@@ -1208,6 +1308,16 @@ function App() {
             <p>
               Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
             </p>
+            <a
+              className="footer-address-link"
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              title="Open location in Google Maps"
+            >
+              <MapPin size={16} />
+              <span>{contactAddress}</span>
+            </a>
             <a className="footer-mail" href={`mailto:${contactEmail}`}>
               <Mail size={18} />
               {contactEmail}
@@ -1216,7 +1326,7 @@ function App() {
 
           <div className="footer-links">
             <div>
-              <span>Company</span>
+              <span className="footer-col-title">Company</span>
               {navItems.map((item) => (
                 <a key={item.path} href={item.path} onClick={navigateTo(item.path)}>
                   {item.label}
@@ -1224,10 +1334,26 @@ function App() {
               ))}
             </div>
             <div>
-              <span>Services</span>
+              <span className="footer-col-title">Services</span>
               {serviceCards.map((service) => (
                 <a key={service.title} href="/services" onClick={navigateTo('/services')}>
                   {service.title}
+                </a>
+              ))}
+            </div>
+            <div className="footer-contact-col">
+              <span className="footer-col-title">Contact</span>
+              <a href={`mailto:${contactEmail}`} className="footer-sub-contact">
+                <Mail size={14} />
+                <span>{contactEmail}</span>
+              </a>
+              {contactPhones.map((phone) => (
+                <a key={phone.number} href={`tel:${phone.tel}`} className="footer-sub-contact" title={`Call ${phone.label}`}>
+                  <Phone size={14} />
+                  <span>
+                    <strong>{phone.number}</strong>
+                    <small> ({phone.label === 'Office Number' ? 'Office' : phone.label.split(' ')[0]})</small>
+                  </span>
                 </a>
               ))}
             </div>
