@@ -887,13 +887,18 @@ function App() {
                     viewport={{ once: true, amount: 0.35 }}
                     transition={{ delay: index * 0.08 }}
                   >
-                    <span className="project-number">0{index + 1}</span>
-                    <div>
-                      <p>{project.type}</p>
-                      <h3>{project.name}</h3>
-                      <small>{project.text}</small>
+                    <div className="featured-project-top">
+                      <span className="project-number">0{index + 1}</span>
+                      <span className="featured-project-arrow" aria-hidden="true">
+                        <ArrowUpRight size={22} />
+                      </span>
                     </div>
-                    <dl>
+                    <div className="featured-project-body">
+                      <p className="featured-project-type">{project.type}</p>
+                      <h3>{project.name}</h3>
+                      <p className="featured-project-desc">{project.text}</p>
+                    </div>
+                    <dl className="featured-project-meta">
                       <div>
                         <dt>Result</dt>
                         <dd>{project.result}</dd>
@@ -903,7 +908,6 @@ function App() {
                         <dd>{project.scope}</dd>
                       </div>
                     </dl>
-                    <ArrowUpRight size={24} />
                   </motion.a>
                 ))}
               </div>

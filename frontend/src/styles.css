@@ -910,12 +910,12 @@ h3 {
 
 .featured-project {
   position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 1rem;
-  min-height: 20rem;
-  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.35rem;
+  min-height: 22rem;
+  padding: 1.5rem;
   overflow: hidden;
   border: 1px solid rgba(38, 246, 255, 0.24);
   border-radius: 1.35rem;
@@ -925,6 +925,7 @@ h3 {
     linear-gradient(145deg, rgba(0, 221, 255, 0.12), rgba(1, 10, 23, 0.86));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
   transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  text-decoration: none;
 }
 
 .featured-project::before {
@@ -938,6 +939,7 @@ h3 {
     linear-gradient(90deg, rgba(38, 246, 255, 0.06) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: linear-gradient(135deg, black, transparent 74%);
+  pointer-events: none;
 }
 
 .featured-project:hover {
@@ -946,47 +948,105 @@ h3 {
   transform: translateY(-8px);
 }
 
-.featured-project > span,
-.featured-project > div,
-.featured-project > svg {
+.featured-project > * {
   position: relative;
   z-index: 1;
 }
 
-.featured-project > span {
-  align-self: start;
-  color: rgba(38, 246, 255, 0.38);
-  font-size: 3.8rem;
-  font-weight: 950;
-  line-height: 0.85;
+.featured-project-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.featured-project p {
-  margin: 0 0 0.65rem;
-  color: #26f6ff;
-  font-size: 0.8rem;
+.featured-project .project-number {
+  color: var(--accent);
+  font-size: 1.8rem;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.featured-project-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent);
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+}
+
+.featured-project:hover .featured-project-arrow {
+  transform: translate(3px, -3px);
+  border-color: var(--accent);
+  background: rgba(244, 180, 0, 0.16);
+}
+
+.featured-project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.featured-project-type {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .featured-project h3 {
-  margin-bottom: 0.65rem;
+  margin: 0;
   color: #ffffff;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  line-height: 0.98;
+  font-size: clamp(1.65rem, 2.6vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.15;
 }
 
-.featured-project small {
-  display: block;
-  max-width: 26rem;
-  color: rgba(238, 251, 255, 0.68);
-  font-size: 0.98rem;
+.featured-project-desc {
+  margin: 0.35rem 0 0;
+  max-width: 100%;
+  color: var(--glass-muted);
+  font-size: 0.96rem;
   line-height: 1.65;
 }
 
-.featured-project > svg {
-  align-self: start;
-  color: #26f6ff;
+.featured-project-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding-top: 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.featured-project-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.featured-project-meta dt {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.featured-project-meta dd {
+  margin: 0;
+  color: var(--glass-text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
 .project-directions-heading {
@@ -1765,16 +1825,8 @@ h3 {
   }
 
   .featured-project {
-    grid-template-columns: 1fr auto;
-    min-height: 17rem;
-  }
-
-  .featured-project > span {
-    font-size: 3rem;
-  }
-
-  .featured-project > div {
-    grid-column: 1 / -1;
+    min-height: auto;
+    padding: 1.35rem;
   }
 
   .service-lane {
@@ -2775,13 +2827,9 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .featured-project {
-    grid-template-columns: 1fr auto;
-  }
-
-  .featured-project > div,
-  .featured-project dl {
-    grid-column: 1 / -1;
+  .featured-project-meta {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .footer-bottom {
@@ -4121,6 +4169,7 @@ body,
 .trust-card:not(.accent) p,
 .faq-item p,
 .page-card p,
+.featured-project-desc,
 .featured-project small,
 .featured-project dt,
 .featured-project dd,
