@@ -1,9 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const particleImageUrl = new URL(
-  '../../public/hero.png',
-  import.meta.url,
-).href;
+const particleImageUrl = '/hero.png';
 
 const vertexShaderSource = `
   attribute vec2 a_position;

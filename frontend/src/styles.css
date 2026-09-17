@@ -1595,6 +1595,37 @@ h3 {
   font-size: 0.86rem;
 }
 
+.footer-map {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.footer-map-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.footer-map-heading a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.footer-map-view {
+  display: block;
+  width: 100%;
+  height: clamp(15rem, 28vw, 21rem);
+  border: 1px solid rgba(38, 246, 255, 0.2);
+  border-radius: 0.55rem;
+}
+
 @keyframes rotateCore {
   to {
     transform: rotate(360deg);
@@ -4703,11 +4734,17 @@ body {
   line-height: 1.6;
 }
 
+.contact-email-list {
+  display: grid;
+  justify-items: start;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
 .contact-email-link {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  margin-top: auto;
   padding: 0.68rem 1.1rem;
   width: fit-content;
   border: 1px solid rgba(244, 180, 0, 0.42);
@@ -4852,5 +4889,3 @@ body {
     gap: 1.5rem;
   }
 }
-
-

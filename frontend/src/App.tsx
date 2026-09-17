@@ -22,9 +22,9 @@ import {
   ShieldCheck,
   Sparkles,
   X,
-  Youtube,
 } from 'lucide-react';
 import { ParticleBackground } from './ParticleBackground';
+import { MapView } from './MapView';
 
 type Metric = {
   label: string;
@@ -304,6 +304,7 @@ const faqs = [
 ];
 
 const contactEmail = 'info@trustcorelabs.com';
+const contactEmails = [contactEmail, 'hashan@trustcorelabs.com'];
 const contactAddress = 'No.257/3, Old Road, Moraketiya, Pannipitiya, Sri Lanka, 10230.';
 const googleMapsUrl =
   'https://maps.google.com/?q=No.257/3,+Old+Road,+Moraketiya,+Pannipitiya,+Sri+Lanka,+10230';
@@ -311,7 +312,6 @@ const googleMapsUrl =
 const contactPhones = [
   { label: 'Office Number', number: '+94 11 208 8358', tel: '+94112088358' },
   { label: 'Hashan Amarasinghe', number: '+94 77 200 9665', tel: '+94772009665' },
-  { label: 'Dashin Sanjana', number: '+94 78 841 8981', tel: '+94788418981' },
 ];
 
 const siteUrl = 'https://www.trustcorelabs.com';
@@ -321,7 +321,6 @@ const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
   { label: 'Facebook', href: 'https://facebook.com/trustcorelabs', icon: Facebook },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/trustcorelabs', icon: Linkedin },
-  { label: 'YouTube', href: 'https://youtube.com/@trustcorelabs', icon: Youtube },
 ];
 
 const fadeUp = {
@@ -1239,14 +1238,15 @@ function App() {
                       Send project scopes, RFPs, or general questions anytime. We respond promptly.
                     </p>
                   </div>
-                  <a
-                    href={`mailto:${contactEmail}`}
-                    className="contact-email-link"
-                  >
-                    <Mail size={16} />
-                    <span>{contactEmail}</span>
-                    <Sparkles size={16} />
-                  </a>
+                  <div className="contact-email-list">
+                    {contactEmails.map((email) => (
+                      <a key={email} href={`mailto:${email}`} className="contact-email-link">
+                        <Mail size={16} />
+                        <span>{email}</span>
+                        <Sparkles size={16} />
+                      </a>
+                    ))}
+                  </div>
                 </motion.article>
               </div>
 
@@ -1343,10 +1343,12 @@ function App() {
             </div>
             <div className="footer-contact-col">
               <span className="footer-col-title">Contact</span>
-              <a href={`mailto:${contactEmail}`} className="footer-sub-contact">
-                <Mail size={14} />
-                <span>{contactEmail}</span>
-              </a>
+              {contactEmails.map((email) => (
+                <a key={email} href={`mailto:${email}`} className="footer-sub-contact">
+                  <Mail size={14} />
+                  <span>{email}</span>
+                </a>
+              ))}
               {contactPhones.map((phone) => (
                 <a key={phone.number} href={`tel:${phone.tel}`} className="footer-sub-contact" title={`Call ${phone.label}`}>
                   <Phone size={14} />
@@ -1376,6 +1378,15 @@ function App() {
                 );
               })}
             </div>
+          </div>
+          <div className="footer-map">
+            <div className="footer-map-heading">
+              <span>Find us</span>
+              <a href={googleMapsUrl} target="_blank" rel="noreferrer">
+                Open in Google Maps <ArrowUpRight size={16} />
+              </a>
+            </div>
+            <MapView />
           </div>
         </div>
 
