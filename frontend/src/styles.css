@@ -5368,3 +5368,36 @@ body {
     gap: 1.75rem;
   }
 }
+
+/* Replayable motion-graphic reveal surfaces for the About page. */
+.about-hero,
+.about-reveal-section .detail-grid,
+.about-reveal-section .mini-grid {
+  perspective: 1200px;
+}
+
+.about-hero > *,
+.about-hero .page-hero-panel > *,
+.about-reveal-section .section-heading > *,
+.about-reveal-section .detail-card,
+.about-reveal-section .mini-card {
+  transform-origin: left bottom;
+  will-change: transform, opacity, clip-path;
+}
+
+.about-panel-icon {
+  display: inline-flex;
+  width: fit-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero > *,
+  .about-hero .page-hero-panel > *,
+  .about-reveal-section .section-heading > *,
+  .about-reveal-section .detail-card,
+  .about-reveal-section .mini-card {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

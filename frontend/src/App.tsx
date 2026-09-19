@@ -913,55 +913,75 @@ function App() {
 
         {route === '/about' && (
           <>
-            <section className="page-hero about-hero page-section">
-              <motion.div variants={fadeUp} initial="hidden" animate="show">
-                <p className="eyebrow">About TrustCore Labs</p>
-                <h1>Software partner for businesses that want to move cleaner.</h1>
-                <p>
+            <motion.section
+              className="page-hero about-hero page-section"
+              variants={revealSequence}
+              initial={reduceMotion ? 'show' : 'hidden'}
+              whileInView="show"
+              viewport={{ once: false, amount: 0.2 }}
+            >
+              <motion.div variants={revealSequence}>
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>About TrustCore Labs</motion.p>
+                <motion.h1 custom={1} variants={textWipeReveal}>Software partner for businesses that want to move cleaner.</motion.h1>
+                <motion.p custom={2} variants={textWipeReveal}>
                   TrustCore Labs is built for companies that need practical technology without losing sight of the business. We connect strategy, design, software engineering, business systems, and launch support into one clear delivery path.
-                </p>
+                </motion.p>
               </motion.div>
-              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
-                <ShieldCheck size={30} />
-                <strong>{company.tagline}</strong>
-                <span>Built around useful releases, clear communication, and systems that can grow after launch.</span>
+              <motion.div className="page-hero-panel" custom={3} variants={cardLiftReveal}>
+                <motion.span className="about-panel-icon" custom={4} variants={textWipeReveal}>
+                  <ShieldCheck size={30} />
+                </motion.span>
+                <motion.strong custom={5} variants={textWipeReveal}>{company.tagline}</motion.strong>
+                <motion.span custom={6} variants={textWipeReveal}>Built around useful releases, clear communication, and systems that can grow after launch.</motion.span>
               </motion.div>
-            </section>
+            </motion.section>
 
-            <section className="content-band">
-              <div className="section-heading story-heading">
-                <p className="eyebrow">How we work</p>
-                <h2>A compact team model for practical business outcomes.</h2>
-                <p>We help owners and teams turn product ideas, manual workflows, and growth plans into software people can actually use.</p>
-              </div>
-              <div className="detail-grid three">
+            <motion.section
+              className="content-band about-reveal-section"
+              variants={revealSequence}
+              initial={reduceMotion ? 'show' : 'hidden'}
+              whileInView="show"
+              viewport={{ once: false, amount: 0.14 }}
+            >
+              <motion.div className="section-heading story-heading" variants={revealSequence}>
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>How we work</motion.p>
+                <motion.h2 custom={1} variants={textWipeReveal}>A compact team model for practical business outcomes.</motion.h2>
+                <motion.p custom={2} variants={textWipeReveal}>We help owners and teams turn product ideas, manual workflows, and growth plans into software people can actually use.</motion.p>
+              </motion.div>
+              <motion.div className="detail-grid three" variants={revealSequence}>
                 {engagementModels.map(([title, text], index) => (
-                  <motion.article className="detail-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.06 }}>
+                  <motion.article className="detail-card" key={title} custom={index + 3} variants={cardLiftReveal}>
                     <span>0{index + 1}</span>
                     <h3>{title}</h3>
                     <p>{text}</p>
                   </motion.article>
                 ))}
-              </div>
-            </section>
+              </motion.div>
+            </motion.section>
 
-            <section className="content-band compact-band">
-              <div className="section-heading">
-                <p className="eyebrow">Standards</p>
-                <h2>The parts we keep consistent across every build.</h2>
-              </div>
-              <div className="mini-grid">
-                {standards.map(([title, text]) => (
-                  <article className="mini-card" key={title}>
+            <motion.section
+              className="content-band compact-band about-reveal-section"
+              variants={revealSequence}
+              initial={reduceMotion ? 'show' : 'hidden'}
+              whileInView="show"
+              viewport={{ once: false, amount: 0.14 }}
+            >
+              <motion.div className="section-heading" variants={revealSequence}>
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Standards</motion.p>
+                <motion.h2 custom={1} variants={textWipeReveal}>The parts we keep consistent across every build.</motion.h2>
+              </motion.div>
+              <motion.div className="mini-grid" variants={revealSequence}>
+                {standards.map(([title, text], index) => (
+                  <motion.article className="mini-card" key={title} custom={index + 2} variants={cardLiftReveal}>
                     <Check size={18} />
                     <div>
                       <h3>{title}</h3>
                       <p>{text}</p>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
-              </div>
-            </section>
+              </motion.div>
+            </motion.section>
           </>
         )}
 
