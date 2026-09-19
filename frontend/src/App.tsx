@@ -308,6 +308,51 @@ const fadeUp = {
   show: { opacity: 1, y: 0 },
 };
 
+const revealSequence = {
+  hidden: {},
+  show: {},
+};
+
+const textWipeReveal = {
+  hidden: {
+    opacity: 0,
+    x: -24,
+    clipPath: 'inset(0 100% 0 0)',
+  },
+  show: (order = 0) => ({
+    opacity: 1,
+    x: 0,
+    clipPath: 'inset(0 0% 0 0)',
+    transition: {
+      duration: 0.78,
+      delay: 0.06 + order * 0.16,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  }),
+};
+
+const cardLiftReveal = {
+  hidden: {
+    opacity: 0,
+    y: 64,
+    rotateX: -12,
+    scale: 0.94,
+    clipPath: 'inset(100% 0 0 0 round 1rem)',
+  },
+  show: (order = 0) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    clipPath: 'inset(0% 0 0 0 round 1rem)',
+    transition: {
+      duration: 0.82,
+      delay: 0.06 + order * 0.14,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  }),
+};
+
 const routes: RoutePath[] = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'];
 
 const routeSeo: Record<RoutePath, { title: string; description: string }> = {
@@ -529,7 +574,14 @@ function App() {
       <header className="nav">
         <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
           <span className="brand-mark">
-            <img src="/navbar%20logo.png" alt="TrustCore Labs" />
+            <img src="/faviconl.png" alt="" />
+          </span>
+          <span className="brand-wordmark" aria-hidden="true">
+            <span className="brand-labs">Labs</span>
+            <span className="brand-name">
+              <span>Trust</span>
+              <span>Core</span>
+            </span>
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -670,13 +722,20 @@ function App() {
           </motion.div>
         </motion.section>
 
-        <section className="page-directory" aria-labelledby="page-directory-title">
-          <div className="section-heading story-heading">
-            <p className="eyebrow">Explore</p>
-            <h2 id="page-directory-title">Explore TrustCore Labs by page.</h2>
-            <p>Move through the company, work, services, process, answers, and contact details from one clean starting point.</p>
-          </div>
-          <div className="page-card-grid">
+        <motion.section
+          className="page-directory"
+          aria-labelledby="page-directory-title"
+          variants={revealSequence}
+          initial={reduceMotion ? 'show' : 'hidden'}
+          whileInView="show"
+          viewport={{ once: false, amount: 0.12 }}
+        >
+          <motion.div className="section-heading story-heading" variants={revealSequence}>
+            <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Explore</motion.p>
+            <motion.h2 id="page-directory-title" custom={1} variants={textWipeReveal}>Explore TrustCore Labs by page.</motion.h2>
+            <motion.p custom={2} variants={textWipeReveal}>Move through the company, work, services, process, answers, and contact details from one clean starting point.</motion.p>
+          </motion.div>
+          <motion.div className="page-card-grid" variants={revealSequence}>
             {pageCards.map((page, index) => {
               const Icon = page.icon;
               return (
@@ -685,11 +744,8 @@ function App() {
                   key={page.path}
                   href={page.path}
                   onClick={navigateTo(page.path)}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.35 }}
-                  transition={{ delay: index * 0.04 }}
+                  custom={index + 3}
+                  variants={cardLiftReveal}
                 >
                   <span className="page-card-icon">
                     <Icon size={22} />
@@ -704,27 +760,30 @@ function App() {
                 </motion.a>
               );
             })}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
-        <section className="why-band">
-          <div className="section-heading story-heading">
-            <p className="eyebrow">Why trust us</p>
-            <h2>Practical breadth with a team model that can grow.</h2>
-            <p>Get the right delivery skills, a clearer build plan, and a software foundation that can keep improving after launch.</p>
-          </div>
-          <div className="why-grid">
+        <motion.section
+          className="why-band"
+          variants={revealSequence}
+          initial={reduceMotion ? 'show' : 'hidden'}
+          whileInView="show"
+          viewport={{ once: false, amount: 0.16 }}
+        >
+          <motion.div className="section-heading story-heading" variants={revealSequence}>
+            <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Why trust us</motion.p>
+            <motion.h2 custom={1} variants={textWipeReveal}>Practical breadth with a team model that can grow.</motion.h2>
+            <motion.p custom={2} variants={textWipeReveal}>Get the right delivery skills, a clearer build plan, and a software foundation that can keep improving after launch.</motion.p>
+          </motion.div>
+          <motion.div className="why-grid" variants={revealSequence}>
             {trustReasons.map((reason, index) => {
               const Icon = reason.icon;
               return (
                 <motion.article
                   className="why-card"
                   key={reason.title}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.35 }}
-                  transition={{ delay: index * 0.06 }}
+                  custom={index + 3}
+                  variants={cardLiftReveal}
                 >
                   <Icon size={28} />
                   <span>0{index + 1}</span>
@@ -733,8 +792,8 @@ function App() {
                 </motion.article>
               );
             })}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
         <section className="metric-strip" aria-label="Company metrics">
           {company.metrics.map((metric) => (
