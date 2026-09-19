@@ -860,44 +860,46 @@ function App() {
           ))}
         </motion.section>
 
-        <section className="platform-band">
-          <motion.div className="platform-copy" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
-            <p className="eyebrow">End-to-end expertise</p>
-            <h2>Reliable digital foundations built around your needs.</h2>
-            <p>
+        <motion.section
+          className="platform-band"
+          variants={revealSequence}
+          initial={reduceMotion ? 'show' : 'hidden'}
+          whileInView="show"
+          viewport={{ once: false, amount: 0.12 }}
+        >
+          <motion.div className="platform-copy" variants={revealSequence}>
+            <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>End-to-end expertise</motion.p>
+            <motion.h2 custom={1} variants={textWipeReveal}>Reliable digital foundations built around your needs.</motion.h2>
+            <motion.p custom={2} variants={textWipeReveal}>
               We bring the public website, internal systems, mobile touchpoints, support flow, and growth channels into one planned product direction so the business can move with less friction.
-            </p>
-            <div className="proof-row" aria-label="TrustCore Labs proof points">
-              {homeProof.map(([value, label]) => (
-                <span key={label}>
+            </motion.p>
+            <motion.div className="proof-row" aria-label="TrustCore Labs proof points" variants={revealSequence}>
+              {homeProof.map(([value, label], index) => (
+                <motion.span key={label} custom={index + 3} variants={textWipeReveal}>
                   <strong>{value}</strong>
                   {label}
-                </span>
+                </motion.span>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
-          <div className="platform-grid">
+          <motion.div className="platform-grid" variants={revealSequence}>
             {platformCards.map((platform, index) => {
               const Icon = platform.icon;
               return (
                 <motion.article
                   className="platform-card"
                   key={platform.title}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, amount: 0.35 }}
-                  transition={{ delay: index * 0.06 }}
+                  custom={index + 6}
+                  variants={cardLiftReveal}
                 >
                   <Icon size={28} />
-                  <span>0{index + 1}</span>
                   <h3>{platform.title}</h3>
                   <p>{platform.text}</p>
                 </motion.article>
               );
             })}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
         <section className="marquee-section" aria-label="Portfolio categories">
           <div className="marquee-track">
