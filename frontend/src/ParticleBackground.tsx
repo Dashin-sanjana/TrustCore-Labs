@@ -173,7 +173,7 @@ export function ParticleBackground() {
     let targetMouseX = -10_000;
     let targetMouseY = -10_000;
     let interactionStrength = 0;
-    let lastPointerMove = 0;
+    let pointerActive = false;
     let running = false;
 
     const resize = () => {
@@ -224,16 +224,21 @@ export function ParticleBackground() {
     };
 
     const render = () => {
-      if (!textureReady) return;
-
-      currentMouseX += (targetMouseX - currentMouseX) * 0.18;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.18;
-
-      if (performance.now() - lastPointerMove < 160 && !reducedMotion) {
-        interactionStrength += (1 - interactionStrength) * 0.22;
-      } else {
-        interactionStrength *= 0.9;
+      if (!textureReady) {
+        running = false;
+        return;
       }
+
+      if (reducedMotion) {
+        currentMouseX = targetMouseX;
+        currentMouseY = targetMouseY;
+        interactionStrength = pointerActive ? 0.72 : 0;
+      } else {
+        currentMouseX += (targetMouseX - currentMouseX) * 0.22;
+        currentMouseY += (targetMouseY - currentMouseY) * 0.22;
+        interactionStrength += ((pointerActive ? 1 : 0) - interactionStrength) * 0.2;
+      }
+
 
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -250,8 +255,9 @@ export function ParticleBackground() {
 
       const mouseStillMoving =
         Math.abs(targetMouseX - currentMouseX) > 0.1 || Math.abs(targetMouseY - currentMouseY) > 0.1;
+      const strengthStillChanging = Math.abs((pointerActive ? 1 : 0) - interactionStrength) > 0.002;
 
-      if (!document.hidden && !reducedMotion && (interactionStrength > 0.002 || mouseStillMoving)) {
+      if (!document.hidden && !reducedMotion && (mouseStillMoving || strengthStillChanging)) {
         animationFrame = window.requestAnimationFrame(render);
       } else {
         running = false;
@@ -268,21 +274,26 @@ export function ParticleBackground() {
       const bounds = canvas.getBoundingClientRect();
       targetMouseX = Math.max(0, Math.min(bounds.width, event.clientX - bounds.left));
       targetMouseY = Math.max(0, Math.min(bounds.height, event.clientY - bounds.top));
+      pointerActive = true;
 
-      if (currentMouseX < -1_000) {
+      if (currentMouseX < -1_000 || reducedMotion) {
         currentMouseX = targetMouseX;
         currentMouseY = targetMouseY;
       }
 
-      lastPointerMove = performance.now();
       requestRender();
     };
 
     const handlePointerLeave = () => {
-      targetMouseX = -10_000;
-      targetMouseY = -10_000;
-      lastPointerMove = 0;
+      pointerActive = false;
       requestRender();
+    };
+
+    const handlePointerEnd = (event: PointerEvent) => {
+      if (event.pointerType !== 'mouse') {
+        pointerActive = false;
+        requestRender();
+      }
     };
 
     const handleResize = () => {
@@ -323,11 +334,12 @@ export function ParticleBackground() {
     image.addEventListener('error', handleImageError);
     image.src = particleImageUrl;
 
-    if (!reducedMotion) {
-      window.addEventListener('pointermove', handlePointerMove, { passive: true });
-      document.documentElement.addEventListener('mouseleave', handlePointerLeave);
-      window.addEventListener('blur', handlePointerLeave);
-    }
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerdown', handlePointerMove, { passive: true });
+    window.addEventListener('pointerup', handlePointerEnd, { passive: true });
+    window.addEventListener('pointercancel', handlePointerEnd, { passive: true });
+    document.documentElement.addEventListener('mouseleave', handlePointerLeave);
+    window.addEventListener('blur', handlePointerLeave);
 
     window.addEventListener('resize', handleResize, { passive: true });
     window.visualViewport?.addEventListener('resize', handleResize, { passive: true });
@@ -339,6 +351,9 @@ export function ParticleBackground() {
       image.removeEventListener('load', handleImageLoad);
       image.removeEventListener('error', handleImageError);
       window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerdown', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerEnd);
+      window.removeEventListener('pointercancel', handlePointerEnd);
       document.documentElement.removeEventListener('mouseleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
       window.removeEventListener('resize', handleResize);
