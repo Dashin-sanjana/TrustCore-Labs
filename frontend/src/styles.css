@@ -1829,6 +1829,126 @@ h3 {
   }
 }
 
+/* Compact, readable featured-project card layout. */
+.featured-projects {
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+.featured-project {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "number summary arrow"
+    "meta meta meta";
+  align-items: start;
+  gap: 1.25rem 1rem;
+  min-height: 0;
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+}
+
+.featured-project > .project-number {
+  grid-area: number;
+  align-self: start;
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  line-height: 1;
+}
+
+.featured-project-summary {
+  grid-area: summary;
+  min-width: 0;
+}
+
+.featured-project-summary > p {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  letter-spacing: 0.05em;
+}
+
+.featured-project-summary > h3 {
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 1.02;
+}
+
+.featured-project-summary > small {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.featured-project > .featured-project-arrow {
+  grid-area: arrow;
+  align-self: start;
+  margin: 0;
+}
+
+.featured-project-meta {
+  grid-area: meta;
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: 1rem;
+  width: 100%;
+  margin: 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.featured-project-meta > div {
+  display: grid;
+  min-width: 0;
+  gap: 0.3rem;
+}
+
+.featured-project-meta dt {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.featured-project-meta dd {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.featured-project:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  width: calc(50% - 0.75rem);
+  justify-self: center;
+}
+
+@media (max-width: 760px) {
+  .featured-projects {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .featured-project,
+  .featured-project:last-child:nth-child(odd) {
+    grid-column: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-project {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem 0.75rem;
+  }
+
+  .featured-project-meta {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+}
+
 /* Multipage visual layer. */
 .page-main {
   position: relative;
@@ -5397,6 +5517,214 @@ body {
   .about-reveal-section .detail-card,
   .about-reveal-section .mini-card {
     clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Keep the featured-project geometry authoritative over legacy breakpoints. */
+.featured-projects {
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+.featured-project {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "number summary arrow"
+    "meta meta meta";
+  align-items: start;
+  gap: 1.25rem 1rem;
+  min-height: 0;
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+}
+
+.featured-project:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  width: calc(50% - 0.75rem);
+  justify-self: center;
+}
+
+@media (max-width: 760px) {
+  .featured-projects {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .featured-project,
+  .featured-project:last-child:nth-child(odd) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "number summary arrow"
+      "meta meta meta";
+    grid-column: auto;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .featured-project-summary,
+  .featured-project-meta {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-project {
+    gap: 1rem 0.75rem;
+  }
+
+  .featured-project-meta {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* Cinematic, replayable reveals for every element on the Work page. */
+.work-reveal-stage,
+.work-reveal-stage .featured-projects,
+.work-reveal-stage .project-grid {
+  perspective: 1200px;
+}
+
+.work-hero > *,
+.work-hero-panel > *,
+.featured-project,
+.featured-project > *,
+.project-directions-heading > *,
+.project-card,
+.project-card > * {
+  transform-origin: left bottom;
+  will-change: transform, opacity, filter, clip-path;
+}
+
+.work-hero-panel,
+.featured-project,
+.project-card {
+  isolation: isolate;
+}
+
+.work-panel-icon {
+  display: inline-flex;
+  width: fit-content;
+}
+
+.featured-project > .featured-project-arrow {
+  display: inline-flex;
+  width: fit-content;
+  color: var(--accent);
+}
+
+.featured-project > .work-reveal-line {
+  position: absolute;
+  top: 0;
+  left: 1.4rem;
+  z-index: 3;
+  width: clamp(3.5rem, 9vw, 7rem);
+  height: 2px;
+  margin: 0;
+  background: linear-gradient(90deg, var(--accent), rgba(244, 180, 0, 0));
+  box-shadow: 0 0 18px rgba(244, 180, 0, 0.55);
+  transform-origin: left center;
+}
+
+.project-card > .work-card-corner {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 2;
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  color: transparent;
+  font-size: 0;
+  filter: drop-shadow(0 0 7px rgba(244, 180, 0, 0.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-hero > *,
+  .work-hero-panel > *,
+  .featured-project,
+  .featured-project > *,
+  .project-directions-heading > *,
+  .project-card,
+  .project-card > * {
+    clip-path: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Responsive particle viewport: follow the real mobile visual viewport. */
+.particle-background {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+}
+
+@media (min-width: 721px) and (max-width: 980px) and (orientation: portrait) {
+  .particle-background {
+    background:
+      radial-gradient(ellipse at 70% 44%, rgba(20, 20, 18, 0.1), transparent 27%),
+      linear-gradient(#f8f9f6, #eceeea);
+    opacity: 0.34;
+  }
+}
+
+@media (max-width: 720px) and (orientation: portrait) {
+  .particle-background {
+    background:
+      radial-gradient(ellipse at 72% 31%, rgba(20, 20, 18, 0.1), transparent 25%),
+      linear-gradient(#f8f9f6, #eceeea);
+    opacity: 0.26;
+  }
+
+  .particle-background--fallback {
+    background:
+      linear-gradient(rgba(241, 242, 239, 0.84), rgba(241, 242, 239, 0.84)),
+      url("../../public/hero.png") 72% 31% / 112% auto no-repeat;
+  }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .particle-background {
+    opacity: 0.22;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .particle-background {
+    background:
+      radial-gradient(ellipse at 76% 52%, rgba(20, 20, 18, 0.1), transparent 27%),
+      linear-gradient(#f8f9f6, #eceeea);
+    opacity: 0.25;
+  }
+
+  .particle-background--fallback {
+    background:
+      linear-gradient(rgba(241, 242, 239, 0.84), rgba(241, 242, 239, 0.84)),
+      url("../../public/hero.png") 76% 52% / auto 108% no-repeat;
+  }
+}
+
+/* Replay the Services-page copy reveal on every viewport entry and exit. */
+.services-text-reveal > * {
+  transform-origin: left bottom;
+  will-change: transform, opacity, filter, clip-path;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-text-reveal > * {
+    clip-path: none !important;
+    filter: none !important;
     opacity: 1 !important;
     transform: none !important;
   }

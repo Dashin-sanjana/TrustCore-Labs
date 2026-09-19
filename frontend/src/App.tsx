@@ -353,6 +353,106 @@ const cardLiftReveal = {
   }),
 };
 
+const workTextReveal = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+    skewY: 3,
+    filter: 'blur(8px)',
+    clipPath: 'inset(0 0 100% 0)',
+  },
+  show: (order = 0) => ({
+    opacity: 1,
+    y: 0,
+    skewY: 0,
+    filter: 'blur(0px)',
+    clipPath: 'inset(0 0 0% 0)',
+    transition: {
+      duration: 0.72,
+      delay: order * 0.1,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  }),
+};
+
+const workPanelReveal = {
+  hidden: {
+    opacity: 0,
+    x: 54,
+    rotateY: -12,
+    scale: 0.94,
+    clipPath: 'inset(0 0 0 100% round 1rem)',
+  },
+  show: {
+    opacity: 1,
+    x: 0,
+    rotateY: 0,
+    scale: 1,
+    clipPath: 'inset(0 0 0 0% round 1rem)',
+    transition: {
+      duration: 0.9,
+      delay: 0.22,
+      ease: [0.16, 1, 0.3, 1] as const,
+      staggerChildren: 0.1,
+      delayChildren: 0.35,
+    },
+  },
+};
+
+const workProjectReveal = {
+  hidden: (order = 0) => ({
+    opacity: 0,
+    x: order % 2 === 0 ? -64 : 64,
+    y: 38,
+    rotateZ: order % 2 === 0 ? -1.5 : 1.5,
+    scale: 0.96,
+  }),
+  show: (order = 0) => ({
+    opacity: 1,
+    x: 0,
+    y: 0,
+    rotateZ: 0,
+    scale: 1,
+    transition: {
+      duration: 0.88,
+      delay: (order % 2) * 0.08,
+      ease: [0.16, 1, 0.3, 1] as const,
+      staggerChildren: 0.075,
+      delayChildren: 0.18,
+    },
+  }),
+};
+
+const workGridCardReveal = {
+  hidden: {
+    opacity: 0,
+    y: 56,
+    rotateX: -10,
+    scale: 0.95,
+  },
+  show: (order = 0) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transition: {
+      duration: 0.78,
+      delay: order * 0.09,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  }),
+};
+
+const workDetailReveal = {
+  hidden: { opacity: 0, y: 18, filter: 'blur(5px)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
 const routes: RoutePath[] = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'];
 
 const routeSeo: Record<RoutePath, { title: string; description: string }> = {
@@ -672,18 +772,24 @@ function App() {
               opacity: reduceMotion ? 1 : heroSwapOpacity,
             }}
           >
-            <motion.p className="eyebrow" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
+            <motion.p
+              className="eyebrow"
+              initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+              animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.18 }}
+            >
               Your growth, powered by practical tech teams.
             </motion.p>
-            <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
+            <motion.h1 initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
               <span>Software that</span>
               <span>helps your</span>
               <span>business grow.</span>
             </motion.h1>
-            <motion.p className="hero-text" initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}>
+            <motion.p className="hero-text" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.16 }}>
               {company.name} helps growing companies build custom software, websites, mobile apps, ERP workflows, and digital growth systems with one focused delivery partner.
             </motion.p>
-            <motion.div className="hero-proof" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <motion.div className="hero-proof" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.2 }}>
               <span>
                 <ShieldCheck size={16} />
                 Secure foundations
@@ -697,7 +803,7 @@ function App() {
                 Scalable product flow
               </span>
             </motion.div>
-            <motion.div className="hero-actions" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.24 }}>
+            <motion.div className="hero-actions" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.24 }}>
               <a className="primary-button" href="/services" onClick={navigateTo('/services')}>
                 Build your team
                 <ChevronRight size={18} />
@@ -708,7 +814,7 @@ function App() {
             </motion.div>
           </motion.div>
 
-          <motion.div className="hero-visual" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
+          <motion.div className="hero-visual" initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }} animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: false, amount: 0.12 }} transition={{ duration: 0.8 }}>
             <div className="story-window">
               <div className="window-bar">
                 <span />
@@ -753,14 +859,14 @@ function App() {
             opacity: reduceMotion ? 1 : agencySwapOpacity,
           }}
         >
-          <motion.div className="intro-copy" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+          <motion.div className="intro-copy" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
             <p className="eyebrow">Digital partner</p>
             <h2>Made like a studio. Delivered like an expert tech team.</h2>
             <p>
               TrustCore Labs helps businesses move from scattered tools to one polished digital presence. Strategy, product design, engineering, business systems, and launch support are shaped together so each release has a clear commercial purpose.
             </p>
           </motion.div>
-          <motion.div className="studio-notes" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+          <motion.div className="studio-notes" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
             <div>
               <span>Delivery note</span>
               <p>Start with one specialist or a compact product pod, then scale when the work proves itself.</p>
@@ -777,6 +883,7 @@ function App() {
           aria-labelledby="page-directory-title"
           variants={revealSequence}
           initial={reduceMotion ? 'show' : 'hidden'}
+          animate={reduceMotion ? 'show' : 'hidden'}
           whileInView="show"
           viewport={{ once: false, amount: 0.12 }}
         >
@@ -817,6 +924,7 @@ function App() {
           className="why-band"
           variants={revealSequence}
           initial={reduceMotion ? 'show' : 'hidden'}
+          animate={reduceMotion ? 'show' : 'hidden'}
           whileInView="show"
           viewport={{ once: false, amount: 0.16 }}
         >
@@ -853,7 +961,7 @@ function App() {
           viewport={{ once: false, amount: 0.4 }}
         >
           {company.metrics.map((metric) => (
-            <motion.div className="metric" key={metric.label} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+            <motion.div className="metric" key={metric.label} variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.25 }}>
               <AnimatedMetricValue value={metric.value} active={metricsActive} reduceMotion={Boolean(reduceMotion)} />
               <p>{metric.label}</p>
             </motion.div>
@@ -864,6 +972,7 @@ function App() {
           className="platform-band"
           variants={revealSequence}
           initial={reduceMotion ? 'show' : 'hidden'}
+          animate={reduceMotion ? 'show' : 'hidden'}
           whileInView="show"
           viewport={{ once: false, amount: 0.12 }}
         >
@@ -917,6 +1026,7 @@ function App() {
               className="page-hero about-hero page-section"
               variants={revealSequence}
               initial={reduceMotion ? 'show' : 'hidden'}
+              animate={reduceMotion ? 'show' : 'hidden'}
               whileInView="show"
               viewport={{ once: false, amount: 0.2 }}
             >
@@ -940,6 +1050,7 @@ function App() {
               className="content-band about-reveal-section"
               variants={revealSequence}
               initial={reduceMotion ? 'show' : 'hidden'}
+              animate={reduceMotion ? 'show' : 'hidden'}
               whileInView="show"
               viewport={{ once: false, amount: 0.14 }}
             >
@@ -963,6 +1074,7 @@ function App() {
               className="content-band compact-band about-reveal-section"
               variants={revealSequence}
               initial={reduceMotion ? 'show' : 'hidden'}
+              animate={reduceMotion ? 'show' : 'hidden'}
               whileInView="show"
               viewport={{ once: false, amount: 0.14 }}
             >
@@ -987,20 +1099,27 @@ function App() {
 
         {route === '/work' && (
           <>
-            <section className="page-hero work-hero page-section">
-              <motion.div variants={fadeUp} initial="hidden" animate="show">
-                <p className="eyebrow">Customer stories</p>
-                <h1>Recent work with real business shape.</h1>
-                <p>Each project is presented by context, role, and outcome so prospects can understand the work quickly.</p>
+            <motion.section
+              className="page-hero work-hero page-section work-reveal-stage"
+              variants={revealSequence}
+              initial={reduceMotion ? 'show' : 'hidden'}
+              animate={reduceMotion ? 'show' : 'hidden'}
+              whileInView="show"
+              viewport={{ once: false, amount: 0.08 }}
+            >
+              <motion.div variants={revealSequence}>
+                <motion.p className="eyebrow" custom={0} variants={workTextReveal}>Customer stories</motion.p>
+                <motion.h1 custom={1} variants={workTextReveal}>Recent work with real business shape.</motion.h1>
+                <motion.p custom={2} variants={workTextReveal}>Each project is presented by context, role, and outcome so prospects can understand the work quickly.</motion.p>
               </motion.div>
-              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
-                <Globe2 size={30} />
-                <strong>5+ live public projects</strong>
-                <span>Retail, service, fitness, food, community, and business-platform work across web and operational systems.</span>
+              <motion.div className="page-hero-panel work-hero-panel" variants={workPanelReveal}>
+                <motion.span className="work-panel-icon" variants={workDetailReveal}><Globe2 size={30} /></motion.span>
+                <motion.strong variants={workDetailReveal}>5+ live public projects</motion.strong>
+                <motion.span variants={workDetailReveal}>Retail, service, fitness, food, community, and business-platform work across web and operational systems.</motion.span>
               </motion.div>
-            </section>
+            </motion.section>
 
-            <section className="work-band" id="work">
+            <section className="work-band work-reveal-stage" id="work">
               <div className="featured-projects">
                 {featuredProjects.map((project, index) => (
                   <motion.a
@@ -1009,50 +1128,63 @@ function App() {
                     href={project.href}
                     target="_blank"
                     rel="noreferrer"
-                    variants={fadeUp}
-                    initial="hidden"
+                    custom={index}
+                    variants={workProjectReveal}
+                    initial={reduceMotion ? 'show' : 'hidden'}
+                    animate={reduceMotion ? 'show' : 'hidden'}
                     whileInView="show"
-                    viewport={{ once: true, amount: 0.35 }}
-                    transition={{ delay: index * 0.08 }}
+                    viewport={{ once: false, amount: 0.05 }}
                   >
-                    <span className="project-number">0{index + 1}</span>
-                    <div>
-                      <p>{project.type}</p>
-                      <h3>{project.name}</h3>
-                      <small>{project.text}</small>
-                    </div>
-                    <dl>
-                      <div>
+                    <motion.span className="project-number" variants={workDetailReveal}>0{index + 1}</motion.span>
+                    <motion.div className="featured-project-summary" variants={revealSequence}>
+                      <motion.p variants={workDetailReveal}>{project.type}</motion.p>
+                      <motion.h3 variants={workDetailReveal}>{project.name}</motion.h3>
+                      <motion.small variants={workDetailReveal}>{project.text}</motion.small>
+                    </motion.div>
+                    <motion.dl className="featured-project-meta" variants={revealSequence}>
+                      <motion.div variants={workDetailReveal}>
                         <dt>Result</dt>
                         <dd>{project.result}</dd>
-                      </div>
-                      <div>
+                      </motion.div>
+                      <motion.div variants={workDetailReveal}>
                         <dt>Scope</dt>
                         <dd>{project.scope}</dd>
-                      </div>
-                    </dl>
-                    <ArrowUpRight size={24} />
+                      </motion.div>
+                    </motion.dl>
+                    <motion.span className="featured-project-arrow" variants={workDetailReveal}>
+                      <ArrowUpRight size={24} />
+                    </motion.span>
+                    <motion.span className="work-reveal-line" aria-hidden="true" variants={workDetailReveal} />
                   </motion.a>
                 ))}
               </div>
-              <div className="section-heading project-directions-heading">
-                <p className="eyebrow">What we build</p>
-                <h2>Project directions we can shape for your business.</h2>
-              </div>
+              <motion.div
+                className="section-heading project-directions-heading"
+                variants={revealSequence}
+                initial={reduceMotion ? 'show' : 'hidden'}
+                animate={reduceMotion ? 'show' : 'hidden'}
+                whileInView="show"
+                viewport={{ once: false, amount: 0.12 }}
+              >
+                <motion.p className="eyebrow" custom={0} variants={workTextReveal}>What we build</motion.p>
+                <motion.h2 custom={1} variants={workTextReveal}>Project directions we can shape for your business.</motion.h2>
+              </motion.div>
               <div className="project-grid">
                 {projectTypes.map(([title, text], index) => (
                   <motion.article
                     className="project-card"
                     key={title}
-                    variants={fadeUp}
-                    initial="hidden"
+                    custom={index}
+                    variants={workGridCardReveal}
+                    initial={reduceMotion ? 'show' : 'hidden'}
+                    animate={reduceMotion ? 'show' : 'hidden'}
                     whileInView="show"
-                    viewport={{ once: true, amount: 0.35 }}
-                    transition={{ delay: index * 0.06 }}
+                    viewport={{ once: false, amount: 0.08 }}
                   >
-                    <span>0{index + 1}</span>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
+                    <motion.span custom={index + 1} variants={workTextReveal}>0{index + 1}</motion.span>
+                    <motion.h3 custom={index + 2} variants={workTextReveal}>{title}</motion.h3>
+                    <motion.p custom={index + 3} variants={workTextReveal}>{text}</motion.p>
+                    <motion.span className="work-card-corner" aria-hidden="true" custom={index + 4} variants={workTextReveal} />
                   </motion.article>
                 ))}
               </div>
@@ -1063,12 +1195,19 @@ function App() {
         {route === '/services' && (
           <>
             <section className="page-hero services-hero page-section">
-              <motion.div variants={fadeUp} initial="hidden" animate="show">
-                <p className="eyebrow">Services</p>
-                <h1>Services that extend your team and accelerate delivery.</h1>
-                <p>Choose a focused build or combine services into a full digital product team for your business.</p>
+              <motion.div
+                className="services-text-reveal"
+                variants={revealSequence}
+                initial={reduceMotion ? 'show' : 'hidden'}
+                animate={reduceMotion ? 'show' : 'hidden'}
+                whileInView="show"
+                viewport={{ once: false, amount: 0.18 }}
+              >
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Services</motion.p>
+                <motion.h1 custom={1} variants={textWipeReveal}>Services that extend your team and accelerate delivery.</motion.h1>
+                <motion.p custom={2} variants={textWipeReveal}>Choose a focused build or combine services into a full digital product team for your business.</motion.p>
               </motion.div>
-              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
                 <Cpu size={30} />
                 <strong>Software, systems, mobile, and growth support.</strong>
                 <span>One delivery flow from discovery to launch and post-release improvement.</span>
@@ -1076,7 +1215,7 @@ function App() {
             </section>
 
             <section className="content-band" id="services">
-              <motion.div className="lab-console" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>
+              <motion.div className="lab-console" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
                 <span className="console-dot" />
                 <p>Software engineering, mobile, ERP, support, and digital growth work together as one practical delivery system.</p>
                 <span className="console-status">Scale ready</span>
@@ -1089,9 +1228,10 @@ function App() {
                       className="service-card service-lane"
                       key={service.title}
                       variants={fadeUp}
-                      initial="hidden"
+                      initial={reduceMotion ? 'show' : 'hidden'}
+                      animate={reduceMotion ? 'show' : 'hidden'}
                       whileInView="show"
-                      viewport={{ once: true, amount: 0.35 }}
+                      viewport={{ once: false, amount: 0.18 }}
                       transition={{ delay: index * 0.08 }}
                     >
                       <span>0{index + 1}</span>
@@ -1118,14 +1258,21 @@ function App() {
             </section>
 
             <section className="content-band compact-band">
-              <div className="section-heading story-heading">
-                <p className="eyebrow">Capabilities</p>
-                <h2>Everything needed to move from idea to operating product.</h2>
-                <p>Use one capability for a focused need, or combine several into a complete product delivery path.</p>
-              </div>
+              <motion.div
+                className="section-heading story-heading services-text-reveal"
+                variants={revealSequence}
+                initial={reduceMotion ? 'show' : 'hidden'}
+                animate={reduceMotion ? 'show' : 'hidden'}
+                whileInView="show"
+                viewport={{ once: false, amount: 0.3 }}
+              >
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Capabilities</motion.p>
+                <motion.h2 custom={1} variants={textWipeReveal}>Everything needed to move from idea to operating product.</motion.h2>
+                <motion.p custom={2} variants={textWipeReveal}>Use one capability for a focused need, or combine several into a complete product delivery path.</motion.p>
+              </motion.div>
               <div className="detail-grid two">
                 {serviceDetails.map(([title, text], index) => (
-                  <motion.article className="detail-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.04 }}>
+                  <motion.article className="detail-card" key={title} variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: index * 0.04 }}>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <h3>{title}</h3>
                     <p>{text}</p>
@@ -1135,10 +1282,17 @@ function App() {
             </section>
 
             <section className="content-band compact-band">
-              <div className="section-heading">
-                <p className="eyebrow">Industries</p>
-                <h2>Business categories we can support.</h2>
-              </div>
+              <motion.div
+                className="section-heading services-text-reveal"
+                variants={revealSequence}
+                initial={reduceMotion ? 'show' : 'hidden'}
+                animate={reduceMotion ? 'show' : 'hidden'}
+                whileInView="show"
+                viewport={{ once: false, amount: 0.35 }}
+              >
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Industries</motion.p>
+                <motion.h2 custom={1} variants={textWipeReveal}>Business categories we can support.</motion.h2>
+              </motion.div>
               <div className="mini-grid">
                 {industries.map(([title, text]) => (
                   <article className="mini-card" key={title}>
@@ -1157,12 +1311,12 @@ function App() {
         {route === '/process' && (
           <>
         <section className="page-hero process-hero page-section">
-          <motion.div variants={fadeUp} initial="hidden" animate="show">
+          <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }}>
             <p className="eyebrow">Process</p>
             <h1>Designed for momentum, engineered for scale.</h1>
             <p>Our process keeps the product vision, delivery team, business workflow, and launch plan connected from the first conversation.</p>
           </motion.div>
-          <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+          <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
             <Layers3 size={30} />
             <strong>Clear scope. Focused build. Practical launch.</strong>
             <span>Each step is designed to reduce confusion and keep the work moving toward a usable release.</span>
@@ -1179,7 +1333,7 @@ function App() {
           </div>
           <div className="process-list">
             {process.map(([number, title, text]) => (
-              <motion.article className="process-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+              <motion.article className="process-card" key={title} variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
                 <span>{number}</span>
                 <div>
                   <h3>{title}</h3>
@@ -1191,14 +1345,14 @@ function App() {
         </section>
 
         <section className="trust-band">
-          <motion.div className="trust-card" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <motion.div className="trust-card" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
             <MessageCircle size={30} />
             <p>
               “Every project should feel clear for the business owner: what we are building, who is responsible, why it matters, and how it helps the company grow.”
             </p>
             <span>TrustCore Labs delivery approach</span>
           </motion.div>
-          <motion.div className="trust-card accent" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }} transition={{ delay: 0.08 }}>
+          <motion.div className="trust-card accent" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }} transition={{ delay: 0.08 }}>
             <Sparkles size={30} />
             <p>Let’s map the team, technologies, and timeline your next release needs.</p>
             <a href="/contact" onClick={navigateTo('/contact')}>Discuss the project</a>
@@ -1216,7 +1370,7 @@ function App() {
               ['Technical foundation', 'A practical architecture for frontend, backend, data, deployment, and future integrations.'],
               ['Launch support', 'Content, fixes, polish, and next-step improvements once real users begin using the product.'],
             ].map(([title, text], index) => (
-              <motion.article className="detail-card" key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.06 }}>
+              <motion.article className="detail-card" key={title} variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: index * 0.06 }}>
                 <span>0{index + 1}</span>
                 <h3>{title}</h3>
                 <p>{text}</p>
@@ -1230,12 +1384,12 @@ function App() {
         {route === '/faq' && (
           <>
             <section className="page-hero faq-hero page-section">
-              <motion.div variants={fadeUp} initial="hidden" animate="show">
+              <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }}>
                 <p className="eyebrow">FAQ</p>
                 <h1>Questions businesses usually ask first.</h1>
                 <p>Clear answers before we talk scope, timeline, budget, or technology choices.</p>
               </motion.div>
-              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
                 <CircleHelp size={30} />
                 <strong>Start with the business problem.</strong>
                 <span>The technical solution becomes easier once the workflow, users, and launch goal are clear.</span>
@@ -1245,7 +1399,7 @@ function App() {
             <section className="faq-band" id="faq">
               <div className="faq-list">
                 {faqs.map(([question, answer], index) => (
-                  <motion.article className="faq-item" key={question} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.05 }}>
+                  <motion.article className="faq-item" key={question} variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: index * 0.05 }}>
                     <CircleHelp size={22} />
                     <div>
                       <h3>{question}</h3>
@@ -1261,12 +1415,12 @@ function App() {
         {route === '/contact' && (
           <>
             <section className="page-hero contact-hero page-section">
-              <motion.div variants={fadeUp} initial="hidden" animate="show">
+              <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }}>
                 <p className="eyebrow">Contact</p>
                 <h1>Ready to map your team, technology, and timeline?</h1>
                 <p>Tell us what you want to build, improve, or launch. We will help shape the right software, systems, and growth path for the business.</p>
               </motion.div>
-              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
                 <Mail size={30} />
                 <strong>Send the project idea.</strong>
                 <span>Include your business type, the problem, preferred timeline, and any reference websites you like.</span>
@@ -1274,7 +1428,13 @@ function App() {
             </section>
 
             <section className="contact-band" id="contact">
-              <motion.div className="contact-panel" initial={{ opacity: 0, y: 38 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }}>
+              <motion.div
+                className="contact-panel"
+                initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 38 }}
+                animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 38 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.18 }}
+              >
                 <div className="contact-copy">
                   <p className="eyebrow">Start a conversation</p>
                   <h2>Share the build you have in mind.</h2>

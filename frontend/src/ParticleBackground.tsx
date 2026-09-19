@@ -19,7 +19,9 @@ const fragmentShaderSource = `
   uniform sampler2D u_image;
   uniform vec2 u_resolution;
   uniform vec2 u_imageSize;
+  uniform vec2 u_imageCenter;
   uniform vec2 u_mouse;
+  uniform float u_displayScale;
   uniform float u_spacing;
   uniform float u_mouseStrength;
 
@@ -40,13 +42,12 @@ const fragmentShaderSource = `
     vec2 displaySize;
 
     if (screenAspect > imageAspect) {
-      displaySize = vec2(0.94 * imageAspect / screenAspect, 0.94);
+      displaySize = vec2(u_displayScale * imageAspect / screenAspect, u_displayScale);
     } else {
-      displaySize = vec2(0.94, 0.94 * screenAspect / imageAspect);
+      displaySize = vec2(u_displayScale, u_displayScale * screenAspect / imageAspect);
     }
 
-    float characterCenterX = screenAspect > 1.0 ? 0.72 : 0.5;
-    vec2 displayOrigin = vec2(characterCenterX, 0.5) - displaySize * 0.5;
+    vec2 displayOrigin = u_imageCenter - displaySize * 0.5;
     vec2 imageUv = (cellCenter / u_resolution - displayOrigin) / displaySize;
     float insideImage =
       step(0.0, imageUv.x) * step(imageUv.x, 1.0) *
@@ -149,7 +150,9 @@ export function ParticleBackground() {
 
     const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
     const imageSizeLocation = gl.getUniformLocation(program, 'u_imageSize');
+    const imageCenterLocation = gl.getUniformLocation(program, 'u_imageCenter');
     const mouseLocation = gl.getUniformLocation(program, 'u_mouse');
+    const displayScaleLocation = gl.getUniformLocation(program, 'u_displayScale');
     const spacingLocation = gl.getUniformLocation(program, 'u_spacing');
     const strengthLocation = gl.getUniformLocation(program, 'u_mouseStrength');
     const imageLocation = gl.getUniformLocation(program, 'u_image');
@@ -157,6 +160,11 @@ export function ParticleBackground() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let pixelRatio = 1;
     let spacing = 4;
+    let displayScale = 0.94;
+    let imageCenterX = 0.72;
+    let imageCenterY = 0.5;
+    let viewportWidth = 1;
+    let viewportHeight = 1;
     let animationFrame = 0;
     let resizeTimer = 0;
     let textureReady = false;
@@ -169,12 +177,49 @@ export function ParticleBackground() {
     let running = false;
 
     const resize = () => {
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-      spacing = window.innerWidth <= 520 ? 7 : window.innerWidth <= 900 ? 5 : 3;
-      canvas.width = Math.round(window.innerWidth * pixelRatio);
-      canvas.height = Math.round(window.innerHeight * pixelRatio);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      const bounds = canvas.getBoundingClientRect();
+      viewportWidth = Math.max(1, Math.round(bounds.width));
+      viewportHeight = Math.max(1, Math.round(bounds.height));
+
+      const isPortrait = viewportHeight > viewportWidth;
+      const isShortLandscape = !isPortrait && viewportHeight <= 520;
+
+      pixelRatio = Math.min(window.devicePixelRatio || 1, viewportWidth <= 720 ? 1.25 : 1.5);
+
+      if (viewportWidth <= 360 && isPortrait) {
+        spacing = 6.5;
+        displayScale = 0.76;
+        imageCenterX = 0.73;
+        imageCenterY = 0.3;
+      } else if (viewportWidth <= 480 && isPortrait) {
+        spacing = 6;
+        displayScale = 0.82;
+        imageCenterX = 0.72;
+        imageCenterY = 0.31;
+      } else if (viewportWidth <= 720 && isPortrait) {
+        spacing = 5.5;
+        displayScale = 0.86;
+        imageCenterX = 0.7;
+        imageCenterY = 0.34;
+      } else if (isShortLandscape) {
+        spacing = 5.5;
+        displayScale = 0.82;
+        imageCenterX = 0.76;
+        imageCenterY = 0.52;
+      } else if (viewportWidth <= 980) {
+        spacing = 4.5;
+        displayScale = 0.9;
+        imageCenterX = 0.7;
+        imageCenterY = 0.46;
+      } else {
+        spacing = 3;
+        displayScale = 0.94;
+        imageCenterX = 0.72;
+        imageCenterY = 0.5;
+      }
+
+      canvas.width = Math.round(viewportWidth * pixelRatio);
+      canvas.height = Math.round(viewportHeight * pixelRatio);
       gl.viewport(0, 0, canvas.width, canvas.height);
     };
 
@@ -184,7 +229,7 @@ export function ParticleBackground() {
       currentMouseX += (targetMouseX - currentMouseX) * 0.18;
       currentMouseY += (targetMouseY - currentMouseY) * 0.18;
 
-      if (performance.now() - lastPointerMove < 90 && !reducedMotion) {
+      if (performance.now() - lastPointerMove < 160 && !reducedMotion) {
         interactionStrength += (1 - interactionStrength) * 0.22;
       } else {
         interactionStrength *= 0.9;
@@ -195,7 +240,9 @@ export function ParticleBackground() {
       gl.useProgram(program);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
       gl.uniform2f(imageSizeLocation, image.naturalWidth, image.naturalHeight);
-      gl.uniform2f(mouseLocation, currentMouseX * pixelRatio, (window.innerHeight - currentMouseY) * pixelRatio);
+      gl.uniform2f(imageCenterLocation, imageCenterX, imageCenterY);
+      gl.uniform2f(mouseLocation, currentMouseX * pixelRatio, (viewportHeight - currentMouseY) * pixelRatio);
+      gl.uniform1f(displayScaleLocation, displayScale);
       gl.uniform1f(spacingLocation, spacing * pixelRatio);
       gl.uniform1f(strengthLocation, interactionStrength);
       gl.uniform1i(imageLocation, 0);
@@ -218,8 +265,9 @@ export function ParticleBackground() {
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      targetMouseX = event.clientX;
-      targetMouseY = event.clientY;
+      const bounds = canvas.getBoundingClientRect();
+      targetMouseX = Math.max(0, Math.min(bounds.width, event.clientX - bounds.left));
+      targetMouseY = Math.max(0, Math.min(bounds.height, event.clientY - bounds.top));
 
       if (currentMouseX < -1_000) {
         currentMouseX = targetMouseX;
@@ -282,6 +330,7 @@ export function ParticleBackground() {
     }
 
     window.addEventListener('resize', handleResize, { passive: true });
+    window.visualViewport?.addEventListener('resize', handleResize, { passive: true });
     document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
@@ -293,6 +342,7 @@ export function ParticleBackground() {
       document.documentElement.removeEventListener('mouseleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
       window.removeEventListener('resize', handleResize);
+      window.visualViewport?.removeEventListener('resize', handleResize);
       document.removeEventListener('visibilitychange', handleVisibility);
       gl.deleteTexture(texture);
       gl.deleteBuffer(positionBuffer);
