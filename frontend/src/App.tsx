@@ -406,6 +406,55 @@ function setMetaTag(selector: string, attribute: 'content' | 'href', value: stri
   }
 }
 
+function AnimatedMetricValue({ value, active, reduceMotion }: { value: string; active: boolean; reduceMotion: boolean }) {
+  const numericText = value.match(/\d+/)?.[0] ?? '0';
+  const target = Number(numericText);
+  const suffix = value.slice(value.indexOf(numericText) + numericText.length);
+  const currentValue = useRef(reduceMotion ? target : 0);
+  const [displayValue, setDisplayValue] = useState(currentValue.current);
+
+  useEffect(() => {
+    const endValue = reduceMotion || active ? target : 0;
+    const startValue = currentValue.current;
+
+    if (startValue === endValue) {
+      setDisplayValue(endValue);
+      return undefined;
+    }
+
+    const duration = active ? 950 : 480;
+    let frameId = 0;
+    let startTime: number | null = null;
+
+    const updateCount = (time: number) => {
+      if (startTime === null) startTime = time;
+
+      const progress = Math.min((time - startTime) / duration, 1);
+      const easedProgress = active
+        ? 1 - Math.pow(1 - progress, 3)
+        : progress * progress;
+      const nextValue = Math.round(startValue + (endValue - startValue) * easedProgress);
+
+      currentValue.current = nextValue;
+      setDisplayValue(nextValue);
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(updateCount);
+      }
+    };
+
+    frameId = window.requestAnimationFrame(updateCount);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [active, reduceMotion, target]);
+
+  return (
+    <span>
+      {String(displayValue).padStart(numericText.length, '0')}
+      {suffix}
+    </span>
+  );
+}
+
 function InteractiveCursor() {
   const ringRef = useRef<HTMLSpanElement>(null);
   const dotRef = useRef<HTMLSpanElement>(null);
@@ -497,6 +546,7 @@ function InteractiveCursor() {
 function App() {
   const [company, setCompany] = useState<Company>(fallbackCompany);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [metricsActive, setMetricsActive] = useState(false);
   const [route, setRoute] = useState<RoutePath>(() => getCurrentRoute());
   const agencyIntroRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
@@ -795,14 +845,20 @@ function App() {
           </motion.div>
         </motion.section>
 
-        <section className="metric-strip" aria-label="Company metrics">
+        <motion.section
+          className="metric-strip"
+          aria-label="Company metrics"
+          onViewportEnter={() => setMetricsActive(true)}
+          onViewportLeave={() => setMetricsActive(false)}
+          viewport={{ once: false, amount: 0.4 }}
+        >
           {company.metrics.map((metric) => (
             <motion.div className="metric" key={metric.label} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
-              <span>{metric.value}</span>
+              <AnimatedMetricValue value={metric.value} active={metricsActive} reduceMotion={Boolean(reduceMotion)} />
               <p>{metric.label}</p>
             </motion.div>
           ))}
-        </section>
+        </motion.section>
 
         <section className="platform-band">
           <motion.div className="platform-copy" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.35 }}>

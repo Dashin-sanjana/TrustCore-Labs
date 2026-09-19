@@ -668,6 +668,7 @@ h3 {
   color: #ffffff;
   font-size: clamp(2.2rem, 5vw, 4rem);
   font-weight: 900;
+  font-variant-numeric: tabular-nums;
 }
 
 .metric p {
