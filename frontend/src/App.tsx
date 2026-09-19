@@ -21,6 +21,7 @@ import {
   Phone,
   ShieldCheck,
   Sparkles,
+  Twitter,
   X,
 } from 'lucide-react';
 import { ParticleBackground } from './ParticleBackground';
@@ -321,6 +322,7 @@ const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
   { label: 'Facebook', href: 'https://facebook.com/trustcorelabs', icon: Facebook },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/trustcorelabs', icon: Linkedin },
+  { label: 'X', href: 'https://x.com/TrustCoreLabs', icon: Twitter },
 ];
 
 const fadeUp = {
