@@ -1,6 +1,6 @@
-# TrustCore Labs
+# TrustCoreLabs
 
-React frontend and Nest backend for the TrustCore Labs company website.
+React frontend and Nest backend for the TrustCoreLabs company website.
 
 ## Run locally
 

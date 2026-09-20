@@ -4696,28 +4696,40 @@ body {
 /* Crop only the logo file's transparent canvas; keep all visible artwork. */
 .brand-mark {
   position: relative;
-  width: 9rem;
-  height: 3.55rem;
+  width: clamp(11rem, 15vw, 14rem);
+  height: auto;
+  aspect-ratio: 2.1 / 1;
   padding: 0;
+  border-radius: 0;
+  background: transparent;
   overflow: hidden;
+  box-shadow: none;
 }
 
 .brand-mark img {
-  position: absolute;
-  top: 49.3%;
-  left: 0;
+  position: static;
   width: 100%;
-  height: auto;
-  object-fit: unset;
-  transform: translateY(-49.3%);
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
 }
 
 @media (max-width: 720px) {
   .brand-mark {
-    width: 8.25rem;
-    height: 3.25rem;
+    width: 10.5rem;
+    height: auto;
     padding: 0;
   }
+}
+
+.footer-logo img {
+  width: min(100%, 15rem);
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  object-fit: contain;
+  box-shadow: none;
 }
 
 /* Scroll-linked 3D handoff between the hero copy and agency section. */
@@ -5056,4 +5068,185 @@ body {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+}
+
+/* Final white-and-yellow brand theme. */
+:root {
+  --page-bg: #ffffff;
+  --text: #1c1b17;
+  --muted: rgba(28, 27, 23, 0.7);
+  --soft: rgba(28, 27, 23, 0.56);
+  --accent: #f4b400;
+  --accent-blue: #ffd95c;
+  --gold-strong: #f2b600;
+  --gold-soft: #ffdc63;
+  --glass: rgba(255, 255, 255, 0.9);
+  --glass-hover: rgba(255, 251, 232, 0.97);
+  --glass-line: rgba(218, 160, 0, 0.26);
+  --glass-text: #1c1b17;
+  --glass-muted: rgba(28, 27, 23, 0.66);
+  --line: rgba(59, 48, 18, 0.13);
+  --line-strong: rgba(244, 180, 0, 0.68);
+  --shadow-soft: 0 18px 48px rgba(92, 70, 10, 0.11);
+}
+
+body {
+  background: #ffffff;
+}
+
+.particle-background {
+  background:
+    radial-gradient(circle at 78% 28%, rgba(255, 213, 70, 0.2), transparent 24%),
+    radial-gradient(circle at 20% 74%, rgba(255, 230, 135, 0.18), transparent 28%),
+    #ffffff;
+}
+
+.nav,
+.mobile-nav {
+  border-color: rgba(244, 180, 0, 0.32);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  box-shadow:
+    0 18px 48px rgba(92, 70, 10, 0.12),
+    inset 0 1px 0 #ffffff;
+}
+
+.desktop-nav a,
+.mobile-nav a,
+.menu-button,
+.secondary-button,
+.page-main .eyebrow,
+.page-card-eyebrow,
+.hero-proof span,
+.capability-row span,
+.proof-row span,
+.console-status,
+.story-pill,
+.marquee-track span,
+.footer-mail,
+.page-card-link,
+.social-row a,
+.footer-socials a {
+  border-color: rgba(244, 180, 0, 0.3);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--text);
+  box-shadow:
+    0 8px 22px rgba(92, 70, 10, 0.09),
+    inset 0 1px 0 #ffffff;
+}
+
+.page-main .eyebrow {
+  background: linear-gradient(135deg, #f8bd18, #ffdb62);
+  color: #211800;
+  border-color: rgba(210, 151, 0, 0.5);
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"],
+.mobile-nav a:hover,
+.mobile-nav a[aria-current="page"],
+.secondary-button:hover,
+.page-card-link:hover,
+.footer-mail:hover,
+.footer-socials a:hover,
+.social-row a:hover {
+  border-color: rgba(216, 156, 0, 0.72);
+  background: #ffc72c;
+  color: #211800;
+}
+
+.story-window,
+.insight-card,
+.page-hero-panel,
+.detail-card,
+.mini-card,
+.why-card,
+.platform-card,
+.trust-card,
+.faq-item,
+.page-card,
+.featured-project,
+.project-card,
+.service-card,
+.process-card,
+.metric,
+.lab-console,
+.footer-action,
+.site-footer,
+.contact-channel-card {
+  border-color: var(--glass-line);
+  background: var(--glass);
+  color: var(--glass-text);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 #ffffff;
+}
+
+.page-card:hover,
+.featured-project:hover,
+.project-card:hover,
+.service-card:hover,
+.why-card:hover,
+.platform-card:hover,
+.detail-card:hover,
+.mini-card:hover,
+.contact-channel-card:hover {
+  border-color: rgba(244, 180, 0, 0.62);
+  background: var(--glass-hover);
+  box-shadow:
+    0 24px 58px rgba(92, 70, 10, 0.15),
+    0 0 0 1px rgba(244, 180, 0, 0.1),
+    inset 0 1px 0 #ffffff;
+}
+
+.contact-channel-card h3,
+.contact-phone-num,
+.contact-email-link,
+.site-footer h2,
+.site-footer h3,
+.site-footer strong,
+.site-footer a,
+.footer-sub-contact strong {
+  color: var(--text);
+}
+
+.contact-channel-address,
+.contact-channel-desc,
+.contact-phone-label,
+.footer-address-link,
+.footer-sub-contact,
+.footer-sub-contact small {
+  color: var(--muted) !important;
+}
+
+.contact-phone-row,
+.contact-email-link {
+  border-color: rgba(244, 180, 0, 0.28);
+  background: rgba(255, 246, 204, 0.48);
+}
+
+.contact-phone-row:hover,
+.contact-email-link:hover {
+  border-color: rgba(218, 156, 0, 0.66);
+  background: #ffc72c;
+  color: #211800;
+}
+
+.page-directory .page-card-eyebrow,
+.page-directory .page-card-link {
+  border-color: rgba(244, 180, 0, 0.3);
+  background: rgba(255, 247, 211, 0.72);
+  color: #4a3908;
+}
+
+.page-directory .page-card-link:hover {
+  border-color: rgba(218, 156, 0, 0.66);
+  background: #ffc72c;
+  color: #211800;
+}
+
+.footer-address-link:hover,
+.footer-sub-contact:hover,
+.footer-sub-contact:hover span {
+  color: #8a6500 !important;
 }

@@ -42,7 +42,7 @@ type Company = {
 type RoutePath = '/' | '/about' | '/work' | '/services' | '/process' | '/faq' | '/contact';
 
 const fallbackCompany: Company = {
-  name: 'TrustCore Labs',
+  name: 'TrustCoreLabs',
   tagline: 'Growth-focused software teams for ambitious businesses.',
   metrics: [
     { label: 'Core service lines', value: '04' },
@@ -70,7 +70,7 @@ const pageCards = [
   {
     path: '/about' as RoutePath,
     eyebrow: 'Company',
-    title: 'About TrustCore Labs',
+    title: 'About TrustCoreLabs',
     text: 'Meet the team model, standards, and delivery approach behind each build.',
     icon: ShieldCheck,
   },
@@ -296,7 +296,7 @@ const homeProof = [
 ];
 
 const faqs = [
-  ['Can you build a full business system?', 'Yes. TrustCore Labs can shape custom software, ERP, CRM, POS, HRM, inventory, finance, and connected web or mobile portals around the business workflow.'],
+  ['Can you build a full business system?', 'Yes. TrustCoreLabs can shape custom software, ERP, CRM, POS, HRM, inventory, finance, and connected web or mobile portals around the business workflow.'],
   ['Do you handle both design and development?', 'Yes. The work can cover interface design, frontend, backend, deployment, and launch support so the product feels consistent end to end.'],
   ['Can marketing be included with software work?', 'Yes. Digital marketing, social media, brand promotion, and campaigns can be planned beside the product so launch and growth move together.'],
   ['Can we start small first?', 'Yes. A first release can focus on the highest-value workflow or public page, then grow into more modules after launch.'],
@@ -316,7 +316,7 @@ const contactPhones = [
 ];
 
 const siteUrl = 'https://www.trustcorelabs.com';
-const defaultSeoImage = `${siteUrl}/trustcore-logo.jpg`;
+const defaultSeoImage = `${siteUrl}/trustcore-logo-lockup.png`;
 
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
@@ -479,39 +479,39 @@ const routes: RoutePath[] = ['/', '/about', '/work', '/services', '/process', '/
 
 const routeSeo: Record<RoutePath, { title: string; description: string }> = {
   '/': {
-    title: 'TrustCore Labs | Custom Software, Web, Mobile, ERP, and Growth',
+    title: 'TrustCoreLabs | Custom Software, Web, Mobile, ERP, and Growth',
     description:
-      'TrustCore Labs designs and builds secure custom software, web and mobile apps, ERP systems, business platforms, and digital growth experiences.',
+      'TrustCoreLabs designs and builds secure custom software, web and mobile apps, ERP systems, business platforms, and digital growth experiences.',
   },
   '/about': {
-    title: 'About TrustCore Labs | Software Partner for Growing Businesses',
+    title: 'About TrustCoreLabs | Software Partner for Growing Businesses',
     description:
-      'Learn how TrustCore Labs connects strategy, design, software engineering, business systems, and launch support into one practical delivery path.',
+      'Learn how TrustCoreLabs connects strategy, design, software engineering, business systems, and launch support into one practical delivery path.',
   },
   '/work': {
-    title: 'TrustCore Labs Work | Software, Web, Mobile, and Business Platforms',
+    title: 'TrustCoreLabs Work | Software, Web, Mobile, and Business Platforms',
     description:
-      'Explore TrustCore Labs project work across AI platforms, retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
+      'Explore TrustCoreLabs project work across AI platforms, retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
   },
   '/services': {
-    title: 'TrustCore Labs Services | Software, ERP, Web, Mobile, and Growth',
+    title: 'TrustCoreLabs Services | Software, ERP, Web, Mobile, and Growth',
     description:
-      'Explore TrustCore Labs services for custom software, web and mobile development, ERP and business systems, launch support, and digital growth.',
+      'Explore TrustCoreLabs services for custom software, web and mobile development, ERP and business systems, launch support, and digital growth.',
   },
   '/process': {
-    title: 'TrustCore Labs Process | From Business Problem to Product Launch',
+    title: 'TrustCoreLabs Process | From Business Problem to Product Launch',
     description:
-      'See how TrustCore Labs moves from discovery and product planning to design, engineering, launch, support, and scalable improvement.',
+      'See how TrustCoreLabs moves from discovery and product planning to design, engineering, launch, support, and scalable improvement.',
   },
   '/faq': {
-    title: 'TrustCore Labs FAQ | Software Project Questions and Answers',
+    title: 'TrustCoreLabs FAQ | Software Project Questions and Answers',
     description:
-      'Find answers about TrustCore Labs software builds, design and development, marketing support, business systems, timelines, and project estimates.',
+      'Find answers about TrustCoreLabs software builds, design and development, marketing support, business systems, timelines, and project estimates.',
   },
   '/contact': {
-    title: 'Contact TrustCore Labs | Start a Software or Digital Product Build',
+    title: 'Contact TrustCoreLabs | Start a Software or Digital Product Build',
     description:
-      'Contact TrustCore Labs to discuss a website, software platform, ERP system, CRM, POS, mobile app, or digital growth project.',
+      'Contact TrustCoreLabs to discuss a website, software platform, ERP system, CRM, POS, mobile app, or digital growth project.',
   },
 };
 
@@ -744,16 +744,9 @@ function App() {
       <motion.div className="ambient ambient-three" style={{ y: glowY }} />
 
       <header className="nav">
-        <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
+        <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
           <span className="brand-mark">
-            <img src="/faviconl.png" alt="" />
-          </span>
-          <span className="brand-wordmark" aria-hidden="true">
-            <span className="brand-labs">Labs</span>
-            <span className="brand-name">
-              <span>Trust</span>
-              <span>Core</span>
-            </span>
+            <img src="/trustcore-logo-lockup.png" alt="" />
           </span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -843,9 +836,9 @@ function App() {
                 <span />
                 <span />
               </div>
-              <img className="story-logo" src="/faviconl.png" alt="TrustCore Labs logo" />
+              <img className="story-logo" src="/faviconl.png" alt="TrustCoreLabs logo" />
               <div className="story-caption">
-                <span>TrustCore Labs</span>
+                <span>TrustCoreLabs</span>
                 <strong>Dedicated delivery shaped around your business.</strong>
               </div>
             </div>
@@ -885,7 +878,7 @@ function App() {
             <p className="eyebrow">Digital partner</p>
             <h2>Made like a studio. Delivered like an expert tech team.</h2>
             <p>
-              TrustCore Labs helps businesses move from scattered tools to one polished digital presence. Strategy, product design, engineering, business systems, and launch support are shaped together so each release has a clear commercial purpose.
+              TrustCoreLabs helps businesses move from scattered tools to one polished digital presence. Strategy, product design, engineering, business systems, and launch support are shaped together so each release has a clear commercial purpose.
             </p>
           </motion.div>
           <motion.div className="studio-notes" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
@@ -911,7 +904,7 @@ function App() {
         >
           <motion.div className="section-heading story-heading" variants={revealSequence}>
             <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Explore</motion.p>
-            <motion.h2 id="page-directory-title" custom={1} variants={textWipeReveal}>Explore TrustCore Labs by page.</motion.h2>
+            <motion.h2 id="page-directory-title" custom={1} variants={textWipeReveal}>Explore TrustCoreLabs by page.</motion.h2>
             <motion.p custom={2} variants={textWipeReveal}>Move through the company, work, services, process, answers, and contact details from one clean starting point.</motion.p>
           </motion.div>
           <motion.div className="page-card-grid" variants={revealSequence}>
@@ -1004,7 +997,7 @@ function App() {
             <motion.p custom={2} variants={textWipeReveal}>
               We bring the public website, internal systems, mobile touchpoints, support flow, and growth channels into one planned product direction so the business can move with less friction.
             </motion.p>
-            <motion.div className="proof-row" aria-label="TrustCore Labs proof points" variants={revealSequence}>
+            <motion.div className="proof-row" aria-label="TrustCoreLabs proof points" variants={revealSequence}>
               {homeProof.map(([value, label], index) => (
                 <motion.span key={label} custom={index + 3} variants={textWipeReveal}>
                   <strong>{value}</strong>
@@ -1053,10 +1046,10 @@ function App() {
               viewport={{ once: false, amount: 0.2 }}
             >
               <motion.div variants={revealSequence}>
-                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>About TrustCore Labs</motion.p>
+                <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>About TrustCoreLabs</motion.p>
                 <motion.h1 custom={1} variants={textWipeReveal}>Software partner for businesses that want to move cleaner.</motion.h1>
                 <motion.p custom={2} variants={textWipeReveal}>
-                  TrustCore Labs is built for companies that need practical technology without losing sight of the business. We connect strategy, design, software engineering, business systems, and launch support into one clear delivery path.
+                  TrustCoreLabs is built for companies that need practical technology without losing sight of the business. We connect strategy, design, software engineering, business systems, and launch support into one clear delivery path.
                 </motion.p>
               </motion.div>
               <motion.div className="page-hero-panel" custom={3} variants={cardLiftReveal}>
@@ -1351,7 +1344,7 @@ function App() {
             <p className="eyebrow">Delivery rhythm</p>
             <h2>From business problem to working product.</h2>
             <p>
-              TrustCore Labs keeps strategy, interface, backend, deployment, and growth support in one build rhythm, so the product feels cohesive from first prototype to production.
+              TrustCoreLabs keeps strategy, interface, backend, deployment, and growth support in one build rhythm, so the product feels cohesive from first prototype to production.
             </p>
           </div>
           <div className="process-list">
@@ -1373,7 +1366,7 @@ function App() {
             <p>
               “Every project should feel clear for the business owner: what we are building, who is responsible, why it matters, and how it helps the company grow.”
             </p>
-            <span>TrustCore Labs delivery approach</span>
+            <span>TrustCoreLabs delivery approach</span>
           </motion.div>
           <motion.div className="trust-card accent" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }} transition={{ delay: 0.08 }}>
             <Sparkles size={30} />
@@ -1546,7 +1539,7 @@ function App() {
                   <h2>Share the build you have in mind.</h2>
                   <p>We can begin with a website, business system, mobile app, ERP module, or a complete product delivery plan.</p>
                 </div>
-                <div className="contact-links" aria-label="TrustCore Labs contact links">
+                <div className="contact-links" aria-label="TrustCoreLabs contact links">
                   <a className="primary-button light contact-email" href={`mailto:${contactEmail}`}>
                     <Mail size={18} />
                     {contactEmail}
@@ -1556,7 +1549,7 @@ function App() {
                     {socialLinks.map((social) => {
                       const Icon = social.icon;
                       return (
-                        <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCore Labs ${social.label}`}>
+                        <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCoreLabs ${social.label}`}>
                           <Icon size={20} />
                           <span>{social.label}</span>
                         </a>
@@ -1591,9 +1584,8 @@ function App() {
         <div className="footer-glow" />
         <div className="footer-shell">
           <div className="footer-brand">
-            <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCore Labs home">
-              <img src="/faviconl.png" alt="" />
-              <span>{company.name}</span>
+            <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
+              <img src="/trustcore-logo-lockup.png" alt="" />
             </a>
             <p>
               Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
@@ -1658,11 +1650,11 @@ function App() {
               Start a project
               <ArrowUpRight size={18} />
             </a>
-            <div className="footer-socials" aria-label="TrustCore Labs social links">
+            <div className="footer-socials" aria-label="TrustCoreLabs social links">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
-                  <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCore Labs ${social.label}`}>
+                  <a key={social.label} href={social.href} target="_blank" rel="noreferrer" aria-label={`TrustCoreLabs ${social.label}`}>
                     <Icon size={19} />
                   </a>
                 );
@@ -1681,7 +1673,7 @@ function App() {
         </div>
 
         <div className="footer-bottom">
-          <span>&copy; {new Date().getFullYear()} TrustCore Labs. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} TrustCoreLabs. All rights reserved.</span>
           <span>Product engineering | Web & mobile | ERP | Digital growth</span>
         </div>
       </footer>
