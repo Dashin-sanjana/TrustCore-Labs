@@ -15,14 +15,17 @@ import {
   Linkedin,
   LockKeyhole,
   Mail,
+  MapPin,
   Menu,
   MessageCircle,
+  Phone,
   ShieldCheck,
   Sparkles,
+  Twitter,
   X,
-  Youtube,
 } from 'lucide-react';
 import { ParticleBackground } from './ParticleBackground';
+import { MapView } from './MapView';
 
 type Metric = {
   label: string;
@@ -43,7 +46,7 @@ const fallbackCompany: Company = {
   tagline: 'Growth-focused software teams for ambitious businesses.',
   metrics: [
     { label: 'Core service lines', value: '04' },
-    { label: 'Live project portfolio', value: '5+' },
+    { label: 'Live project portfolio', value: '6+' },
     { label: 'Team extension mindset', value: '1' },
   ],
   services: [
@@ -136,6 +139,7 @@ const portfolio = [
   'New Zealankanz',
   'Fatbis',
   'Focus Fitness',
+  'AI Hub',
   'Togo and Friends',
   'Business portals',
   'ERP systems',
@@ -177,6 +181,14 @@ const featuredProjects = [
     result: 'Fitness presence',
     scope: 'Frontend experience, responsive layout, content flow',
     href: 'https://focusfitness.waveloop.dev/',
+  },
+  {
+    name: 'AI Hub',
+    type: 'AI tools & web platform',
+    text: 'A curated discovery platform with 500+ free AI tools, custom AI playground apps, and practical creator utilities.',
+    result: 'AI platform & directory',
+    scope: 'Full-stack platform, tool directory, AI playground apps',
+    href: 'https://ai-hub.live',
   },
   {
     name: 'Togo and Friends',
@@ -278,7 +290,7 @@ const trustReasons = [
 ];
 
 const homeProof = [
-  ['5+', 'live company projects'],
+  ['6+', 'live company projects'],
   ['4', 'core service lines'],
   ['1', 'connected delivery partner'],
 ];
@@ -292,7 +304,17 @@ const faqs = [
   ['What do you need to estimate a project?', 'A short description of the business, the users, the required features, current tools, deadline, and any examples you like is enough to begin the conversation.'],
 ];
 
-const contactEmail = 'trustcorelabs@gmail.com';
+const contactEmail = 'info@trustcorelabs.com';
+const contactEmails = [contactEmail, 'hashan@trustcorelabs.com'];
+const contactAddress = 'No.257/3, Old Road, Moraketiya, Pannipitiya, Sri Lanka, 10230.';
+const googleMapsUrl =
+  'https://maps.google.com/?q=No.257/3,+Old+Road,+Moraketiya,+Pannipitiya,+Sri+Lanka,+10230';
+
+const contactPhones = [
+  { label: 'Office Number', number: '+94 11 208 8358', tel: '+94112088358' },
+  { label: 'Hashan Amarasinghe', number: '+94 77 200 9665', tel: '+94772009665' },
+];
+
 const siteUrl = 'https://www.trustcorelabs.com';
 const defaultSeoImage = `${siteUrl}/trustcore-logo.jpg`;
 
@@ -300,7 +322,7 @@ const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
   { label: 'Facebook', href: 'https://facebook.com/trustcorelabs', icon: Facebook },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/trustcorelabs', icon: Linkedin },
-  { label: 'YouTube', href: 'https://youtube.com/@trustcorelabs', icon: Youtube },
+  { label: 'X', href: 'https://x.com/TrustCoreLabs', icon: Twitter },
 ];
 
 const fadeUp = {
@@ -469,7 +491,7 @@ const routeSeo: Record<RoutePath, { title: string; description: string }> = {
   '/work': {
     title: 'TrustCore Labs Work | Software, Web, Mobile, and Business Platforms',
     description:
-      'Explore TrustCore Labs project work across retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
+      'Explore TrustCore Labs project work across AI platforms, retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
   },
   '/services': {
     title: 'TrustCore Labs Services | Software, ERP, Web, Mobile, and Growth',
@@ -1112,10 +1134,10 @@ function App() {
                 <motion.h1 custom={1} variants={workTextReveal}>Recent work with real business shape.</motion.h1>
                 <motion.p custom={2} variants={workTextReveal}>Each project is presented by context, role, and outcome so prospects can understand the work quickly.</motion.p>
               </motion.div>
-              <motion.div className="page-hero-panel work-hero-panel" variants={workPanelReveal}>
-                <motion.span className="work-panel-icon" variants={workDetailReveal}><Globe2 size={30} /></motion.span>
-                <motion.strong variants={workDetailReveal}>5+ live public projects</motion.strong>
-                <motion.span variants={workDetailReveal}>Retail, service, fitness, food, community, and business-platform work across web and operational systems.</motion.span>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
+                <Globe2 size={30} />
+                <strong>6+ live public projects</strong>
+                <span>AI platforms, retail, service, fitness, food, community, and business-platform work across web and operational systems.</span>
               </motion.div>
             </motion.section>
 
@@ -1135,26 +1157,27 @@ function App() {
                     whileInView="show"
                     viewport={{ once: false, amount: 0.05 }}
                   >
-                    <motion.span className="project-number" variants={workDetailReveal}>0{index + 1}</motion.span>
-                    <motion.div className="featured-project-summary" variants={revealSequence}>
-                      <motion.p variants={workDetailReveal}>{project.type}</motion.p>
-                      <motion.h3 variants={workDetailReveal}>{project.name}</motion.h3>
-                      <motion.small variants={workDetailReveal}>{project.text}</motion.small>
-                    </motion.div>
-                    <motion.dl className="featured-project-meta" variants={revealSequence}>
-                      <motion.div variants={workDetailReveal}>
+                    <div className="featured-project-top">
+                      <span className="project-number">0{index + 1}</span>
+                      <span className="featured-project-arrow" aria-hidden="true">
+                        <ArrowUpRight size={22} />
+                      </span>
+                    </div>
+                    <div className="featured-project-body">
+                      <p className="featured-project-type">{project.type}</p>
+                      <h3>{project.name}</h3>
+                      <p className="featured-project-desc">{project.text}</p>
+                    </div>
+                    <dl className="featured-project-meta">
+                      <div>
                         <dt>Result</dt>
                         <dd>{project.result}</dd>
                       </motion.div>
                       <motion.div variants={workDetailReveal}>
                         <dt>Scope</dt>
                         <dd>{project.scope}</dd>
-                      </motion.div>
-                    </motion.dl>
-                    <motion.span className="featured-project-arrow" variants={workDetailReveal}>
-                      <ArrowUpRight size={24} />
-                    </motion.span>
-                    <motion.span className="work-reveal-line" aria-hidden="true" variants={workDetailReveal} />
+                      </div>
+                    </dl>
                   </motion.a>
                 ))}
               </div>
@@ -1428,13 +1451,96 @@ function App() {
             </section>
 
             <section className="contact-band" id="contact">
-              <motion.div
-                className="contact-panel"
-                initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 38 }}
-                animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 38 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.18 }}
-              >
+              <div className="contact-channels-grid">
+                <motion.article
+                  className="contact-channel-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                >
+                  <div>
+                    <div className="contact-channel-badge">
+                      <MapPin size={20} />
+                      <span>Office Location</span>
+                    </div>
+                    <h3>Visit Our Office</h3>
+                    <p className="contact-channel-address">{contactAddress}</p>
+                  </div>
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-action-link"
+                  >
+                    <span>View on Google Maps</span>
+                    <ArrowUpRight size={15} />
+                  </a>
+                </motion.article>
+
+                <motion.article
+                  className="contact-channel-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: 0.08 }}
+                >
+                  <div>
+                    <div className="contact-channel-badge">
+                      <Phone size={20} />
+                      <span>Direct Lines</span>
+                    </div>
+                    <h3>Call Our Team</h3>
+                    <div className="contact-phone-list">
+                      {contactPhones.map((phone) => (
+                        <a
+                          key={phone.number}
+                          href={`tel:${phone.tel}`}
+                          className="contact-phone-row"
+                        >
+                          <div className="contact-phone-meta">
+                            <span className="contact-phone-label">{phone.label}</span>
+                            <strong className="contact-phone-num">{phone.number}</strong>
+                          </div>
+                          <ArrowUpRight size={15} className="contact-phone-arrow" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </motion.article>
+
+                <motion.article
+                  className="contact-channel-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: 0.16 }}
+                >
+                  <div>
+                    <div className="contact-channel-badge">
+                      <Mail size={20} />
+                      <span>Electronic Mail</span>
+                    </div>
+                    <h3>Email Inquiries</h3>
+                    <p className="contact-channel-desc">
+                      Send project scopes, RFPs, or general questions anytime. We respond promptly.
+                    </p>
+                  </div>
+                  <div className="contact-email-list">
+                    {contactEmails.map((email) => (
+                      <a key={email} href={`mailto:${email}`} className="contact-email-link">
+                        <Mail size={16} />
+                        <span>{email}</span>
+                        <Sparkles size={16} />
+                      </a>
+                    ))}
+                  </div>
+                </motion.article>
+              </div>
+
+              <motion.div className="contact-panel" initial={{ opacity: 0, y: 38 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }}>
                 <div className="contact-copy">
                   <p className="eyebrow">Start a conversation</p>
                   <h2>Share the build you have in mind.</h2>
@@ -1492,6 +1598,16 @@ function App() {
             <p>
               Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
             </p>
+            <a
+              className="footer-address-link"
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              title="Open location in Google Maps"
+            >
+              <MapPin size={16} />
+              <span>{contactAddress}</span>
+            </a>
             <a className="footer-mail" href={`mailto:${contactEmail}`}>
               <Mail size={18} />
               {contactEmail}
@@ -1500,7 +1616,7 @@ function App() {
 
           <div className="footer-links">
             <div>
-              <span>Company</span>
+              <span className="footer-col-title">Company</span>
               {navItems.map((item) => (
                 <a key={item.path} href={item.path} onClick={navigateTo(item.path)}>
                   {item.label}
@@ -1508,10 +1624,28 @@ function App() {
               ))}
             </div>
             <div>
-              <span>Services</span>
+              <span className="footer-col-title">Services</span>
               {serviceCards.map((service) => (
                 <a key={service.title} href="/services" onClick={navigateTo('/services')}>
                   {service.title}
+                </a>
+              ))}
+            </div>
+            <div className="footer-contact-col">
+              <span className="footer-col-title">Contact</span>
+              {contactEmails.map((email) => (
+                <a key={email} href={`mailto:${email}`} className="footer-sub-contact">
+                  <Mail size={14} />
+                  <span>{email}</span>
+                </a>
+              ))}
+              {contactPhones.map((phone) => (
+                <a key={phone.number} href={`tel:${phone.tel}`} className="footer-sub-contact" title={`Call ${phone.label}`}>
+                  <Phone size={14} />
+                  <span>
+                    <strong>{phone.number}</strong>
+                    <small> ({phone.label === 'Office Number' ? 'Office' : phone.label.split(' ')[0]})</small>
+                  </span>
                 </a>
               ))}
             </div>
@@ -1534,6 +1668,15 @@ function App() {
                 );
               })}
             </div>
+          </div>
+          <div className="footer-map">
+            <div className="footer-map-heading">
+              <span>Find us</span>
+              <a href={googleMapsUrl} target="_blank" rel="noreferrer">
+                Open in Google Maps <ArrowUpRight size={16} />
+              </a>
+            </div>
+            <MapView />
           </div>
         </div>
 
