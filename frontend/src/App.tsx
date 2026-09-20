@@ -1172,11 +1172,11 @@ function App() {
                       <div>
                         <dt>Result</dt>
                         <dd>{project.result}</dd>
-                      </motion.div>
+                      </div>
                       <motion.div variants={workDetailReveal}>
                         <dt>Scope</dt>
                         <dd>{project.scope}</dd>
-                      </div>
+                      </motion.div>
                     </dl>
                   </motion.a>
                 ))}
