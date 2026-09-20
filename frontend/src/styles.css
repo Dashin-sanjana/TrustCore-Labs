@@ -4086,6 +4086,13 @@ h3 {
   backdrop-filter: blur(18px) saturate(1.4);
 }
 
+.page-main .eyebrow {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  clip-path: none !important;
+  filter: none !important;
+}
+
 .desktop-nav a:hover,
 .desktop-nav a[aria-current="page"],
 .mobile-nav a:hover,
