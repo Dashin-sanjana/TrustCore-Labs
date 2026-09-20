@@ -2742,7 +2742,10 @@ h3 {
   backdrop-filter: blur(18px) saturate(1.4);
 }
 
-.page-main .eyebrow,
+.page-main .eyebrow {
+  padding: 0.45rem 1.1rem;
+}
+
 .page-card-eyebrow,
 .console-status {
   padding: 0.45rem 0.72rem;
