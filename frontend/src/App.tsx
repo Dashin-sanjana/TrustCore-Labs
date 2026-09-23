@@ -1,7 +1,8 @@
-import { type MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { type MouseEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
+  ArrowDown,
   Blocks,
   Braces,
   Check,
@@ -25,7 +26,8 @@ import {
   X,
 } from 'lucide-react';
 import { ParticleBackground } from './ParticleBackground';
-import { MapView } from './MapView';
+import { SignalField } from './SignalField';
+import { BoonDotField } from './BoonDotField';
 
 type Metric = {
   label: string;
@@ -243,6 +245,46 @@ const process = [
   ['04', 'Scale', 'Improve performance, support, growth content, and next-phase features after the first release.'],
 ];
 
+const deliveryCore = [
+  {
+    number: '01',
+    title: 'Discover',
+    label: 'Business signal',
+    text: 'We map the real workflow, users, constraints, and commercial priority before defining the product.',
+    output: 'Clear scope, user journeys, and delivery direction',
+  },
+  {
+    number: '02',
+    title: 'Design',
+    label: 'System structure',
+    text: 'Interfaces, data relationships, permissions, and service flows are shaped into one coherent system.',
+    output: 'Product architecture and interaction blueprint',
+  },
+  {
+    number: '03',
+    title: 'Build',
+    label: 'Connected execution',
+    text: 'Frontend, APIs, business logic, integrations, and content move together through focused releases.',
+    output: 'Testable software with visible progress',
+  },
+  {
+    number: '04',
+    title: 'Launch',
+    label: 'Operational release',
+    text: 'We prepare deployment, data, access, performance, analytics, and launch communication as one release.',
+    output: 'Production-ready product and handover',
+  },
+  {
+    number: '05',
+    title: 'Grow',
+    label: 'Continuous advantage',
+    text: 'Real usage guides the next modules, integrations, campaigns, and operational improvements.',
+    output: 'A roadmap grounded in business evidence',
+  },
+];
+
+const manifesto = 'We turn business complexity into software that is clear, connected, secure, and ready to grow.';
+
 const platformCards = [
   {
     icon: Braces,
@@ -316,7 +358,7 @@ const contactPhones = [
 ];
 
 const siteUrl = 'https://www.trustcorelabs.com';
-const defaultSeoImage = `${siteUrl}/trustcore-logo-lockup.png`;
+const defaultSeoImage = `${siteUrl}/trustcore-logo.png`;
 
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
@@ -328,6 +370,94 @@ const socialLinks = [
 const fadeUp = {
   hidden: { opacity: 0, y: 34 },
   show: { opacity: 1, y: 0 },
+};
+
+const homeHeroReveal = {
+  hidden: {},
+  show: {
+    transition: {
+      delayChildren: 0.18,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const homeHeroLineReveal = {
+  hidden: {
+    y: '112%',
+    rotateZ: 2,
+    filter: 'blur(8px)',
+  },
+  show: {
+    y: '0%',
+    rotateZ: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 1.05,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
+const homeSupportingReveal = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+    clipPath: 'inset(0 0 100% 0)',
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    clipPath: 'inset(0 0 0% 0)',
+    transition: {
+      duration: 0.82,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
+const homeSectionReveal = {
+  hidden: {
+    opacity: 0,
+    y: 72,
+    clipPath: 'inset(12% 0 0 0)',
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    clipPath: 'inset(0% 0 0 0)',
+    transition: {
+      duration: 1.05,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
+const homeListReveal = {
+  hidden: {},
+  show: {
+    transition: {
+      delayChildren: 0.12,
+      staggerChildren: 0.09,
+    },
+  },
+};
+
+const homeRowReveal = {
+  hidden: {
+    opacity: 0,
+    y: 52,
+    clipPath: 'inset(0 0 100% 0)',
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    clipPath: 'inset(0 0 0% 0)',
+    transition: {
+      duration: 0.78,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
 };
 
 const revealSequence = {
@@ -583,6 +713,8 @@ function InteractiveCursor() {
   const target = useRef({ x: -120, y: -120 });
   const follower = useRef({ x: -120, y: -120 });
   const frame = useRef<number | null>(null);
+  const visibleRef = useRef(false);
+  const interactiveRef = useRef(false);
   const [visible, setVisible] = useState(false);
   const [interactive, setInteractive] = useState(false);
   const [pressed, setPressed] = useState(false);
@@ -595,9 +727,19 @@ function InteractiveCursor() {
       return undefined;
     }
 
+    const syncInteractiveState = (element: EventTarget | null) => {
+      const targetElement = element instanceof Element ? element : null;
+      const nextInteractive = Boolean(targetElement?.closest('a, button, input, textarea, select, [role="button"], [role="tab"]'));
+
+      if (nextInteractive !== interactiveRef.current) {
+        interactiveRef.current = nextInteractive;
+        setInteractive(nextInteractive);
+      }
+    };
+
     const moveCursor = () => {
-      follower.current.x += (target.current.x - follower.current.x) * 0.18;
-      follower.current.y += (target.current.y - follower.current.y) * 0.18;
+      follower.current.x += (target.current.x - follower.current.x) * 0.42;
+      follower.current.y += (target.current.y - follower.current.y) * 0.42;
 
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${follower.current.x}px, ${follower.current.y}px, 0)`;
@@ -609,19 +751,30 @@ function InteractiveCursor() {
     const handlePointerMove = (event: PointerEvent) => {
       target.current = { x: event.clientX, y: event.clientY };
 
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        follower.current = target.current;
+        setVisible(true);
+
+        if (ringRef.current) {
+          ringRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+        }
+      }
+
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
       }
 
-      setVisible(true);
+      syncInteractiveState(event.target);
     };
 
     const handlePointerOver = (event: PointerEvent) => {
-      const targetElement = event.target instanceof Element ? event.target : null;
-      setInteractive(Boolean(targetElement?.closest('a, button, input, textarea, select, [role="button"]')));
+      syncInteractiveState(event.target);
     };
 
     const handlePointerLeave = () => {
+      visibleRef.current = false;
+      interactiveRef.current = false;
       setVisible(false);
       setInteractive(false);
       setPressed(false);
@@ -630,8 +783,8 @@ function InteractiveCursor() {
     const handlePointerUp = () => setPressed(false);
 
     frame.current = window.requestAnimationFrame(moveCursor);
-    window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('pointerover', handlePointerOver);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerover', handlePointerOver, { passive: true });
     window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('pointerup', handlePointerUp);
     document.documentElement.addEventListener('mouseleave', handlePointerLeave);
@@ -669,6 +822,7 @@ function App() {
   const [company, setCompany] = useState<Company>(fallbackCompany);
   const [menuOpen, setMenuOpen] = useState(false);
   const [metricsActive, setMetricsActive] = useState(false);
+  const [activeCoreStage, setActiveCoreStage] = useState(0);
   const [route, setRoute] = useState<RoutePath>(() => getCurrentRoute());
   const agencyIntroRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
@@ -694,9 +848,19 @@ function App() {
 
   useEffect(() => {
     const syncRoute = () => setRoute(getCurrentRoute());
+    window.history.scrollRestoration = 'manual';
     window.addEventListener('popstate', syncRoute);
     return () => window.removeEventListener('popstate', syncRoute);
   }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    const resetScroll = window.setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, 0);
+
+    return () => window.clearTimeout(resetScroll);
+  }, [route]);
 
   useEffect(() => {
     const metadata = routeSeo[route];
@@ -739,15 +903,19 @@ function App() {
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <div className="noise" />
       <div className="cyber-grid" />
+      <BoonDotField key={route} />
       <motion.div className="ambient ambient-one" style={{ y: glowY }} />
       <motion.div className="ambient ambient-two" style={{ y: heroY }} />
       <motion.div className="ambient ambient-three" style={{ y: glowY }} />
 
-      <header className="nav">
+      <motion.header
+        className="nav"
+        initial={reduceMotion ? false : { y: '-110%', opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+      >
         <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
-          <span className="brand-mark">
-            <img src="/trustcore-logo-lockup.png" alt="" />
-          </span>
+          <img className="brand-logo-full" src="/trustcore-logo.png" alt="TrustCore Labs" />
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
@@ -763,7 +931,7 @@ function App() {
         <button className="menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle navigation">
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
-      </header>
+      </motion.header>
 
       {menuOpen && (
         <motion.div className="mobile-nav" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}>
@@ -775,12 +943,22 @@ function App() {
         </motion.div>
       )}
 
-      <main className="page-main">
+      <main className={`page-main${route === '/' ? ' home-v4' : ''}`}>
         {route === '/' && (
           <>
         <section className="hero section-grid">
           <motion.div
+            className="hero-scanline"
+            aria-hidden="true"
+            initial={reduceMotion ? false : { x: '-18vw', opacity: 0 }}
+            animate={reduceMotion ? { opacity: 0 } : { x: '118vw', opacity: [0, 0.75, 0] }}
+            transition={{ duration: 4.8, delay: 1.4, repeat: Infinity, repeatDelay: 3.8, ease: 'easeInOut' }}
+          />
+          <motion.div
             className="hero-copy hero-swap-face"
+            variants={homeHeroReveal}
+            initial={reduceMotion ? false : 'hidden'}
+            animate="show"
             style={{
               y: heroY,
               rotateX: reduceMotion ? 0 : heroSwapRotate,
@@ -789,20 +967,20 @@ function App() {
           >
             <motion.p
               className="eyebrow"
-              initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-              animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.18 }}
+              variants={homeSupportingReveal}
             >
-              Your growth, powered by practical tech teams.
+              Product engineering / business systems / growth
             </motion.p>
-            <motion.h1 initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
-              <span>Software that</span>
-              <span>helps your</span>
-              <span>business grow.</span>
+            <motion.h1>
+              <span className="hero-line-clip">
+                <motion.span className="hero-thin" variants={homeHeroLineReveal}>We build</motion.span>
+              </span>
+              <span className="hero-line-clip">
+                <motion.span className="hero-strong" variants={homeHeroLineReveal}>digital systems.</motion.span>
+              </span>
             </motion.h1>
-            <motion.p className="hero-text" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.16 }}>
-              {company.name} helps growing companies build custom software, websites, mobile apps, ERP workflows, and digital growth systems with one focused delivery partner.
+            <motion.p className="hero-text" variants={homeSupportingReveal}>
+              {company.name} designs, builds, and improves the software behind growing businesses, from customer experiences to the systems that run daily operations.
             </motion.p>
             <motion.div className="hero-proof" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.2 }}>
               <span>
@@ -818,15 +996,19 @@ function App() {
                 Scalable product flow
               </span>
             </motion.div>
-            <motion.div className="hero-actions" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.24 }}>
+            <motion.div className="hero-actions" variants={homeSupportingReveal}>
               <a className="primary-button" href="/services" onClick={navigateTo('/services')}>
-                Build your team
+                Explore the core
                 <ChevronRight size={18} />
               </a>
               <a className="secondary-button" href="/contact" onClick={navigateTo('/contact')}>
                 Talk to us
               </a>
             </motion.div>
+            <a className="hero-scroll-cue" href="#home-story">
+              Explore our approach
+              <ArrowDown size={16} />
+            </a>
           </motion.div>
 
           <motion.div className="hero-visual" initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }} animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: false, amount: 0.12 }} transition={{ duration: 0.8 }}>
@@ -868,101 +1050,161 @@ function App() {
 
         <motion.section
           ref={agencyIntroRef}
-          className="agency-intro agency-swap-face"
+          id="home-story"
+          className="home-manifesto agency-swap-face"
           style={{
             rotateX: reduceMotion ? 0 : agencySwapRotate,
             opacity: reduceMotion ? 1 : agencySwapOpacity,
           }}
         >
-          <motion.div className="intro-copy" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
-            <p className="eyebrow">Digital partner</p>
-            <h2>Made like a studio. Delivered like an expert tech team.</h2>
-            <p>
-              TrustCoreLabs helps businesses move from scattered tools to one polished digital presence. Strategy, product design, engineering, business systems, and launch support are shaped together so each release has a clear commercial purpose.
-            </p>
-          </motion.div>
-          <motion.div className="studio-notes" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.2 }}>
-            <div>
-              <span>Delivery note</span>
-              <p>Start with one specialist or a compact product pod, then scale when the work proves itself.</p>
-            </div>
-            <div>
-              <span>Engineering note</span>
-              <p>Clean interfaces, reliable APIs, business logic, and deployment are treated as one product.</p>
-            </div>
-          </motion.div>
+          <div className="home-section-index">Manifesto / 01</div>
+          <motion.h2
+            className="manifesto-copy"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.45 }}
+            variants={{ show: { transition: { staggerChildren: 0.055 } } }}
+          >
+            {manifesto.split(' ').map((word, index) => (
+              <motion.span
+                key={`${word}-${index}`}
+                variants={{
+                  hidden: { opacity: 0.16, y: 18 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                }}
+              >
+                {word}{' '}
+              </motion.span>
+            ))}
+          </motion.h2>
+          <motion.p className="manifesto-note" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.6 }}>
+            Strategy, product design, engineering, business operations, and launch support move as one connected discipline.
+          </motion.p>
         </motion.section>
 
         <motion.section
-          className="page-directory"
-          aria-labelledby="page-directory-title"
-          variants={revealSequence}
-          initial={reduceMotion ? 'show' : 'hidden'}
-          animate={reduceMotion ? 'show' : 'hidden'}
-          whileInView="show"
-          viewport={{ once: false, amount: 0.12 }}
+          className="signal-field"
+          initial={reduceMotion ? { opacity: 1 } : { opacity: 0, clipPath: 'inset(0 0 16% 0)' }}
+          whileInView={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <motion.div className="section-heading story-heading" variants={revealSequence}>
-            <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Explore</motion.p>
-            <motion.h2 id="page-directory-title" custom={1} variants={textWipeReveal}>Explore TrustCoreLabs by page.</motion.h2>
-            <motion.p custom={2} variants={textWipeReveal}>Move through the company, work, services, process, answers, and contact details from one clean starting point.</motion.p>
+          <SignalField />
+          <ParticleBackground className="signal-man-background" />
+          <div className="signal-field-shade" aria-hidden="true" />
+          <motion.div
+            className="signal-field-copy"
+            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 48, filter: 'blur(12px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.65 }}
+            transition={{ duration: 1, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span>Connected intelligence / live systems</span>
+            <h2>Turn operational complexity into clear, confident action.</h2>
           </motion.div>
-          <motion.div className="page-card-grid" variants={revealSequence}>
-            {pageCards.map((page, index) => {
-              const Icon = page.icon;
+          <div className="signal-field-meta">
+            <span>Strategy</span>
+            <span>Product</span>
+            <span>Engineering</span>
+            <span>Growth</span>
+          </div>
+        </motion.section>
+
+        <div className="boon-zone">
+        <motion.section
+          className="delivery-core"
+          initial={reduceMotion ? { opacity: 1 } : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+        >
+          <motion.div
+            className="delivery-core-heading"
+            variants={homeSectionReveal}
+            initial={reduceMotion ? 'show' : 'hidden'}
+            whileInView="show"
+            viewport={{ once: true, amount: 0.5 }}
+          >
+            <div className="home-section-index">System architecture / 02</div>
+            <h2>The delivery core.</h2>
+            <p>A connected operating model that turns a business problem into a product people can trust and use.</p>
+          </motion.div>
+          <div className="delivery-core-layout">
+            <div className="core-stage-list" role="tablist" aria-label="TrustCore delivery stages">
+              {deliveryCore.map((stage, index) => (
+                <button
+                  className={index === activeCoreStage ? 'is-active' : ''}
+                  key={stage.title}
+                  type="button"
+                  role="tab"
+                  aria-selected={index === activeCoreStage}
+                  onClick={() => setActiveCoreStage(index)}
+                >
+                  <span>{stage.number}</span>
+                  <strong>{stage.title}</strong>
+                  <small>{stage.label}</small>
+                </button>
+              ))}
+            </div>
+            <motion.div
+              className="core-stage-detail"
+              key={deliveryCore[activeCoreStage].title}
+              initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              role="tabpanel"
+            >
+              <div className="core-orbit" aria-hidden="true">
+                <span className="core-orbit-ring" />
+                <span className="core-orbit-node core-orbit-node-a" />
+                <span className="core-orbit-node core-orbit-node-b" />
+                <span className="core-orbit-node core-orbit-node-c" />
+                <strong>{deliveryCore[activeCoreStage].number}</strong>
+              </div>
+              <div className="core-detail-copy">
+                <span>{deliveryCore[activeCoreStage].label}</span>
+                <h3>{deliveryCore[activeCoreStage].title}</h3>
+                <p>{deliveryCore[activeCoreStage].text}</p>
+                <small>Output</small>
+                <strong>{deliveryCore[activeCoreStage].output}</strong>
+              </div>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="home-capabilities"
+          variants={homeSectionReveal}
+          initial={reduceMotion ? 'show' : 'hidden'}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.08 }}
+        >
+          <motion.div className="capabilities-heading" variants={homeSupportingReveal}>
+            <div className="home-section-index">System capabilities / 03</div>
+            <h2>Engineered for momentum.</h2>
+          </motion.div>
+          <motion.div
+            className="capability-list"
+            variants={homeListReveal}
+            initial={reduceMotion ? 'show' : 'hidden'}
+            whileInView="show"
+            viewport={{ once: true, amount: 0.08 }}
+          >
+            {serviceCards.map((service, index) => {
+              const Icon = service.icon;
               return (
                 <motion.a
-                  className="page-card"
-                  key={page.path}
-                  href={page.path}
-                  onClick={navigateTo(page.path)}
-                  custom={index + 3}
-                  variants={cardLiftReveal}
+                  className="capability-item"
+                  href="/services"
+                  onClick={navigateTo('/services')}
+                  key={service.title}
+                  variants={homeRowReveal}
                 >
-                  <span className="page-card-icon">
-                    <Icon size={22} />
-                  </span>
-                  <span className="page-card-eyebrow">{page.eyebrow}</span>
-                  <h3>{page.title}</h3>
-                  <p>{page.text}</p>
-                  <span className="page-card-link">
-                    Open page
-                    <ArrowUpRight size={17} />
-                  </span>
+                  <span className="capability-number">0{index + 1}</span>
+                  <span className="capability-icon"><Icon size={24} /></span>
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <ArrowUpRight size={22} />
                 </motion.a>
-              );
-            })}
-          </motion.div>
-        </motion.section>
-
-        <motion.section
-          className="why-band"
-          variants={revealSequence}
-          initial={reduceMotion ? 'show' : 'hidden'}
-          animate={reduceMotion ? 'show' : 'hidden'}
-          whileInView="show"
-          viewport={{ once: false, amount: 0.16 }}
-        >
-          <motion.div className="section-heading story-heading" variants={revealSequence}>
-            <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>Why trust us</motion.p>
-            <motion.h2 custom={1} variants={textWipeReveal}>Practical breadth with a team model that can grow.</motion.h2>
-            <motion.p custom={2} variants={textWipeReveal}>Get the right delivery skills, a clearer build plan, and a software foundation that can keep improving after launch.</motion.p>
-          </motion.div>
-          <motion.div className="why-grid" variants={revealSequence}>
-            {trustReasons.map((reason, index) => {
-              const Icon = reason.icon;
-              return (
-                <motion.article
-                  className="why-card"
-                  key={reason.title}
-                  custom={index + 3}
-                  variants={cardLiftReveal}
-                >
-                  <Icon size={28} />
-                  <span>0{index + 1}</span>
-                  <h3>{reason.title}</h3>
-                  <p>{reason.text}</p>
-                </motion.article>
               );
             })}
           </motion.div>
@@ -984,46 +1226,90 @@ function App() {
         </motion.section>
 
         <motion.section
-          className="platform-band"
-          variants={revealSequence}
+          className="home-work"
+          variants={homeSectionReveal}
           initial={reduceMotion ? 'show' : 'hidden'}
-          animate={reduceMotion ? 'show' : 'hidden'}
           whileInView="show"
-          viewport={{ once: false, amount: 0.12 }}
+          viewport={{ once: true, amount: 0.06 }}
         >
-          <motion.div className="platform-copy" variants={revealSequence}>
-            <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>End-to-end expertise</motion.p>
-            <motion.h2 custom={1} variants={textWipeReveal}>Reliable digital foundations built around your needs.</motion.h2>
-            <motion.p custom={2} variants={textWipeReveal}>
-              We bring the public website, internal systems, mobile touchpoints, support flow, and growth channels into one planned product direction so the business can move with less friction.
-            </motion.p>
-            <motion.div className="proof-row" aria-label="TrustCoreLabs proof points" variants={revealSequence}>
-              {homeProof.map(([value, label], index) => (
-                <motion.span key={label} custom={index + 3} variants={textWipeReveal}>
-                  <strong>{value}</strong>
-                  {label}
-                </motion.span>
-              ))}
-            </motion.div>
+          <motion.div className="home-work-heading" variants={homeSupportingReveal}>
+            <div className="home-section-index">Selected outcomes / 04</div>
+            <h2>Built for the real world.</h2>
+            <a href="/work" onClick={navigateTo('/work')}>View all work <ArrowUpRight size={17} /></a>
           </motion.div>
-          <motion.div className="platform-grid" variants={revealSequence}>
-            {platformCards.map((platform, index) => {
-              const Icon = platform.icon;
+          <motion.div
+            className="home-work-list"
+            variants={homeListReveal}
+            initial={reduceMotion ? 'show' : 'hidden'}
+            whileInView="show"
+            viewport={{ once: true, amount: 0.04 }}
+          >
+            {featuredProjects.map((project, index) => (
+              <motion.a
+                className="home-work-item"
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                key={project.name}
+                variants={homeRowReveal}
+              >
+                <span>0{index + 1}</span>
+                <div>
+                  <small>{project.type}</small>
+                  <h3>{project.name}</h3>
+                </div>
+                <p>{project.text}</p>
+                <ArrowUpRight size={24} />
+              </motion.a>
+            ))}
+          </motion.div>
+        </motion.section>
+
+        <motion.section
+          className="home-difference"
+          variants={homeSectionReveal}
+          initial={reduceMotion ? 'show' : 'hidden'}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <div className="home-section-index">The TrustCore difference / 05</div>
+          <motion.div
+            className="difference-grid"
+            variants={homeListReveal}
+            initial={reduceMotion ? 'show' : 'hidden'}
+            whileInView="show"
+            viewport={{ once: true, amount: 0.08 }}
+          >
+            {trustReasons.slice(0, 3).map((reason, index) => {
+              const Icon = reason.icon;
               return (
                 <motion.article
-                  className="platform-card"
-                  key={platform.title}
-                  custom={index + 6}
-                  variants={cardLiftReveal}
+                  key={reason.title}
+                  variants={homeRowReveal}
                 >
-                  <Icon size={28} />
-                  <h3>{platform.title}</h3>
-                  <p>{platform.text}</p>
+                  <span>0{index + 1}</span>
+                  <Icon size={26} />
+                  <h3>{reason.title}</h3>
+                  <p>{reason.text}</p>
                 </motion.article>
               );
             })}
           </motion.div>
         </motion.section>
+
+        <motion.section
+          className="home-final-cta"
+          initial={false}
+        >
+          <span>Start a project / 06</span>
+          <h2>Bring the complexity.<br />Let&apos;s build what comes next.</h2>
+          <p>Software platforms, business systems, digital experiences, and the support to keep them moving.</p>
+          <a className="primary-button" href="/contact" onClick={navigateTo('/contact')}>
+            Start a project
+            <ArrowUpRight size={19} />
+          </a>
+        </motion.section>
+        </div>
 
         <section className="marquee-section" aria-label="Portfolio categories">
           <div className="marquee-track">
@@ -1038,13 +1324,15 @@ function App() {
         {route === '/about' && (
           <>
             <motion.section
-              className="page-hero about-hero page-section"
+              className="page-hero about-hero page-section particle-page-hero"
               variants={revealSequence}
               initial={reduceMotion ? 'show' : 'hidden'}
               animate={reduceMotion ? 'show' : 'hidden'}
               whileInView="show"
               viewport={{ once: false, amount: 0.2 }}
             >
+              <SignalField />
+              <div className="signal-field-shade" aria-hidden="true" />
               <motion.div variants={revealSequence}>
                 <motion.p className="eyebrow" custom={0} variants={textWipeReveal}>About TrustCoreLabs</motion.p>
                 <motion.h1 custom={1} variants={textWipeReveal}>Software partner for businesses that want to move cleaner.</motion.h1>
@@ -1115,13 +1403,15 @@ function App() {
         {route === '/work' && (
           <>
             <motion.section
-              className="page-hero work-hero page-section work-reveal-stage"
+              className="page-hero work-hero page-section work-reveal-stage particle-page-hero"
               variants={revealSequence}
               initial={reduceMotion ? 'show' : 'hidden'}
               animate={reduceMotion ? 'show' : 'hidden'}
               whileInView="show"
               viewport={{ once: false, amount: 0.08 }}
             >
+              <SignalField />
+              <div className="signal-field-shade" aria-hidden="true" />
               <motion.div variants={revealSequence}>
                 <motion.p className="eyebrow" custom={0} variants={workTextReveal}>Customer stories</motion.p>
                 <motion.h1 custom={1} variants={workTextReveal}>Recent work with real business shape.</motion.h1>
@@ -1210,12 +1500,14 @@ function App() {
 
         {route === '/services' && (
           <>
-            <section className="page-hero services-hero page-section">
+            <section className="page-hero services-hero page-section particle-page-hero">
+              <SignalField />
+              <div className="signal-field-shade" aria-hidden="true" />
               <motion.div
                 className="services-text-reveal"
                 variants={revealSequence}
                 initial={reduceMotion ? 'show' : 'hidden'}
-                animate={reduceMotion ? 'show' : 'hidden'}
+                animate="show"
                 whileInView="show"
                 viewport={{ once: false, amount: 0.18 }}
               >
@@ -1223,7 +1515,7 @@ function App() {
                 <motion.h1 custom={1} variants={textWipeReveal}>Services that extend your team and accelerate delivery.</motion.h1>
                 <motion.p custom={2} variants={textWipeReveal}>Choose a focused build or combine services into a full digital product team for your business.</motion.p>
               </motion.div>
-              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate="show" whileInView="show" viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.08 }}>
                 <Cpu size={30} />
                 <strong>Software, systems, mobile, and growth support.</strong>
                 <span>One delivery flow from discovery to launch and post-release improvement.</span>
@@ -1326,7 +1618,9 @@ function App() {
 
         {route === '/process' && (
           <>
-        <section className="page-hero process-hero page-section">
+        <section className="page-hero process-hero page-section particle-page-hero">
+          <SignalField />
+          <div className="signal-field-shade" aria-hidden="true" />
           <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }}>
             <p className="eyebrow">Process</p>
             <h1>Designed for momentum, engineered for scale.</h1>
@@ -1399,7 +1693,9 @@ function App() {
 
         {route === '/faq' && (
           <>
-            <section className="page-hero faq-hero page-section">
+            <section className="page-hero faq-hero page-section particle-page-hero">
+              <SignalField />
+              <div className="signal-field-shade" aria-hidden="true" />
               <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }}>
                 <p className="eyebrow">FAQ</p>
                 <h1>Questions businesses usually ask first.</h1>
@@ -1580,12 +1876,19 @@ function App() {
         )}
       </main>
 
-      <footer className="site-footer">
+      <motion.footer
+        className="site-footer"
+        initial={reduceMotion ? false : { opacity: 0, y: 42 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.08 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="footer-glow" />
         <div className="footer-shell">
           <div className="footer-brand">
             <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
-              <img src="/trustcore-logo-lockup.png" alt="" />
+              <img src="/trustcore-mark.png" alt="" />
+              <span className="footer-wordmark">Trust<span>Core</span><small>Labs</small></span>
             </a>
             <p>
               Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
@@ -1661,22 +1964,13 @@ function App() {
               })}
             </div>
           </div>
-          <div className="footer-map">
-            <div className="footer-map-heading">
-              <span>Find us</span>
-              <a href={googleMapsUrl} target="_blank" rel="noreferrer">
-                Open in Google Maps <ArrowUpRight size={16} />
-              </a>
-            </div>
-            <MapView />
-          </div>
         </div>
 
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} TrustCoreLabs. All rights reserved.</span>
           <span>Product engineering | Web & mobile | ERP | Digital growth</span>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }

@@ -53,9 +53,9 @@ const fragmentShaderSource = `
     float luminance = dot(sourceColor, vec3(0.2126, 0.7152, 0.0722));
     float imageMask = (1.0 - smoothstep(0.48, 0.8, luminance)) * insideImage;
 
-    vec3 black = vec3(0.025, 0.025, 0.025);
-    vec3 charcoal = vec3(0.2, 0.2, 0.2);
-    vec3 particleColor = mix(black, charcoal, smoothstep(0.16, 0.72, luminance));
+    vec3 graphite = vec3(0.34, 0.39, 0.42);
+    vec3 silver = vec3(0.72, 0.76, 0.78);
+    vec3 particleColor = mix(graphite, silver, smoothstep(0.16, 0.72, luminance));
     float opacity = particleShape * imageMask * (0.56 + (1.0 - luminance) * 0.42);
 
     gl_FragColor = vec4(particleColor * opacity, opacity);
@@ -104,7 +104,11 @@ function createProgram(gl: WebGLRenderingContext) {
   return program;
 }
 
-export function ParticleBackground() {
+type ParticleBackgroundProps = {
+  className?: string;
+};
+
+export function ParticleBackground({ className = '' }: ParticleBackgroundProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -184,20 +188,20 @@ export function ParticleBackground() {
       pixelRatio = Math.min(window.devicePixelRatio || 1, viewportWidth <= 720 ? 1.25 : 1.5);
 
       if (viewportWidth <= 360 && isPortrait) {
-        spacing = 6.5;
-        displayScale = 0.76;
-        imageCenterX = 0.73;
-        imageCenterY = 0.3;
+        spacing = 5;
+        displayScale = 1.7;
+        imageCenterX = 0.76;
+        imageCenterY = 0.43;
       } else if (viewportWidth <= 480 && isPortrait) {
-        spacing = 6;
-        displayScale = 0.82;
-        imageCenterX = 0.72;
-        imageCenterY = 0.31;
+        spacing = 5;
+        displayScale = 1.55;
+        imageCenterX = 0.76;
+        imageCenterY = 0.44;
       } else if (viewportWidth <= 720 && isPortrait) {
-        spacing = 5.5;
-        displayScale = 0.86;
-        imageCenterX = 0.7;
-        imageCenterY = 0.34;
+        spacing = 4.75;
+        displayScale = 0.96;
+        imageCenterX = 0.75;
+        imageCenterY = 0.44;
       } else if (isShortLandscape) {
         spacing = 5.5;
         displayScale = 0.82;
@@ -362,5 +366,5 @@ export function ParticleBackground() {
     };
   }, []);
 
-  return <canvas className="particle-background" ref={canvasRef} aria-hidden="true" />;
+  return <canvas className={`particle-background ${className}`.trim()} ref={canvasRef} aria-hidden="true" />;
 }
