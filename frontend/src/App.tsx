@@ -1887,8 +1887,7 @@ function App() {
         <div className="footer-shell">
           <div className="footer-brand">
             <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
-              <img src="/trustcore-mark.png" alt="" />
-              <span className="footer-wordmark">Trust<span>Core</span><small>Labs</small></span>
+              <img className="brand-logo-full" src="/trustcore-logo.png" alt="TrustCore Labs" />
             </a>
             <p>
               Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.

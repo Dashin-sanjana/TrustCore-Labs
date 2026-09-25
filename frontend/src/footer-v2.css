@@ -62,45 +62,20 @@
 .site-footer .footer-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
   padding: 0;
   background: transparent;
 }
 
-.site-footer .footer-logo img {
-  width: 3.9rem;
-  height: 3.9rem;
+.site-footer .footer-logo .brand-logo-full {
+  display: block;
+  width: min(100%, 18rem);
+  height: auto;
+  max-width: none;
   border: 0;
   border-radius: 0;
   object-fit: contain;
   filter: none;
   box-shadow: none;
-}
-
-.footer-wordmark {
-  display: grid;
-  grid-template-columns: auto auto;
-  color: #f5f7f8;
-  font-size: 1.05rem;
-  font-weight: 820;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.footer-wordmark > span {
-  color: #ffb30f;
-}
-
-.footer-wordmark small {
-  grid-column: 1 / -1;
-  margin-top: 0.25rem;
-  color: rgba(245, 247, 248, 0.48);
-  font-family: var(--site-font);
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.36em;
-  text-align: right;
 }
 
 .site-footer .footer-brand p {
@@ -276,6 +251,10 @@
 }
 
 @media (max-width: 720px) {
+  .site-footer .footer-logo .brand-logo-full {
+    width: min(100%, 15rem);
+  }
+
   .site-footer .footer-shell {
     width: min(100% - 2rem, 1360px);
     grid-template-columns: 1fr;
