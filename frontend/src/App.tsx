@@ -1885,7 +1885,13 @@ function App() {
       >
         <div className="footer-glow" />
         <div className="footer-shell">
-          <div className="footer-brand">
+          <motion.div
+            className="footer-brand"
+            initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.72, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          >
             <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
               <img className="brand-logo-full" src="/trustcore-logo.png" alt="TrustCore Labs" />
             </a>
@@ -1906,9 +1912,15 @@ function App() {
               <Mail size={18} />
               {contactEmail}
             </a>
-          </div>
+          </motion.div>
 
-          <div className="footer-links">
+          <motion.div
+            className="footer-links"
+            initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.72, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div>
               <span className="footer-col-title">Company</span>
               {navItems.map((item) => (
@@ -1943,9 +1955,15 @@ function App() {
                 </a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="footer-action">
+          <motion.div
+            className="footer-action"
+            initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.72, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          >
             <p className="eyebrow">Built for growth. Secured by practice.</p>
             <h2>Let's build your next release.</h2>
             <a className="primary-button footer-cta" href="/contact" onClick={navigateTo('/contact')}>
@@ -1962,13 +1980,19 @@ function App() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="footer-bottom">
+        <motion.div
+          className="footer-bottom"
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
+        >
           <span>&copy; {new Date().getFullYear()} TrustCoreLabs. All rights reserved.</span>
           <span>Product engineering | Web & mobile | ERP | Digital growth</span>
-        </div>
+        </motion.div>
       </motion.footer>
     </div>
   );
