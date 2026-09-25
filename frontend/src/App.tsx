@@ -1726,7 +1726,7 @@ function App() {
 
         {route === '/contact' && (
           <>
-            <section className="page-hero contact-hero page-section">
+            <section className="page-hero contact-hero page-section particle-page-hero">
               <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate={reduceMotion ? 'show' : 'hidden'} whileInView="show" viewport={{ once: false, amount: 0.18 }}>
                 <p className="eyebrow">Contact</p>
                 <h1>Ready to map your team, technology, and timeline?</h1>

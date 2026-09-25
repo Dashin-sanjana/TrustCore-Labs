@@ -198,7 +198,7 @@ body:has(.page-main.home-v4) .particle-background {
   border: 0;
   background: transparent;
   color: rgba(242, 247, 250, 0.68) !important;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
 }
@@ -303,7 +303,7 @@ body:has(.page-main.home-v4) .particle-background {
 
 .home-v4 .home-section-index {
   color: rgba(232, 241, 247, 0.52);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -427,7 +427,7 @@ body:has(.page-main.home-v4) .particle-background {
   display: block;
   margin-bottom: 1.4rem;
   color: var(--home-gold);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -455,7 +455,7 @@ body:has(.page-main.home-v4) .particle-background {
   padding-top: 1rem;
   border-top: 1px solid rgba(255,255,255,0.2);
   color: rgba(255,255,255,0.55);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.64rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -517,7 +517,7 @@ body:has(.page-main.home-v4) .particle-background {
   background: transparent;
   color: #ffcf55 !important;
   box-shadow: none;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -749,7 +749,7 @@ body:has(.particle-page-hero) .nav-cta {
 .home-v4 .core-stage-list button span,
 .home-v4 .core-stage-list button small {
   color: inherit;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.66rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -812,7 +812,7 @@ body:has(.particle-page-hero) .nav-cta {
 .home-v4 .core-detail-copy > span,
 .home-v4 .core-detail-copy small {
   color: var(--home-gold);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -923,7 +923,7 @@ body:has(.particle-page-hero) .nav-cta {
 
 .home-v4 .capability-number {
   color: rgba(255,255,255,0.48);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.7rem;
 }
 
@@ -988,7 +988,7 @@ body:has(.particle-page-hero) .nav-cta {
 
 .home-v4 .metric p {
   margin-top: 1rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1049,7 +1049,7 @@ body:has(.particle-page-hero) .nav-cta {
 .home-v4 .home-work-item > span,
 .home-v4 .home-work-item small {
   color: rgba(7,21,34,0.62) !important;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.66rem;
   text-transform: uppercase;
 }
@@ -1161,7 +1161,7 @@ body:has(.particle-page-hero) .nav-cta {
 
 .home-v4 .difference-grid article > span {
   color: rgba(255,255,255,0.45);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
 }
 
@@ -1215,7 +1215,7 @@ body:has(.particle-page-hero) .nav-cta {
 }
 
 .home-v4 .home-final-cta > span {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--site-font);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
