@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const particleImageUrl = '/hero.png';
+const particleImageUrl = '/hero.webp';
 
 const vertexShaderSource = `
   attribute vec2 a_position;
@@ -53,9 +53,9 @@ const fragmentShaderSource = `
     float luminance = dot(sourceColor, vec3(0.2126, 0.7152, 0.0722));
     float imageMask = (1.0 - smoothstep(0.48, 0.8, luminance)) * insideImage;
 
-    vec3 graphite = vec3(0.34, 0.39, 0.42);
-    vec3 silver = vec3(0.72, 0.76, 0.78);
-    vec3 particleColor = mix(graphite, silver, smoothstep(0.16, 0.72, luminance));
+    vec3 graphite = vec3(0.20, 0.18, 0.14);
+    vec3 amber = vec3(1.0, 0.70, 0.06);
+    vec3 particleColor = mix(graphite, amber, smoothstep(0.16, 0.72, luminance));
     float opacity = particleShape * imageMask * (0.56 + (1.0 - luminance) * 0.42);
 
     gl_FragColor = vec4(particleColor * opacity, opacity);
@@ -158,6 +158,7 @@ export function ParticleBackground({ className = '' }: ParticleBackgroundProps =
     const strengthLocation = gl.getUniformLocation(program, 'u_mouseStrength');
     const imageLocation = gl.getUniformLocation(program, 'u_image');
     const image = new Image();
+    const isHeroParticle = canvas.classList.contains('hero-particle-man');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let pixelRatio = 1;
     let spacing = 4;
@@ -216,6 +217,13 @@ export function ParticleBackground({ className = '' }: ParticleBackgroundProps =
         spacing = 3;
         displayScale = 0.94;
         imageCenterX = 0.72;
+        imageCenterY = 0.5;
+      }
+
+      if (isHeroParticle) {
+        spacing = window.innerWidth <= 680 ? 4.5 : 3.4;
+        displayScale = window.innerWidth <= 680 ? 1.04 : window.innerWidth <= 980 ? 1.25 : 1.55;
+        imageCenterX = window.innerWidth <= 680 ? 0.58 : 0.54;
         imageCenterY = 0.5;
       }
 

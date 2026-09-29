@@ -1,0 +1,692 @@
+/* Final brand layer: one TrustCore palette and navigation treatment across every route. */
+:root {
+  --brand-amber: #ffb30f;
+  --brand-amber-bright: #ffc83d;
+  --brand-orange: #f47d16;
+  --brand-ink: #0b0a08;
+  --brand-charcoal: #201e1a;
+  --brand-cream: #fffaf0;
+  --brand-paper: #f7f4ed;
+  --brand-line: rgba(255, 179, 15, 0.24);
+  --brand-line-strong: rgba(255, 179, 15, 0.62);
+  --brand-muted: rgba(255, 250, 240, 0.68);
+  --page-bg: var(--brand-ink);
+  --text: var(--brand-cream);
+  --muted: var(--brand-muted);
+  --accent: var(--brand-amber);
+  --accent-blue: var(--brand-orange);
+  --gold-strong: var(--brand-amber);
+  --gold-soft: var(--brand-amber-bright);
+  --glass: rgba(20, 18, 14, 0.82);
+  --glass-hover: rgba(32, 27, 17, 0.94);
+  --glass-line: var(--brand-line);
+  --glass-text: var(--brand-cream);
+  --glass-muted: var(--brand-muted);
+  --line: rgba(255, 237, 196, 0.12);
+  --line-strong: var(--brand-line-strong);
+  --shadow-soft: 0 24px 72px rgba(0, 0, 0, 0.34);
+}
+
+body {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(255, 179, 15, 0.13), transparent 30rem),
+    radial-gradient(circle at 12% 84%, rgba(244, 125, 22, 0.08), transparent 28rem),
+    linear-gradient(145deg, #070706 0%, #12100c 54%, #080706 100%);
+  color: var(--brand-cream);
+}
+
+.site-shell {
+  background:
+    radial-gradient(circle at 84% 18%, rgba(255, 179, 15, 0.1), transparent 30rem),
+    linear-gradient(180deg, #090806 0%, #12100c 50%, #080706 100%);
+}
+
+.site-shell > .particle-background {
+  background:
+    radial-gradient(circle at 72% 24%, rgba(255, 179, 15, 0.12), transparent 26rem),
+    radial-gradient(circle at 18% 76%, rgba(244, 125, 22, 0.08), transparent 28rem),
+    linear-gradient(145deg, #070706, #12100c 58%, #080706);
+}
+
+.scroll-progress {
+  background: linear-gradient(90deg, var(--brand-orange), var(--brand-amber), #ffe29a);
+  box-shadow: 0 0 18px rgba(255, 179, 15, 0.5);
+}
+
+.cursor-dot {
+  background: var(--brand-amber);
+  box-shadow: 0 0 14px rgba(255, 179, 15, 0.88), 0 0 32px rgba(244, 125, 22, 0.48);
+}
+
+.cursor-ring {
+  border-color: rgba(255, 179, 15, 0.56);
+  background: radial-gradient(circle, rgba(255, 179, 15, 0.16), transparent 64%);
+  box-shadow: 0 0 20px rgba(255, 179, 15, 0.22);
+}
+
+.interactive-cursor.is-interactive .cursor-ring {
+  border-color: rgba(255, 212, 103, 0.78);
+  background: radial-gradient(circle, rgba(255, 179, 15, 0.25), transparent 66%);
+}
+
+/* The same navigation surface is used on home and every inner page. */
+.nav,
+body:has(.page-main.home-v4) .nav,
+body:has(.particle-page-hero) .nav {
+  top: 0;
+  width: 100%;
+  max-width: none;
+  min-height: 5.5rem;
+  padding: 0.75rem max(1.25rem, calc((100vw - 1320px) / 2));
+  border: 0;
+  border-bottom: 1px solid rgba(255, 179, 15, 0.22);
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(10, 9, 7, 0.96), rgba(10, 9, 7, 0.86));
+  color: var(--brand-cream);
+  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.22);
+  -webkit-backdrop-filter: blur(22px) saturate(1.15);
+  backdrop-filter: blur(22px) saturate(1.15);
+}
+
+.brand,
+body:has(.page-main.home-v4) .brand {
+  flex: 0 0 auto;
+  width: clamp(11.5rem, 14.5vw, 13.5rem);
+  height: 4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.brand:hover {
+  transform: translateY(-2px);
+  background: transparent;
+  box-shadow: none;
+}
+
+.brand .brand-logo-full,
+body:has(.page-main.home-v4) .brand .brand-logo-full,
+body:has(.particle-page-hero) .brand .brand-logo-full {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 8px 20px rgba(255, 179, 15, 0.12));
+}
+
+.desktop-nav,
+body:has(.page-main.home-v4) .desktop-nav,
+body:has(.particle-page-hero) .desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 1.8vw, 1.8rem);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.desktop-nav a,
+body:has(.page-main.home-v4) .desktop-nav a,
+body:has(.particle-page-hero) .desktop-nav a {
+  position: relative;
+  padding: 0.55rem 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 250, 240, 0.68);
+  box-shadow: none;
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+
+.desktop-nav a::after,
+body:has(.particle-page-hero) .desktop-nav a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-orange), var(--brand-amber));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 260ms ease;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current="page"],
+body:has(.page-main.home-v4) .desktop-nav a:hover,
+body:has(.page-main.home-v4) .desktop-nav a[aria-current="page"],
+body:has(.particle-page-hero) .desktop-nav a:hover,
+body:has(.particle-page-hero) .desktop-nav a[aria-current="page"] {
+  background: transparent;
+  color: #ffffff;
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.desktop-nav a:hover::after,
+.desktop-nav a[aria-current="page"]::after,
+body:has(.particle-page-hero) .desktop-nav a:hover::after,
+body:has(.particle-page-hero) .desktop-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-cta,
+body:has(.page-main.home-v4) .nav-cta,
+body:has(.particle-page-hero) .nav-cta,
+.primary-button,
+.primary-button.light,
+.footer-cta {
+  min-height: 2.8rem;
+  padding: 0 1.05rem;
+  border: 1px solid rgba(255, 205, 87, 0.58);
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--brand-amber-bright), var(--brand-orange));
+  color: #100c04 !important;
+  box-shadow: 0 14px 36px rgba(244, 125, 22, 0.22);
+}
+
+.nav-cta:hover,
+body:has(.page-main.home-v4) .nav-cta:hover,
+body:has(.particle-page-hero) .nav-cta:hover,
+.primary-button:hover,
+.primary-button.light:hover,
+.footer-cta:hover {
+  border-color: #ffe198;
+  background: #ffe198;
+  color: var(--brand-ink) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(255, 179, 15, 0.28);
+}
+
+.secondary-button,
+.menu-button {
+  border-color: rgba(255, 179, 15, 0.42);
+  border-radius: 6px;
+  background: rgba(255, 179, 15, 0.07);
+  color: var(--brand-cream);
+  box-shadow: none;
+}
+
+.secondary-button:hover,
+.menu-button:hover {
+  border-color: var(--brand-amber);
+  background: rgba(255, 179, 15, 0.15);
+  color: #ffffff;
+}
+
+.mobile-nav,
+body:has(.page-main.home-v4) .mobile-nav,
+body:has(.particle-page-hero) .mobile-nav {
+  top: 5.5rem;
+  right: 0.75rem;
+  left: 0.75rem;
+  width: auto;
+  border: 1px solid rgba(255, 179, 15, 0.3);
+  border-radius: 6px;
+  background: rgba(12, 10, 7, 0.97);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+}
+
+.mobile-nav a,
+body:has(.page-main.home-v4) .mobile-nav a,
+body:has(.particle-page-hero) .mobile-nav a {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: rgba(255, 179, 15, 0.04);
+  color: rgba(255, 250, 240, 0.82);
+  box-shadow: none;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a[aria-current="page"],
+body:has(.particle-page-hero) .mobile-nav a:hover,
+body:has(.particle-page-hero) .mobile-nav a[aria-current="page"] {
+  border-color: rgba(255, 179, 15, 0.4);
+  background: rgba(255, 179, 15, 0.14);
+  color: #ffffff;
+}
+
+/* Inner-page heroes now belong to the same dark brand system as the homepage. */
+.particle-page-hero {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  background:
+    radial-gradient(circle at 76% 46%, rgba(255, 179, 15, 0.16), transparent 24rem),
+    radial-gradient(circle at 18% 16%, rgba(244, 125, 22, 0.09), transparent 26rem),
+    linear-gradient(135deg, #080705, #100e0a 55%, #070706) !important;
+}
+
+.particle-page-hero::after,
+.signal-field-shade {
+  background: linear-gradient(180deg, rgba(7, 7, 6, 0.14), rgba(7, 7, 6, 0.58));
+}
+
+.particle-page-hero .eyebrow,
+.page-main .eyebrow {
+  border-color: rgba(255, 179, 15, 0.46);
+  background: rgba(255, 179, 15, 0.09);
+  color: var(--brand-amber-bright) !important;
+  box-shadow: none;
+}
+
+.particle-page-hero h1,
+.particle-page-hero > div > p,
+.particle-page-hero span {
+  color: var(--brand-cream) !important;
+}
+
+.particle-page-hero .page-hero-panel {
+  border: 1px solid rgba(255, 179, 15, 0.32);
+  border-radius: 6px;
+  background: linear-gradient(145deg, rgba(24, 20, 13, 0.84), rgba(10, 9, 7, 0.82));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3), inset 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.particle-page-hero .page-hero-panel svg,
+.about-panel-icon,
+.service-icon {
+  color: var(--brand-amber);
+}
+
+.content-band,
+.work-band,
+.split-band,
+.faq-band,
+.contact-band {
+  background: linear-gradient(180deg, rgba(13, 12, 9, 0.98), rgba(8, 8, 7, 0.98));
+}
+
+.compact-band,
+.faq-band {
+  background: linear-gradient(180deg, #100e0a, #0a0907);
+}
+
+.section-heading h2,
+.sticky-copy h2,
+.page-main :is(h1, h2, h3, h4, h5, h6, strong) {
+  color: var(--brand-cream);
+}
+
+.page-main :is(p, small, dt, dd) {
+  color: var(--brand-muted);
+}
+
+.page-hero-panel,
+.detail-card,
+.mini-card,
+.service-card,
+.process-card,
+.trust-card,
+.faq-item,
+.featured-project,
+.project-card,
+.lab-console,
+.contact-channel-card,
+.contact-phone-row,
+.contact-email-link,
+.service-related-links a {
+  border-color: var(--brand-line);
+  background: linear-gradient(145deg, rgba(28, 24, 16, 0.88), rgba(13, 12, 9, 0.92));
+  color: var(--brand-cream);
+  box-shadow: var(--shadow-soft), inset 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.detail-card:hover,
+.mini-card:hover,
+.service-card:hover,
+.process-card:hover,
+.featured-project:hover,
+.project-card:hover,
+.contact-channel-card:hover,
+.contact-phone-row:hover,
+.contact-email-link:hover,
+.service-related-links a:hover {
+  border-color: var(--brand-line-strong);
+  background: linear-gradient(145deg, rgba(48, 36, 16, 0.96), rgba(18, 15, 10, 0.96));
+  color: #ffffff;
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(255, 179, 15, 0.1);
+}
+
+.detail-card > span,
+.service-card > span,
+.process-card > span,
+.project-card > span,
+.project-number,
+.console-status,
+.service-link-label,
+.footer-col-title,
+.contact-channel-badge,
+.contact-action-link,
+.contact-phone-arrow,
+.service-related-links a:hover {
+  color: var(--brand-amber) !important;
+}
+
+.service-icon,
+.contact-channel-badge {
+  border-color: rgba(255, 179, 15, 0.38);
+  background: rgba(255, 179, 15, 0.1);
+}
+
+.capability-row span,
+.service-related-links a {
+  border-color: rgba(255, 179, 15, 0.28);
+  background: rgba(255, 179, 15, 0.06);
+  color: rgba(255, 250, 240, 0.82);
+  box-shadow: none;
+}
+
+.lab-console {
+  border-left: 3px solid var(--brand-amber);
+}
+
+.console-dot {
+  background: var(--brand-amber);
+  box-shadow: 0 0 18px rgba(255, 179, 15, 0.72);
+}
+
+.contact-panel,
+.trust-card.accent {
+  border: 1px solid rgba(255, 179, 15, 0.46);
+  background:
+    radial-gradient(circle at 84% 18%, rgba(255, 179, 15, 0.18), transparent 20rem),
+    linear-gradient(145deg, #211807, #0d0b07);
+  color: var(--brand-cream);
+  box-shadow: 0 30px 86px rgba(0, 0, 0, 0.38);
+}
+
+.service-final-cta,
+.home-v4 .home-final-cta,
+.home-v4 .metric-strip {
+  background: linear-gradient(120deg, var(--brand-amber-bright), var(--brand-amber) 58%, var(--brand-orange));
+  color: var(--brand-ink);
+}
+
+.service-final-cta :is(h2, p, span),
+.home-v4 .home-final-cta :is(h2, p, span),
+.home-v4 .metric-strip :is(strong, p, span) {
+  color: var(--brand-ink) !important;
+}
+
+.marquee-section,
+.home-v4 .marquee-section {
+  border-color: rgba(255, 225, 148, 0.34);
+  background: #090806;
+}
+
+.marquee-track span,
+.home-v4 .marquee-track span {
+  background: transparent;
+  color: var(--brand-amber-bright);
+  box-shadow: none;
+}
+
+.site-footer {
+  border-color: rgba(255, 179, 15, 0.18);
+  background: #070706;
+}
+
+.site-footer .footer-logo {
+  width: min(18rem, 100%);
+  min-height: 5.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.site-footer .footer-logo .brand-logo-full {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(255, 179, 15, 0.12));
+}
+
+.site-footer :is(h2, h3, strong, a) {
+  color: var(--brand-cream);
+}
+
+/* Keep the homepage hero focused: the interactive particle human is the only visual animation. */
+.home-v4 .hero-scanline,
+.home-v4 .hero-visual-glow,
+.home-v4 .hero-orbit,
+.home-v4 .hero-tech-card,
+.home-v4 .hero-signal-line {
+  display: none !important;
+}
+
+.home-v4 .hero-visual,
+.home-v4 .hero-visual::before,
+.home-v4 .hero-visual::after {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.home-v4 .hero-visual::before,
+.home-v4 .hero-visual::after {
+  content: none;
+}
+
+/* A calmer, first-viewport composition with the complete particle human in frame. */
+.home-v4 .hero {
+  grid-template-columns: minmax(0, 1fr) minmax(25rem, 0.82fr);
+  min-height: calc(100svh - 5.5rem);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  padding-top: clamp(3rem, 7vh, 4.5rem);
+  padding-bottom: clamp(2rem, 4vh, 3rem);
+}
+
+.home-v4 .hero-copy {
+  align-self: center;
+  max-width: 43rem;
+  gap: clamp(0.72rem, 1.2vh, 1rem);
+}
+
+.home-v4 .hero-copy h1 {
+  width: min(11.2ch, 100%);
+  font-size: clamp(3.2rem, 5vw, 6rem);
+  line-height: 0.92;
+}
+
+.home-v4 .hero-text {
+  max-width: 36rem;
+  font-size: clamp(0.9rem, 1vw, 1.02rem);
+  line-height: 1.58;
+}
+
+.home-v4 .hero-trust-line {
+  display: block;
+  margin: 0;
+  color: rgba(255, 235, 197, 0.76) !important;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.home-v4 .hero-actions {
+  margin-top: 0.35rem;
+}
+
+.home-v4 .hero-visual {
+  align-self: center;
+  min-height: clamp(27rem, 40vw, 37rem);
+  margin: 0;
+  overflow: hidden;
+}
+
+.home-v4 .hero-particle-man {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  filter: sepia(0.34) saturate(1.3) contrast(1.06) brightness(1.12) drop-shadow(0 24px 54px rgba(255, 151, 21, 0.12));
+}
+
+@media (max-width: 980px) {
+  .home-v4 .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    padding-top: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .home-v4 .hero-copy {
+    order: 1;
+  }
+
+  .home-v4 .hero-visual {
+    order: 2;
+    min-height: clamp(15rem, 42vw, 22rem);
+    margin: 0;
+  }
+}
+
+@media (min-width: 681px) and (max-width: 980px) {
+  .home-v4 .hero {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 3.25rem);
+    padding: clamp(2.5rem, 6vh, 4rem) 1.25rem clamp(2rem, 4vh, 3rem);
+  }
+
+  .home-v4 .hero-copy {
+    width: 100%;
+    max-width: 43rem;
+  }
+
+  .home-v4 .hero-copy h1 {
+    width: min(10.5ch, 100%);
+    font-size: clamp(2.75rem, 6vw, 4rem);
+    line-height: 0.94;
+  }
+
+  .home-v4 .hero-text {
+    font-size: 0.88rem;
+  }
+
+  .home-v4 .hero-visual {
+    min-height: clamp(24rem, 58vw, 31rem);
+    margin: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .home-v4 .hero {
+    min-height: calc(100svh - 4.75rem);
+    padding: 2rem 1rem;
+  }
+
+  .home-v4 .hero-copy {
+    gap: 0.68rem;
+  }
+
+  .home-v4 .hero-copy h1 {
+    width: 100%;
+    font-size: clamp(2.1rem, 9.6vw, 3.15rem);
+    line-height: 0.96;
+  }
+
+  .home-v4 .hero-visual {
+    min-height: clamp(10.5rem, 45vw, 13rem);
+  }
+
+  .home-v4 .hero-trust-line {
+    font-size: 0.75rem;
+  }
+}
+
+.footer-mail,
+.footer-socials a {
+  border-color: rgba(255, 179, 15, 0.3);
+  background: rgba(255, 179, 15, 0.07);
+  color: var(--brand-cream);
+  box-shadow: none;
+}
+
+.footer-mail:hover,
+.footer-socials a:hover {
+  border-color: var(--brand-amber);
+  background: rgba(255, 179, 15, 0.16);
+  color: #ffffff;
+}
+
+@media (max-width: 980px) {
+  .desktop-nav,
+  body:has(.page-main.home-v4) .desktop-nav,
+  body:has(.particle-page-hero) .desktop-nav,
+  .nav-cta,
+  body:has(.page-main.home-v4) .nav-cta,
+  body:has(.particle-page-hero) .nav-cta {
+    display: none;
+  }
+
+  .menu-button,
+  body:has(.page-main.home-v4) .menu-button,
+  body:has(.particle-page-hero) .menu-button {
+    display: grid;
+    border-color: rgba(255, 179, 15, 0.4);
+    background: rgba(255, 179, 15, 0.08);
+    color: var(--brand-amber-bright);
+  }
+}
+
+@media (max-width: 720px) {
+  .nav,
+  body:has(.page-main.home-v4) .nav,
+  body:has(.particle-page-hero) .nav {
+    min-height: 4.75rem;
+    padding-inline: 1rem;
+  }
+
+  .brand,
+  body:has(.page-main.home-v4) .brand {
+    width: min(9.8rem, calc(100vw - 7rem));
+    height: 3.45rem;
+  }
+
+  .brand .brand-logo-full,
+  body:has(.page-main.home-v4) .brand .brand-logo-full,
+  body:has(.particle-page-hero) .brand .brand-logo-full {
+    width: 100%;
+    height: 100%;
+  }
+
+  .mobile-nav,
+  body:has(.page-main.home-v4) .mobile-nav,
+  body:has(.particle-page-hero) .mobile-nav {
+    top: 4.75rem;
+  }
+
+  .particle-page-hero {
+    padding-top: 7rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-nav a::after {
+    transition: none;
+  }
+}

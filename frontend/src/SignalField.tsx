@@ -106,7 +106,7 @@ export function SignalField() {
         const alpha = 0.22 + (1 - centerDistance) * 0.58;
         const pulse = 0.72 + Math.sin(clock * 5 * point.speed + point.phase) * 0.28;
         const gold = [255, 179, 15];
-        const blue = [72, 174, 232];
+        const blue = [151, 116, 53];
         const mix = point.colorMix * 0.72 + scrollProgress * 0.28;
         const red = Math.round(blue[0] + (gold[0] - blue[0]) * mix);
         const green = Math.round(blue[1] + (gold[1] - blue[1]) * mix);

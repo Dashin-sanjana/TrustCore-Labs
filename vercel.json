@@ -4,10 +4,14 @@
   "buildCommand": "npm run build --workspace frontend",
   "outputDirectory": "frontend/dist",
   "installCommand": "npm install",
-  "rewrites": [
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
     {
-      "source": "/((?!api/.*).*)",
-      "destination": "/index.html"
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "trustcorelabs.com" }],
+      "destination": "https://www.trustcorelabs.com/:path*",
+      "permanent": true
     }
   ]
 }

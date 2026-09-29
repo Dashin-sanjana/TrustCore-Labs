@@ -28,6 +28,7 @@ import {
 import { ParticleBackground } from './ParticleBackground';
 import { SignalField } from './SignalField';
 import { BoonDotField } from './BoonDotField';
+import { defaultSeoImage, generalFaqs as faqs, getStructuredData, indexableRoutes, routeSeo, servicePages, siteUrl, type RoutePath } from './seo';
 
 type Metric = {
   label: string;
@@ -41,7 +42,7 @@ type Company = {
   services: string[];
 };
 
-type RoutePath = '/' | '/about' | '/work' | '/services' | '/process' | '/faq' | '/contact';
+type AppRoute = RoutePath | '/404';
 
 const fallbackCompany: Company = {
   name: 'TrustCoreLabs',
@@ -60,11 +61,11 @@ const fallbackCompany: Company = {
 };
 
 const navItems: { label: string; path: RoutePath }[] = [
-  { label: 'About', path: '/about' },
-  { label: 'Work', path: '/work' },
+  { label: 'Home', path: '/' },
   { label: 'Services', path: '/services' },
-  { label: 'Process', path: '/process' },
-  { label: 'FAQ', path: '/faq' },
+  { label: 'Solutions', path: '/process' },
+  { label: 'About', path: '/about' },
+  { label: 'Projects', path: '/work' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -135,6 +136,13 @@ const serviceCards = [
     text: 'Digital strategy, social media marketing, brand promotion, launch support, and maintenance that keep the business moving.',
   },
 ];
+
+const serviceCardPaths: Record<string, RoutePath> = {
+  'Product & Software Engineering': '/custom-software-development',
+  'Web & Mobile Solutions': '/web-development',
+  'ERP & Business Systems': '/business-systems',
+  'Digital Growth & Support': '/services',
+};
 
 const portfolio = [
   'Dash Fashion',
@@ -337,15 +345,6 @@ const homeProof = [
   ['1', 'connected delivery partner'],
 ];
 
-const faqs = [
-  ['Can you build a full business system?', 'Yes. TrustCoreLabs can shape custom software, ERP, CRM, POS, HRM, inventory, finance, and connected web or mobile portals around the business workflow.'],
-  ['Do you handle both design and development?', 'Yes. The work can cover interface design, frontend, backend, deployment, and launch support so the product feels consistent end to end.'],
-  ['Can marketing be included with software work?', 'Yes. Digital marketing, social media, brand promotion, and campaigns can be planned beside the product so launch and growth move together.'],
-  ['Can we start small first?', 'Yes. A first release can focus on the highest-value workflow or public page, then grow into more modules after launch.'],
-  ['Do you work with existing businesses?', 'Yes. We can improve an existing website, rebuild a workflow, or add a new business system beside current operations.'],
-  ['What do you need to estimate a project?', 'A short description of the business, the users, the required features, current tools, deadline, and any examples you like is enough to begin the conversation.'],
-];
-
 const contactEmail = 'info@trustcorelabs.com';
 const contactEmails = [contactEmail, 'hashan@trustcorelabs.com'];
 const contactAddress = 'No.257/3, Old Road, Moraketiya, Pannipitiya, Sri Lanka, 10230.';
@@ -357,9 +356,6 @@ const contactPhones = [
   { label: 'Hashan Amarasinghe', number: '+94 77 200 9665', tel: '+94772009665' },
 ];
 
-const siteUrl = 'https://www.trustcorelabs.com';
-const defaultSeoImage = `${siteUrl}/trustcore-logo.png`;
-
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
   { label: 'Facebook', href: 'https://facebook.com/trustcorelabs', icon: Facebook },
@@ -370,33 +366,6 @@ const socialLinks = [
 const fadeUp = {
   hidden: { opacity: 0, y: 34 },
   show: { opacity: 1, y: 0 },
-};
-
-const homeHeroReveal = {
-  hidden: {},
-  show: {
-    transition: {
-      delayChildren: 0.18,
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const homeHeroLineReveal = {
-  hidden: {
-    y: '112%',
-    rotateZ: 2,
-    filter: 'blur(8px)',
-  },
-  show: {
-    y: '0%',
-    rotateZ: 0,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 1.05,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  },
 };
 
 const homeSupportingReveal = {
@@ -605,49 +574,12 @@ const workDetailReveal = {
   },
 };
 
-const routes: RoutePath[] = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'];
-
-const routeSeo: Record<RoutePath, { title: string; description: string }> = {
-  '/': {
-    title: 'TrustCoreLabs | Custom Software, Web, Mobile, ERP, and Growth',
-    description:
-      'TrustCoreLabs designs and builds secure custom software, web and mobile apps, ERP systems, business platforms, and digital growth experiences.',
-  },
-  '/about': {
-    title: 'About TrustCoreLabs | Software Partner for Growing Businesses',
-    description:
-      'Learn how TrustCoreLabs connects strategy, design, software engineering, business systems, and launch support into one practical delivery path.',
-  },
-  '/work': {
-    title: 'TrustCoreLabs Work | Software, Web, Mobile, and Business Platforms',
-    description:
-      'Explore TrustCoreLabs project work across AI platforms, retail, service, fitness, food, community, web apps, mobile experiences, and business systems.',
-  },
-  '/services': {
-    title: 'TrustCoreLabs Services | Software, ERP, Web, Mobile, and Growth',
-    description:
-      'Explore TrustCoreLabs services for custom software, web and mobile development, ERP and business systems, launch support, and digital growth.',
-  },
-  '/process': {
-    title: 'TrustCoreLabs Process | From Business Problem to Product Launch',
-    description:
-      'See how TrustCoreLabs moves from discovery and product planning to design, engineering, launch, support, and scalable improvement.',
-  },
-  '/faq': {
-    title: 'TrustCoreLabs FAQ | Software Project Questions and Answers',
-    description:
-      'Find answers about TrustCoreLabs software builds, design and development, marketing support, business systems, timelines, and project estimates.',
-  },
-  '/contact': {
-    title: 'Contact TrustCoreLabs | Start a Software or Digital Product Build',
-    description:
-      'Contact TrustCoreLabs to discuss a website, software platform, ERP system, CRM, POS, mobile app, or digital growth project.',
-  },
-};
-
-function getCurrentRoute(): RoutePath {
-  const path = window.location.pathname as RoutePath;
-  return routes.includes(path) ? path : '/';
+function getCurrentRoute(): AppRoute {
+  const pathWithoutExtension = window.location.pathname.replace(/\.html$/, '');
+  const normalizedPath = pathWithoutExtension.length > 1
+    ? pathWithoutExtension.replace(/\/$/, '')
+    : pathWithoutExtension;
+  return indexableRoutes.includes(normalizedPath as RoutePath) ? normalizedPath as RoutePath : '/404';
 }
 
 function setMetaTag(selector: string, attribute: 'content' | 'href', value: string) {
@@ -818,12 +750,12 @@ function InteractiveCursor() {
   );
 }
 
-function App() {
+function App({ initialPath }: { initialPath?: AppRoute } = {}) {
   const [company, setCompany] = useState<Company>(fallbackCompany);
   const [menuOpen, setMenuOpen] = useState(false);
   const [metricsActive, setMetricsActive] = useState(false);
   const [activeCoreStage, setActiveCoreStage] = useState(0);
-  const [route, setRoute] = useState<RoutePath>(() => getCurrentRoute());
+  const [route, setRoute] = useState<AppRoute>(() => initialPath ?? getCurrentRoute());
   const agencyIntroRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
@@ -834,8 +766,6 @@ function App() {
   const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 24 });
   const heroY = useTransform(scrollYProgress, [0, 0.45], [0, -120]);
   const glowY = useTransform(scrollYProgress, [0, 0.45], [0, 90]);
-  const heroSwapRotate = useTransform(sectionSwapProgress, [0, 0.5, 1], [0, -22, -90]);
-  const heroSwapOpacity = useTransform(sectionSwapProgress, [0, 0.72, 1], [1, 0.92, 0]);
   const agencySwapRotate = useTransform(sectionSwapProgress, [0, 0.38, 1], [90, 72, 0]);
   const agencySwapOpacity = useTransform(sectionSwapProgress, [0, 0.28, 0.72, 1], [0, 0.08, 0.78, 1]);
 
@@ -847,7 +777,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const syncRoute = () => setRoute(getCurrentRoute());
+    const syncRoute = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      setRoute(getCurrentRoute());
+    };
     window.history.scrollRestoration = 'manual';
     window.addEventListener('popstate', syncRoute);
     return () => window.removeEventListener('popstate', syncRoute);
@@ -863,6 +796,16 @@ function App() {
   }, [route]);
 
   useEffect(() => {
+    const robots = document.head.querySelector<HTMLMetaElement>('meta[name="robots"]');
+
+    if (route === '/404') {
+      document.title = 'Page Not Found | TrustCore Labs';
+      setMetaTag('meta[name="description"]', 'content', 'The page you requested could not be found. Explore TrustCore Labs services, projects, or contact information.');
+      robots?.setAttribute('content', 'noindex, nofollow');
+      document.head.querySelector('#structured-data')?.remove();
+      return;
+    }
+
     const metadata = routeSeo[route];
     const canonicalUrl = `${siteUrl}${route === '/' ? '/' : route}`;
 
@@ -876,6 +819,16 @@ function App() {
     setMetaTag('meta[name="twitter:title"]', 'content', metadata.title);
     setMetaTag('meta[name="twitter:description"]', 'content', metadata.description);
     setMetaTag('meta[name="twitter:image"]', 'content', defaultSeoImage);
+    robots?.setAttribute('content', 'index, follow, max-image-preview:large');
+
+    let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
+    if (!structuredData) {
+      structuredData = document.createElement('script');
+      structuredData.id = 'structured-data';
+      structuredData.type = 'application/ld+json';
+      document.head.appendChild(structuredData);
+    }
+    structuredData.textContent = JSON.stringify(getStructuredData(route));
   }, [route]);
 
   const navigateTo = (path: RoutePath) => (event: MouseEvent<HTMLAnchorElement>) => {
@@ -883,22 +836,20 @@ function App() {
       return;
     }
 
-    event.preventDefault();
     setMenuOpen(false);
 
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, '', path);
-      setRoute(path);
+    if (window.location.pathname === path) {
+      event.preventDefault();
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const marqueeItems = useMemo(() => [...portfolio, ...portfolio], []);
+  const activeService = route === '/404' ? undefined : servicePages.find((service) => service.path === route);
 
   return (
     <div className="site-shell">
-      <ParticleBackground />
+      {route !== '/' && <ParticleBackground />}
       <InteractiveCursor />
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
       <div className="noise" />
@@ -915,7 +866,7 @@ function App() {
         transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
       >
         <a className="brand" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
-          <img className="brand-logo-full" src="/trustcore-logo.png" alt="TrustCore Labs" />
+          <img className="brand-logo-full" src="/trustcore-logo-on-dark.png" alt="TrustCore Labs" width="1140" height="540" />
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
@@ -925,7 +876,7 @@ function App() {
           ))}
         </nav>
         <a className="nav-cta" href="/contact" onClick={navigateTo('/contact')}>
-          Start a build
+          Start a Project
           <ArrowUpRight size={17} />
         </a>
         <button className="menu-button" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle navigation">
@@ -947,104 +898,41 @@ function App() {
         {route === '/' && (
           <>
         <section className="hero section-grid">
-          <motion.div
-            className="hero-scanline"
-            aria-hidden="true"
-            initial={reduceMotion ? false : { x: '-18vw', opacity: 0 }}
-            animate={reduceMotion ? { opacity: 0 } : { x: '118vw', opacity: [0, 0.75, 0] }}
-            transition={{ duration: 4.8, delay: 1.4, repeat: Infinity, repeatDelay: 3.8, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="hero-copy hero-swap-face"
-            variants={homeHeroReveal}
-            initial={reduceMotion ? false : 'hidden'}
-            animate="show"
-            style={{
-              y: heroY,
-              rotateX: reduceMotion ? 0 : heroSwapRotate,
-              opacity: reduceMotion ? 1 : heroSwapOpacity,
-            }}
-          >
-            <motion.p
-              className="eyebrow"
-              variants={homeSupportingReveal}
-            >
-              Product engineering / business systems / growth
-            </motion.p>
-            <motion.h1>
+          <div className="hero-copy">
+            <p className="eyebrow">
+              SOFTWARE • WEB • MOBILE • DIGITAL SOLUTIONS
+            </p>
+            <h1>
               <span className="hero-line-clip">
-                <motion.span className="hero-thin" variants={homeHeroLineReveal}>We build</motion.span>
+                <span className="hero-thin">We Build Digital Solutions</span>
               </span>
               <span className="hero-line-clip">
-                <motion.span className="hero-strong" variants={homeHeroLineReveal}>digital systems.</motion.span>
+                <span className="hero-strong">That Move Businesses Forward.</span>
               </span>
-            </motion.h1>
-            <motion.p className="hero-text" variants={homeSupportingReveal}>
-              {company.name} designs, builds, and improves the software behind growing businesses, from customer experiences to the systems that run daily operations.
-            </motion.p>
-            <motion.div className="hero-proof" initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} animate={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.18 }} transition={{ delay: 0.2 }}>
-              <span>
-                <ShieldCheck size={16} />
-                Secure foundations
-              </span>
-              <span>
-                <LockKeyhole size={16} />
-                Matched delivery team
-              </span>
-              <span>
-                <Layers3 size={16} />
-                Scalable product flow
-              </span>
-            </motion.div>
-            <motion.div className="hero-actions" variants={homeSupportingReveal}>
-              <a className="primary-button" href="/services" onClick={navigateTo('/services')}>
-                Explore the core
+            </h1>
+            <p className="hero-text">
+              From high-performance websites and mobile apps to custom business systems, TrustCore Labs turns ambitious ideas into reliable digital products.
+            </p>
+            <p className="hero-trust-line">
+              Built for startups, growing businesses & ambitious teams.
+            </p>
+            <div className="hero-actions">
+              <a className="primary-button" href="/contact" onClick={navigateTo('/contact')}>
+                Start Your Project
                 <ChevronRight size={18} />
               </a>
-              <a className="secondary-button" href="/contact" onClick={navigateTo('/contact')}>
-                Talk to us
+              <a className="secondary-button" href="/work" onClick={navigateTo('/work')}>
+                Explore Our Work
               </a>
-            </motion.div>
+            </div>
             <a className="hero-scroll-cue" href="#home-story">
               Explore our approach
               <ArrowDown size={16} />
             </a>
-          </motion.div>
+          </div>
 
-          <motion.div className="hero-visual" initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }} animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: false, amount: 0.12 }} transition={{ duration: 0.8 }}>
-            <div className="story-window">
-              <div className="window-bar">
-                <span />
-                <span />
-                <span />
-              </div>
-              <img className="story-logo" src="/faviconl.png" alt="TrustCoreLabs logo" />
-              <div className="story-caption">
-                <span>TrustCoreLabs</span>
-                <strong>Dedicated delivery shaped around your business.</strong>
-              </div>
-            </div>
-            <div className="insight-card insight-main">
-              <span>01</span>
-              <strong>Team extension</strong>
-              <p>We add the skills your in-house team needs to move faster.</p>
-            </div>
-            <div className="insight-card insight-side">
-              <span>02</span>
-              <strong>Full-stack build</strong>
-              <p>Interfaces, APIs, systems, content, and launch work together.</p>
-            </div>
-            <div className="node node-a" />
-            <div className="node node-b" />
-            <div className="node node-c" />
-            <div className="story-pill story-pill-a">Product teams</div>
-            <div className="story-pill story-pill-b">ERP systems</div>
-            <div className="story-pill story-pill-c">Growth support</div>
-            <div className="story-thread">
-              <span />
-              <span />
-              <span />
-            </div>
+          <motion.div className="hero-visual" initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.94 }} animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
+            <ParticleBackground className="hero-particle-man" />
           </motion.div>
         </section>
 
@@ -1194,8 +1082,8 @@ function App() {
               return (
                 <motion.a
                   className="capability-item"
-                  href="/services"
-                  onClick={navigateTo('/services')}
+                  href={serviceCardPaths[service.title]}
+                  onClick={navigateTo(serviceCardPaths[service.title])}
                   key={service.title}
                   variants={homeRowReveal}
                 >
@@ -1613,6 +1501,141 @@ function App() {
                 ))}
               </div>
             </section>
+
+            <section className="content-band compact-band service-directory" aria-labelledby="service-directory-title">
+              <div className="section-heading">
+                <p className="eyebrow">Focused services</p>
+                <h2 id="service-directory-title">Explore the right delivery path for your project.</h2>
+                <p>Each service page explains the problems we solve, capabilities, delivery process, technology approach, and practical questions to consider.</p>
+              </div>
+              <div className="detail-grid two">
+                {servicePages.map((service, index) => (
+                  <a className="detail-card service-directory-link" key={service.path} href={service.path} onClick={navigateTo(service.path)}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <h3>{service.shortTitle}</h3>
+                    <p>{service.description}</p>
+                    <span className="service-link-label">View service <ArrowUpRight size={17} /></span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        {activeService && (
+          <>
+            <section className="page-hero services-hero page-section particle-page-hero service-detail-hero">
+              <SignalField />
+              <div className="signal-field-shade" aria-hidden="true" />
+              <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate="show">
+                <p className="eyebrow">{activeService.eyebrow}</p>
+                <h1>{activeService.heading}</h1>
+                <p>{activeService.intro}</p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate="show" transition={{ delay: 0.08 }}>
+                <Cpu size={30} />
+                <strong>Sri Lanka-based. Ready for international delivery.</strong>
+                <span>Clear discovery, thoughtful UI/UX, dependable engineering, and practical launch support.</span>
+              </motion.div>
+            </section>
+
+            <nav className="content-band service-breadcrumbs" aria-label="Breadcrumb">
+              <a href="/" onClick={navigateTo('/')}>Home</a>
+              <ChevronRight size={14} aria-hidden="true" />
+              <a href="/services" onClick={navigateTo('/services')}>Services</a>
+              <ChevronRight size={14} aria-hidden="true" />
+              <span aria-current="page">{activeService.shortTitle}</span>
+            </nav>
+
+            <section className="content-band service-detail-section" aria-labelledby="problems-title">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Business problems</p>
+                <h2 id="problems-title">Where this service creates useful change.</h2>
+              </div>
+              <div className="mini-grid">
+                {activeService.problems.map((problem) => (
+                  <article className="mini-card" key={problem}>
+                    <Check size={18} />
+                    <p>{problem}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band service-detail-section" aria-labelledby="capabilities-title">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Capabilities</p>
+                <h2 id="capabilities-title">What the engagement can include.</h2>
+              </div>
+              <div className="detail-grid two">
+                {activeService.capabilities.map((capability, index) => (
+                  <article className="detail-card" key={capability}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <h3>{capability}</h3>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="split-band service-process-section" aria-labelledby="service-process-title">
+              <div className="sticky-copy">
+                <p className="eyebrow">Development process</p>
+                <h2 id="service-process-title">A visible path from context to release.</h2>
+                <p>{activeService.technologies}</p>
+              </div>
+              <div className="process-list">
+                {activeService.process.map((step, index) => (
+                  <article className="process-card" key={step}>
+                    <span>0{index + 1}</span>
+                    <div><h3>{step}</h3></div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band service-detail-section" aria-labelledby="why-trustcore-title">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Why TrustCore Labs</p>
+                <h2 id="why-trustcore-title">Business context stays connected to delivery.</h2>
+                <p>{activeService.why}</p>
+              </div>
+              <div className="service-related-links" aria-label="Related TrustCore Labs projects">
+                <strong>Relevant public work</strong>
+                {activeService.relatedProjects.map((projectName) => {
+                  const project = featuredProjects.find((item) => item.name === projectName);
+                  return project ? (
+                    <a key={project.name} href={project.href} target="_blank" rel="noreferrer">
+                      {project.name}<ArrowUpRight size={16} />
+                    </a>
+                  ) : null;
+                })}
+                <a href="/work" onClick={navigateTo('/work')}>View all projects<ChevronRight size={16} /></a>
+              </div>
+            </section>
+
+            <section className="faq-band service-faq" aria-labelledby="service-faq-title">
+              <div className="section-heading">
+                <p className="eyebrow">FAQ</p>
+                <h2 id="service-faq-title">Questions about {activeService.shortTitle.toLowerCase()}.</h2>
+              </div>
+              <div className="faq-list">
+                {activeService.faqs.map(([question, answer], index) => (
+                  <article className="faq-item" key={question}>
+                    <span>0{index + 1}</span>
+                    <div><h3>{question}</h3><p>{answer}</p></div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="home-final-cta service-final-cta">
+              <span>Start a project</span>
+              <h2>Let&apos;s turn the requirement into a practical release.</h2>
+              <p>Share the business context, users, timeline, and what needs to improve first.</p>
+              <a className="primary-button" href="/contact" onClick={navigateTo('/contact')}>
+                Discuss your project<ArrowUpRight size={18} />
+              </a>
+            </section>
           </>
         )}
 
@@ -1874,6 +1897,20 @@ function App() {
             </section>
           </>
         )}
+
+        {route === '/404' && (
+          <section className="page-hero page-section not-found-page">
+            <div>
+              <p className="eyebrow">404 / Page not found</p>
+              <h1>This page does not exist.</h1>
+              <p>The address may have changed, or the link may be incomplete. Continue to our services, projects, or homepage.</p>
+              <div className="hero-actions">
+                <a className="primary-button" href="/" onClick={navigateTo('/')}>Return home<ChevronRight size={18} /></a>
+                <a className="secondary-button" href="/services" onClick={navigateTo('/services')}>Explore services</a>
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
       <motion.footer
@@ -1893,7 +1930,7 @@ function App() {
             transition={{ duration: 0.72, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
             <a className="footer-logo" href="/" onClick={navigateTo('/')} aria-label="TrustCoreLabs home">
-              <img className="brand-logo-full" src="/trustcore-logo.png" alt="TrustCore Labs" />
+              <img className="brand-logo-full" src="/trustcore-logo-on-dark.png" alt="TrustCore Labs" width="1140" height="540" loading="lazy" />
             </a>
             <p>
               Software teams, business systems, mobile experiences, and growth campaigns built with clarity from idea to launch.
@@ -1931,9 +1968,9 @@ function App() {
             </div>
             <div>
               <span className="footer-col-title">Services</span>
-              {serviceCards.map((service) => (
-                <a key={service.title} href="/services" onClick={navigateTo('/services')}>
-                  {service.title}
+              {servicePages.map((service) => (
+                <a key={service.path} href={service.path} onClick={navigateTo(service.path)}>
+                  {service.shortTitle}
                 </a>
               ))}
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type Dot = {
@@ -20,6 +20,9 @@ const random = (seed: number) => fract(Math.sin(seed * 78.233) * 43758.5453);
 
 export function BoonDotField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -212,6 +215,8 @@ export function BoonDotField() {
       reducedMotion.removeEventListener('change', handleMotionChange);
     };
   }, []);
+
+  if (!mounted) return null;
 
   return createPortal(
     <canvas ref={canvasRef} className="boon-dot-field" aria-hidden="true" />,
