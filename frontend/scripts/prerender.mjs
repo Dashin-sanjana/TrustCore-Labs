@@ -43,8 +43,13 @@ function buildDocument(path, appHtml, structuredData) {
   html = replaceMeta(html, 'og:title', metadata.title, true);
   html = replaceMeta(html, 'og:description', metadata.description, true);
   html = replaceMeta(html, 'og:url', canonicalUrl ?? serverEntry.siteUrl, true);
+  html = replaceMeta(html, 'og:image', metadata.image ?? serverEntry.defaultSeoImage, true);
+  html = replaceMeta(html, 'og:image:alt', metadata.imageAlt ?? 'TrustCore Labs logo', true);
+  html = replaceMeta(html, 'og:image:width', String(metadata.imageWidth ?? 4200), true);
+  html = replaceMeta(html, 'og:image:height', String(metadata.imageHeight ?? 2000), true);
   html = replaceMeta(html, 'twitter:title', metadata.title);
   html = replaceMeta(html, 'twitter:description', metadata.description);
+  html = replaceMeta(html, 'twitter:image', metadata.image ?? serverEntry.defaultSeoImage);
 
   if (canonicalUrl) {
     html = html.replace(/<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${canonicalUrl}" />`);

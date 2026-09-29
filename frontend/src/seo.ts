@@ -1,3 +1,5 @@
+import { caseStudies, caseStudyByPath, type CaseStudyPath } from './caseStudies';
+
 export const siteUrl = 'https://www.trustcorelabs.com';
 export const siteName = 'TrustCore Labs';
 export const defaultSeoImage = `${siteUrl}/trustcore-logo-lockup.png`;
@@ -176,10 +178,20 @@ export const servicePages = [
 
 export const coreRoutes = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'] as const;
 export const serviceRoutes = servicePages.map((page) => page.path);
-export type RoutePath = (typeof coreRoutes)[number] | (typeof servicePages)[number]['path'];
-export const indexableRoutes: RoutePath[] = [...coreRoutes, ...serviceRoutes];
+export const caseStudyRoutes = caseStudies.map((study) => study.path);
+export type RoutePath = (typeof coreRoutes)[number] | (typeof servicePages)[number]['path'] | CaseStudyPath;
+export const indexableRoutes: RoutePath[] = [...coreRoutes, ...serviceRoutes, ...caseStudyRoutes];
 
-export const routeSeo: Record<RoutePath, { title: string; description: string }> = {
+export type RouteMetadata = {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+};
+
+export const routeSeo: Record<RoutePath, RouteMetadata> = {
   '/': {
     title: 'TrustCore Labs | Web, Mobile & Software Development',
     description: 'TrustCore Labs builds websites, mobile apps, custom software, ERP solutions, and digital products for businesses in Sri Lanka and worldwide.',
@@ -189,8 +201,8 @@ export const routeSeo: Record<RoutePath, { title: string; description: string }>
     description: 'Meet the Sri Lanka-based TrustCore Labs team connecting strategy, UI/UX, software engineering, business systems, and launch support.',
   },
   '/work': {
-    title: 'Software & Web Development Projects | TrustCore Labs',
-    description: 'Explore TrustCore Labs projects across AI, retail, services, fitness, food, community platforms, websites, and business systems.',
+    title: 'Software Development Work & Case Studies | TrustCore Labs',
+    description: 'Explore verified TrustCore Labs case studies and public project links across web development, UI/UX, software, and digital platforms.',
   },
   '/services': {
     title: 'Software, Web & Mobile Services | TrustCore Labs',
@@ -209,7 +221,15 @@ export const routeSeo: Record<RoutePath, { title: string; description: string }>
     description: 'Contact TrustCore Labs in Sri Lanka to discuss a website, mobile app, custom software platform, ERP, CRM, POS, or UI/UX project.',
   },
   ...Object.fromEntries(servicePages.map((page) => [page.path, { title: page.title, description: page.description }])),
-} as Record<RoutePath, { title: string; description: string }>;
+  ...Object.fromEntries(caseStudies.map((study) => [study.path, {
+    title: study.seoTitle,
+    description: study.metaDescription,
+    image: `${siteUrl}${study.heroImage}`,
+    imageAlt: study.heroAlt,
+    imageWidth: study.heroImageWidth,
+    imageHeight: study.heroImageHeight,
+  }])),
+} as Record<RoutePath, RouteMetadata>;
 
 const organization = {
   '@type': 'Organization',
@@ -242,6 +262,8 @@ const organization = {
 
 const breadcrumbName = (path: RoutePath) => {
   if (path === '/') return 'Home';
+  const caseStudy = caseStudyByPath(path);
+  if (caseStudy) return caseStudy.name;
   return servicePages.find((page) => page.path === path)?.shortTitle
     ?? ({ '/about': 'About', '/work': 'Projects', '/services': 'Services', '/process': 'Process', '/faq': 'FAQ', '/contact': 'Contact' } as Record<string, string>)[path];
 };
@@ -262,9 +284,16 @@ export function getStructuredData(path: RoutePath) {
 
   if (path !== '/') {
     const service = servicePages.find((page) => page.path === path);
+    const caseStudy = caseStudyByPath(path);
     graph.push({
       '@type': 'BreadcrumbList',
-      itemListElement: service
+      itemListElement: caseStudy
+        ? [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+            { '@type': 'ListItem', position: 2, name: 'Work', item: `${siteUrl}/work` },
+            { '@type': 'ListItem', position: 3, name: caseStudy.name, item: `${siteUrl}${caseStudy.path}` },
+          ]
+        : service
         ? [
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
             { '@type': 'ListItem', position: 2, name: 'Services', item: `${siteUrl}/services` },
@@ -295,6 +324,27 @@ export function getStructuredData(path: RoutePath) {
         name: question,
         acceptedAnswer: { '@type': 'Answer', text: answer },
       })),
+    });
+  }
+
+  const caseStudy = caseStudyByPath(path);
+  if (caseStudy) {
+    graph.push({
+      '@type': 'Article',
+      '@id': `${siteUrl}${caseStudy.path}#case-study`,
+      headline: caseStudy.name,
+      description: caseStudy.metaDescription,
+      url: `${siteUrl}${caseStudy.path}`,
+      image: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}${caseStudy.heroImage}`,
+        width: caseStudy.heroImageWidth,
+        height: caseStudy.heroImageHeight,
+      },
+      author: { '@id': `${siteUrl}/#organization` },
+      publisher: { '@id': `${siteUrl}/#organization` },
+      about: caseStudy.services.map((item) => item.label),
+      inLanguage: 'en',
     });
   }
 

@@ -22,12 +22,13 @@ import {
   Phone,
   ShieldCheck,
   Sparkles,
-  Twitter,
   X,
 } from 'lucide-react';
 import { ParticleBackground } from './ParticleBackground';
 import { SignalField } from './SignalField';
 import { BoonDotField } from './BoonDotField';
+import { CaseStudyPage } from './CaseStudyPage';
+import { caseStudies, caseStudyByPath } from './caseStudies';
 import { defaultSeoImage, generalFaqs as faqs, getStructuredData, indexableRoutes, routeSeo, servicePages, siteUrl, type RoutePath } from './seo';
 
 type Metric = {
@@ -49,7 +50,7 @@ const fallbackCompany: Company = {
   tagline: 'Growth-focused software teams for ambitious businesses.',
   metrics: [
     { label: 'Core service lines', value: '04' },
-    { label: 'Live project portfolio', value: '6+' },
+    { label: 'Verified case studies', value: '01' },
     { label: 'Team extension mindset', value: '1' },
   ],
   services: [
@@ -81,7 +82,7 @@ const pageCards = [
     path: '/work' as RoutePath,
     eyebrow: 'Portfolio',
     title: 'Recent Work',
-    text: 'Browse public projects, outcomes, scopes, and business categories.',
+    text: 'Browse verified case studies and supporting public project links.',
     icon: Globe2,
   },
   {
@@ -163,7 +164,7 @@ const featuredProjects = [
   {
     name: 'Dash Fashion',
     type: 'Retail launch',
-    text: 'A fashion storefront shaped around browsing, brand confidence, and easy customer engagement.',
+    text: 'A public fashion storefront with catalogue browsing, responsive product presentation, and customer contact paths.',
     result: 'Commerce presence',
     scope: 'Frontend, product flow, visual system',
     href: 'https://dash-fashion-ruby.vercel.app',
@@ -171,7 +172,7 @@ const featuredProjects = [
   {
     name: 'New Zealankanz',
     type: 'Service platform',
-    text: 'A business web experience built for service discovery, structured listings, and stronger digital reach.',
+    text: 'A public service website with structured listings, service discovery, and responsive content pages.',
     result: 'Public platform',
     scope: 'Web app, content flow, launch support',
     href: 'https://new-zealankanz-frontend.vercel.app',
@@ -179,7 +180,7 @@ const featuredProjects = [
   {
     name: 'Fatbis',
     type: 'Food business website',
-    text: 'A lively web presence shaped for product discovery, customer interest, and brand visibility.',
+    text: 'A public food brand website presenting products, brand content, and customer contact information.',
     result: 'Brand website',
     scope: 'Website experience, visual presentation, launch support',
     href: 'https://fatbis.net/',
@@ -187,7 +188,7 @@ const featuredProjects = [
   {
     name: 'Focus Fitness',
     type: 'Fitness web experience',
-    text: 'A sharp fitness-focused website built around motivation, service clarity, and conversion.',
+    text: 'A public fitness website presenting services, programs, brand content, and clear contact paths.',
     result: 'Fitness presence',
     scope: 'Frontend experience, responsive layout, content flow',
     href: 'https://focusfitness.waveloop.dev/',
@@ -195,7 +196,7 @@ const featuredProjects = [
   {
     name: 'AI Hub',
     type: 'AI tools & web platform',
-    text: 'A curated discovery platform with 500+ free AI tools, custom AI playground apps, and practical creator utilities.',
+    text: 'A public AI discovery platform with a tool directory, playground experiences, and creator utilities.',
     result: 'AI platform & directory',
     scope: 'Full-stack platform, tool directory, AI playground apps',
     href: 'https://ai-hub.live',
@@ -203,7 +204,7 @@ const featuredProjects = [
   {
     name: 'Togo and Friends',
     type: 'Community brand platform',
-    text: 'A playful public website shaped for storytelling, browsing, and audience connection.',
+    text: 'A public community brand website with story-led content, navigation, and responsive pages.',
     result: 'Public website',
     scope: 'Brand storytelling, web pages, user journey',
     href: 'https://togoandfriends.com/home',
@@ -340,7 +341,7 @@ const trustReasons = [
 ];
 
 const homeProof = [
-  ['6+', 'live company projects'],
+  ['01', 'verified case study'],
   ['4', 'core service lines'],
   ['1', 'connected delivery partner'],
 ];
@@ -356,11 +357,20 @@ const contactPhones = [
   { label: 'Hashan Amarasinghe', number: '+94 77 200 9665', tel: '+94772009665' },
 ];
 
+function TikTokIcon({ size = 24 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M15.6 3c.24 2.07 1.4 3.3 3.4 3.43v3.1a7.7 7.7 0 0 1-3.36-.78v6.1a6.15 6.15 0 1 1-5.3-6.1c.4-.05.8-.06 1.2-.02v3.16a3.05 3.05 0 1 0 1.05 2.3V3h3.01Z" />
+    </svg>
+  );
+}
+
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com/trustcorelabs', icon: Instagram },
   { label: 'Facebook', href: 'https://facebook.com/trustcorelabs', icon: Facebook },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/trustcorelabs', icon: Linkedin },
-  { label: 'X', href: 'https://x.com/TrustCoreLabs', icon: Twitter },
+  { label: 'X', href: 'https://x.com/TrustCoreLabs', icon: X },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@trustcorelabs', icon: TikTokIcon },
 ];
 
 const fadeUp = {
@@ -808,6 +818,7 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
 
     const metadata = routeSeo[route];
     const canonicalUrl = `${siteUrl}${route === '/' ? '/' : route}`;
+    const socialImage = metadata.image ?? defaultSeoImage;
 
     document.title = metadata.title;
     setMetaTag('meta[name="description"]', 'content', metadata.description);
@@ -815,10 +826,13 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
     setMetaTag('meta[property="og:title"]', 'content', metadata.title);
     setMetaTag('meta[property="og:description"]', 'content', metadata.description);
     setMetaTag('meta[property="og:url"]', 'content', canonicalUrl);
-    setMetaTag('meta[property="og:image"]', 'content', defaultSeoImage);
+    setMetaTag('meta[property="og:image"]', 'content', socialImage);
+    setMetaTag('meta[property="og:image:alt"]', 'content', metadata.imageAlt ?? 'TrustCore Labs logo');
+    setMetaTag('meta[property="og:image:width"]', 'content', String(metadata.imageWidth ?? 4200));
+    setMetaTag('meta[property="og:image:height"]', 'content', String(metadata.imageHeight ?? 2000));
     setMetaTag('meta[name="twitter:title"]', 'content', metadata.title);
     setMetaTag('meta[name="twitter:description"]', 'content', metadata.description);
-    setMetaTag('meta[name="twitter:image"]', 'content', defaultSeoImage);
+    setMetaTag('meta[name="twitter:image"]', 'content', socialImage);
     robots?.setAttribute('content', 'index, follow, max-image-preview:large');
 
     let structuredData = document.head.querySelector<HTMLScriptElement>('#structured-data');
@@ -846,6 +860,7 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
 
   const marqueeItems = useMemo(() => [...portfolio, ...portfolio], []);
   const activeService = route === '/404' ? undefined : servicePages.find((service) => service.path === route);
+  const activeCaseStudy = route === '/404' ? undefined : caseStudyByPath(route);
 
   return (
     <div className="site-shell">
@@ -1121,7 +1136,7 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
           viewport={{ once: true, amount: 0.06 }}
         >
           <motion.div className="home-work-heading" variants={homeSupportingReveal}>
-            <div className="home-section-index">Selected outcomes / 04</div>
+            <div className="home-section-index">Selected public work / 04</div>
             <h2>Built for the real world.</h2>
             <a href="/work" onClick={navigateTo('/work')}>View all work <ArrowUpRight size={17} /></a>
           </motion.div>
@@ -1132,6 +1147,22 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
             whileInView="show"
             viewport={{ once: true, amount: 0.04 }}
           >
+            {caseStudies.map((study, index) => (
+              <motion.a
+                className="home-work-item"
+                href={study.path}
+                key={study.path}
+                variants={homeRowReveal}
+              >
+                <span>0{index + 1}</span>
+                <div>
+                  <small>Verified case study</small>
+                  <h3>{study.name}</h3>
+                </div>
+                <p>{study.summary}</p>
+                <ArrowUpRight size={24} />
+              </motion.a>
+            ))}
             {featuredProjects.map((project, index) => (
               <motion.a
                 className="home-work-item"
@@ -1141,7 +1172,7 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
                 key={project.name}
                 variants={homeRowReveal}
               >
-                <span>0{index + 1}</span>
+                <span>{String(index + caseStudies.length + 1).padStart(2, '0')}</span>
                 <div>
                   <small>{project.type}</small>
                   <h3>{project.name}</h3>
@@ -1301,18 +1332,38 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
               <SignalField />
               <div className="signal-field-shade" aria-hidden="true" />
               <motion.div variants={revealSequence}>
-                <motion.p className="eyebrow" custom={0} variants={workTextReveal}>Customer stories</motion.p>
-                <motion.h1 custom={1} variants={workTextReveal}>Recent work with real business shape.</motion.h1>
-                <motion.p custom={2} variants={workTextReveal}>Each project is presented by context, role, and outcome so prospects can understand the work quickly.</motion.p>
+                <motion.p className="eyebrow" custom={0} variants={workTextReveal}>Portfolio and case studies</motion.p>
+                <motion.h1 custom={1} variants={workTextReveal}>Digital work explained with useful context.</motion.h1>
+                <motion.p custom={2} variants={workTextReveal}>Verified case studies document the challenge, delivery, technology, and outcome without unsupported performance claims.</motion.p>
               </motion.div>
               <motion.div className="page-hero-panel" variants={fadeUp} initial="hidden" animate="show" transition={{ delay: 0.08 }}>
                 <Globe2 size={30} />
-                <strong>6+ live public projects</strong>
-                <span>AI platforms, retail, service, fitness, food, community, and business-platform work across web and operational systems.</span>
+                <strong>Verified work, published carefully</strong>
+                <span>Detailed case studies are added only when project scope, attribution, and visible evidence can be confirmed.</span>
               </motion.div>
             </motion.section>
 
             <section className="work-band work-reveal-stage" id="work">
+              <div className="verified-work-heading">
+                <p className="eyebrow">Verified case study</p>
+                <h2>Repository-backed work with a transparent delivery record.</h2>
+              </div>
+              {caseStudies.map((study) => (
+                <a className="verified-case-card" href={study.path} key={study.path}>
+                  <img src={study.heroImage} alt={study.heroAlt} width={study.heroImageWidth} height={study.heroImageHeight} loading="eager" decoding="async" />
+                  <div>
+                    <span>{study.category}</span>
+                    <h2>{study.name}</h2>
+                    <p>{study.summary}</p>
+                    <strong>View Case Study <ArrowUpRight size={17} /></strong>
+                  </div>
+                </a>
+              ))}
+              <div className="public-work-heading">
+                <p className="eyebrow">Additional public links</p>
+                <h2>Project links currently presented in the portfolio.</h2>
+                <p>Detailed case studies will be added after project attribution, scope, and supporting assets are confirmed.</p>
+              </div>
               <div className="featured-projects">
                 {featuredProjects.map((project, index) => (
                   <motion.a
@@ -1341,7 +1392,7 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
                     </div>
                     <dl className="featured-project-meta">
                       <div>
-                        <dt>Result</dt>
+                        <dt>Delivery</dt>
                         <dd>{project.result}</dd>
                       </div>
                       <motion.div variants={workDetailReveal}>
@@ -1385,6 +1436,8 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
             </section>
           </>
         )}
+
+        {activeCaseStudy && <CaseStudyPage study={activeCaseStudy} />}
 
         {route === '/services' && (
           <>
@@ -1600,16 +1653,15 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
                 <p>{activeService.why}</p>
               </div>
               <div className="service-related-links" aria-label="Related TrustCore Labs projects">
-                <strong>Relevant public work</strong>
-                {activeService.relatedProjects.map((projectName) => {
-                  const project = featuredProjects.find((item) => item.name === projectName);
-                  return project ? (
-                    <a key={project.name} href={project.href} target="_blank" rel="noreferrer">
-                      {project.name}<ArrowUpRight size={16} />
+                <strong>Related work</strong>
+                {caseStudies
+                  .filter((study) => study.services.some((service) => service.href === activeService.path))
+                  .map((study) => (
+                    <a key={study.path} href={study.path}>
+                      {study.name}<ChevronRight size={16} />
                     </a>
-                  ) : null;
-                })}
-                <a href="/work" onClick={navigateTo('/work')}>View all projects<ChevronRight size={16} /></a>
+                  ))}
+                <a href="/work" onClick={navigateTo('/work')}>View all work<ChevronRight size={16} /></a>
               </div>
             </section>
 

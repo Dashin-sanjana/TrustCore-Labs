@@ -76,11 +76,20 @@
 .site-footer .footer-logo::after {
   content: "";
   position: absolute;
-  inset: -40% auto -40% -45%;
-  width: 28%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.88), transparent);
+  inset: 0;
+  background: linear-gradient(105deg, transparent 36%, rgba(255, 255, 255, 0.9) 48%, rgba(255, 179, 15, 0.38) 52%, transparent 64%);
+  background-size: 260% 100%;
+  background-position: 140% 0;
+  -webkit-mask-image: url("/trustcore-logo-on-dark.png");
+  mask-image: url("/trustcore-logo-on-dark.png");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  opacity: 0;
   pointer-events: none;
-  transform: skewX(-18deg);
   animation: footer-logo-sheen 6s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
 
@@ -276,9 +285,17 @@
 }
 
 @keyframes footer-logo-sheen {
-  0%, 62% { left: -45%; opacity: 0; }
+  0%, 62% {
+    background-position: 140% 0;
+    opacity: 0;
+  }
+
   68% { opacity: 1; }
-  84%, 100% { left: 120%; opacity: 0; }
+
+  84%, 100% {
+    background-position: -40% 0;
+    opacity: 0;
+  }
 }
 
 @media (max-width: 1120px) {
