@@ -1350,7 +1350,6 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
               </div>
               {caseStudies.map((study) => (
                 <a className="verified-case-card" href={study.path} key={study.path}>
-                  <img src={study.heroImage} alt={study.heroAlt} width={study.heroImageWidth} height={study.heroImageHeight} loading="eager" decoding="async" />
                   <div>
                     <span>{study.category}</span>
                     <h2>{study.name}</h2>
