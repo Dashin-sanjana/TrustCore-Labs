@@ -3,6 +3,20 @@ import { caseStudies, caseStudyByPath, type CaseStudyPath } from './caseStudies'
 export const siteUrl = 'https://www.trustcorelabs.com';
 export const siteName = 'TrustCore Labs';
 export const defaultSeoImage = `${siteUrl}/trustcore-logo-lockup.png`;
+export const businessPhone = '+94788418981';
+export const businessAddress = {
+  streetAddress: 'No. 257/3 Old Rd',
+  addressLocality: 'Pannipitiya',
+  postalCode: '10230',
+  addressCountry: 'LK',
+};
+export const socialUrls = [
+  'https://instagram.com/trustcorelabs',
+  'https://facebook.com/trustcorelabs',
+  'https://linkedin.com/company/trustcorelabs',
+  'https://x.com/TrustCoreLabs',
+  'https://www.tiktok.com/@trustcorelabs',
+];
 
 export const generalFaqs = [
   ['Can you build a full business system?', 'Yes. TrustCore Labs can shape custom software, ERP, CRM, POS, HRM, inventory, finance, and connected web or mobile portals around the business workflow.'],
@@ -17,8 +31,8 @@ export const servicePages = [
   {
     path: '/web-development',
     shortTitle: 'Web Development',
-    title: 'Web Development Services | TrustCore Labs',
-    description: 'TrustCore Labs builds fast, accessible websites and web applications for businesses in Sri Lanka and international teams.',
+    title: 'Web Development Company in Sri Lanka | TrustCore Labs',
+    description: 'TrustCore Labs provides web development in Sri Lanka for business websites, web applications, customer portals, and responsive digital experiences.',
     eyebrow: 'Web development',
     heading: 'Web development built around real business goals.',
     intro: 'We design and develop responsive websites and web applications that make services easier to understand, products easier to use, and business workflows easier to manage. Every build is planned for performance, accessibility, search visibility, and practical growth after launch.',
@@ -49,8 +63,8 @@ export const servicePages = [
   {
     path: '/mobile-app-development',
     shortTitle: 'Mobile App Development',
-    title: 'Mobile App Development | TrustCore Labs',
-    description: 'Plan, design, and build practical mobile apps with TrustCore Labs, serving Sri Lankan businesses and international product teams.',
+    title: 'Mobile App Development Company in Sri Lanka | TrustCore Labs',
+    description: 'Plan, design, and build mobile apps with TrustCore Labs in Sri Lanka, including customer apps, staff tools, booking flows, and connected platforms.',
     eyebrow: 'Mobile app development',
     heading: 'Mobile apps designed for useful, repeatable experiences.',
     intro: 'We help businesses turn a mobile product idea or operational need into a focused app with clear user journeys, reliable integrations, and a realistic release plan. The work can cover customer-facing apps, staff tools, booking flows, field operations, and mobile companions to larger business platforms.',
@@ -81,8 +95,8 @@ export const servicePages = [
   {
     path: '/custom-software-development',
     shortTitle: 'Custom Software',
-    title: 'Custom Software Development | TrustCore Labs',
-    description: 'TrustCore Labs creates secure custom software, portals, dashboards, and workflow systems for growing organizations.',
+    title: 'Custom Software Development Sri Lanka | TrustCore Labs',
+    description: 'TrustCore Labs builds custom software in Sri Lanka, including portals, dashboards, workflow systems, SaaS products, and secure business platforms.',
     eyebrow: 'Custom software development',
     heading: 'Custom software shaped around how your business actually works.',
     intro: 'Off-the-shelf tools often force teams into awkward processes. We design and build software around the users, rules, data, and decisions that make the business distinct, from focused internal tools to customer portals and full operational platforms.',
@@ -113,8 +127,8 @@ export const servicePages = [
   {
     path: '/business-systems',
     shortTitle: 'Business Systems & ERP',
-    title: 'Business Systems & ERP Solutions | TrustCore Labs',
-    description: 'Connect operations with custom ERP, CRM, POS, inventory, HR, finance, and reporting systems from TrustCore Labs.',
+    title: 'ERP & Business Systems Sri Lanka | TrustCore Labs',
+    description: 'Connect business operations with ERP, CRM, POS, inventory, HR, finance, reporting, and workflow systems from TrustCore Labs in Sri Lanka.',
     eyebrow: 'Business systems and ERP',
     heading: 'Connected business systems for clearer daily operations.',
     intro: 'We help organizations replace fragmented operational work with connected systems for the teams, records, approvals, and reports they use every day. Solutions can focus on one high-value workflow or grow into a broader ERP-style platform over time.',
@@ -145,8 +159,8 @@ export const servicePages = [
   {
     path: '/ui-ux-design',
     shortTitle: 'UI/UX Design',
-    title: 'UI/UX Design Services | TrustCore Labs',
-    description: 'TrustCore Labs designs clear, accessible interfaces and practical user journeys for websites, mobile apps, and business software.',
+    title: 'UI UX Design Services Sri Lanka | TrustCore Labs',
+    description: 'TrustCore Labs provides UI UX design services in Sri Lanka for websites, mobile apps, dashboards, business systems, and product prototypes.',
     eyebrow: 'UI/UX design',
     heading: 'Interface design that makes complex products feel clear.',
     intro: 'We design user journeys and interfaces for websites, mobile apps, dashboards, and operational software. The goal is not decoration alone: it is helping people understand what to do, complete tasks confidently, and move through the product with less friction.',
@@ -177,10 +191,11 @@ export const servicePages = [
 ] as const;
 
 export const coreRoutes = ['/', '/about', '/work', '/services', '/process', '/faq', '/contact'] as const;
+export const localRoutes = ['/software-company-pannipitiya'] as const;
 export const serviceRoutes = servicePages.map((page) => page.path);
 export const caseStudyRoutes = caseStudies.map((study) => study.path);
-export type RoutePath = (typeof coreRoutes)[number] | (typeof servicePages)[number]['path'] | CaseStudyPath;
-export const indexableRoutes: RoutePath[] = [...coreRoutes, ...serviceRoutes, ...caseStudyRoutes];
+export type RoutePath = (typeof coreRoutes)[number] | (typeof localRoutes)[number] | (typeof servicePages)[number]['path'] | CaseStudyPath;
+export const indexableRoutes: RoutePath[] = [...coreRoutes, ...localRoutes, ...serviceRoutes, ...caseStudyRoutes];
 
 export type RouteMetadata = {
   title: string;
@@ -193,8 +208,8 @@ export type RouteMetadata = {
 
 export const routeSeo: Record<RoutePath, RouteMetadata> = {
   '/': {
-    title: 'TrustCore Labs | Web, Mobile & Software Development',
-    description: 'TrustCore Labs builds websites, mobile apps, custom software, ERP solutions, and digital products for businesses in Sri Lanka and worldwide.',
+    title: 'Software Company in Pannipitiya, Sri Lanka | TrustCore Labs',
+    description: 'TrustCore Labs is a software company in Pannipitiya, Sri Lanka providing web development, mobile app development, custom software, ERP systems and UI/UX solutions for businesses locally and worldwide.',
   },
   '/about': {
     title: 'About TrustCore Labs | Software Development Team',
@@ -219,6 +234,10 @@ export const routeSeo: Record<RoutePath, RouteMetadata> = {
   '/contact': {
     title: 'Contact TrustCore Labs | Start a Software Project',
     description: 'Contact TrustCore Labs in Sri Lanka to discuss a website, mobile app, custom software platform, ERP, CRM, POS, or UI/UX project.',
+  },
+  '/software-company-pannipitiya': {
+    title: 'Software Company in Pannipitiya | TrustCore Labs',
+    description: 'Looking for a software company in Pannipitiya? TrustCore Labs provides web development, mobile apps, custom software, ERP systems and digital solutions for businesses in Sri Lanka.',
   },
   ...Object.fromEntries(servicePages.map((page) => [page.path, { title: page.title, description: page.description }])),
   ...Object.fromEntries(caseStudies.map((study) => [study.path, {
@@ -252,12 +271,7 @@ const organization = {
     postalCode: '10230',
     addressCountry: 'LK',
   },
-  sameAs: [
-    'https://instagram.com/trustcorelabs',
-    'https://facebook.com/trustcorelabs',
-    'https://linkedin.com/company/trustcorelabs',
-    'https://x.com/TrustCoreLabs',
-  ],
+  sameAs: socialUrls,
 };
 
 const breadcrumbName = (path: RoutePath) => {
@@ -271,16 +285,51 @@ const breadcrumbName = (path: RoutePath) => {
 export function getStructuredData(path: RoutePath) {
   const graph: Record<string, unknown>[] = [organization];
 
+  graph.push({
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: `${siteUrl}/`,
+    name: siteName,
+    publisher: { '@id': `${siteUrl}/#organization` },
+    inLanguage: 'en',
+  });
+
   if (path === '/') {
     graph.push({
-      '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
-      url: `${siteUrl}/`,
+      '@type': 'ProfessionalService',
+      '@id': `${siteUrl}/#business`,
       name: siteName,
-      publisher: { '@id': `${siteUrl}/#organization` },
-      inLanguage: 'en',
+      url: `${siteUrl}/`,
+      logo: defaultSeoImage,
+      image: defaultSeoImage,
+      telephone: businessPhone,
+      address: {
+        '@type': 'PostalAddress',
+        ...businessAddress,
+      },
+      areaServed: [
+        {
+          '@type': 'Country',
+          name: 'Sri Lanka',
+        },
+      ],
+      sameAs: socialUrls,
     });
   }
+
+  const metadata = routeSeo[path];
+  const pageType = path === '/contact' ? 'ContactPage' : path === '/about' ? 'AboutPage' : 'WebPage';
+  graph.push({
+    '@type': pageType,
+    '@id': `${siteUrl}${path === '/' ? '/' : path}#webpage`,
+    url: `${siteUrl}${path === '/' ? '/' : path}`,
+    name: metadata.title,
+    description: metadata.description,
+    isPartOf: { '@id': `${siteUrl}/#website` },
+    about: { '@id': `${siteUrl}/#organization` },
+    publisher: { '@id': `${siteUrl}/#organization` },
+    inLanguage: 'en',
+  });
 
   if (path !== '/') {
     const service = servicePages.find((page) => page.path === path);
@@ -298,6 +347,11 @@ export function getStructuredData(path: RoutePath) {
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
             { '@type': 'ListItem', position: 2, name: 'Services', item: `${siteUrl}/services` },
             { '@type': 'ListItem', position: 3, name: service.shortTitle, item: `${siteUrl}${path}` },
+          ]
+        : path === '/software-company-pannipitiya'
+        ? [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+            { '@type': 'ListItem', position: 2, name: 'Software Company in Pannipitiya', item: `${siteUrl}${path}` },
           ]
         : [
             { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
@@ -352,6 +406,23 @@ export function getStructuredData(path: RoutePath) {
     graph.push({
       '@type': 'FAQPage',
       mainEntity: generalFaqs.map(([question, answer]) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+    });
+  }
+
+  if (path === '/software-company-pannipitiya') {
+    graph.push({
+      '@type': 'FAQPage',
+      mainEntity: [
+        ['What software development services do you provide?', 'TrustCore Labs provides web development, mobile app development, custom software, ERP and business systems, UI/UX design, and digital solution support.'],
+        ['Do you work with businesses outside Pannipitiya?', 'Yes. TrustCore Labs is based in Pannipitiya and works with businesses across Sri Lanka and international teams.'],
+        ['Can you build custom ERP or business systems?', 'Yes. The team can plan and build ERP-style modules, CRM, POS, inventory, HR, finance, reporting, and workflow systems around business operations.'],
+        ['Do you provide mobile app development?', 'Yes. TrustCore Labs can design and build mobile app experiences for customer journeys, staff workflows, booking, ordering, and connected business platforms.'],
+        ['How can I request a quotation?', 'You can contact TrustCore Labs with your business context, required features, timeline, and reference examples so the team can prepare the next steps.'],
+      ].map(([question, answer]) => ({
         '@type': 'Question',
         name: question,
         acceptedAnswer: { '@type': 'Answer', text: answer },

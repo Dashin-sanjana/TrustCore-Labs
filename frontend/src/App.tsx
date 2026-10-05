@@ -227,6 +227,42 @@ const serviceDetails = [
   ['Launch & Growth Support', 'Content flow, campaign support, SEO foundations, maintenance, and practical post-launch iteration.'],
 ];
 
+const localServiceSummaries = [
+  {
+    title: 'Web Development',
+    href: '/web-development' as RoutePath,
+    text: 'Responsive business websites, service pages, web applications, portals, and content structures that are easy for customers to understand.',
+  },
+  {
+    title: 'Mobile App Development',
+    href: '/mobile-app-development' as RoutePath,
+    text: 'Mobile app planning, UI, and connected app development for customer journeys, staff workflows, booking, ordering, and field operations.',
+  },
+  {
+    title: 'Custom Software Development',
+    href: '/custom-software-development' as RoutePath,
+    text: 'Custom dashboards, SaaS products, internal tools, workflow systems, and secure portals shaped around the way the business works.',
+  },
+  {
+    title: 'ERP & Business Systems',
+    href: '/business-systems' as RoutePath,
+    text: 'ERP-style systems for CRM, POS, inventory, HR, finance, approvals, reporting, and operational data that needs to stay connected.',
+  },
+  {
+    title: 'UI/UX Design',
+    href: '/ui-ux-design' as RoutePath,
+    text: 'Interface design, user journeys, wireframes, prototypes, dashboards, and product screens prepared for responsive implementation.',
+  },
+];
+
+const localFaqs = [
+  ['What software development services do you provide?', 'TrustCore Labs provides web development, mobile app development, custom software, ERP and business systems, UI/UX design, and digital solution support.'],
+  ['Do you work with businesses outside Pannipitiya?', 'Yes. TrustCore Labs is based in Pannipitiya and works with businesses across Sri Lanka and with international teams.'],
+  ['Can you build custom ERP or business systems?', 'Yes. We can plan and build ERP-style modules, CRM, POS, inventory, HR, finance, reporting, and workflow systems around business operations.'],
+  ['Do you provide mobile app development?', 'Yes. We can design and build mobile app experiences for customer journeys, staff workflows, booking, ordering, and connected business platforms.'],
+  ['How can I request a quotation?', 'Send the business context, required features, timeline, and any reference examples through the contact page so we can shape the next steps.'],
+] as const;
+
 const industries = [
   ['Retail & ecommerce', 'Product discovery, catalog flows, storefronts, POS, stock, and customer management.'],
   ['Service companies', 'Booking, inquiry, listings, CRM, staff workflows, and public service pages.'],
@@ -919,14 +955,14 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
             </p>
             <h1>
               <span className="hero-line-clip">
-                <span className="hero-thin">We Build Digital Solutions</span>
+                <span className="hero-thin">Software Development Company</span>
               </span>
               <span className="hero-line-clip">
-                <span className="hero-strong">That Move Businesses Forward.</span>
+                <span className="hero-strong">in Sri Lanka.</span>
               </span>
             </h1>
             <p className="hero-text">
-              From high-performance websites and mobile apps to custom business systems, TrustCore Labs turns ambitious ideas into reliable digital products.
+              Web, mobile app, ERP and custom software solutions from our team in Pannipitiya, Sri Lanka.
             </p>
             <p className="hero-trust-line">
               Built for startups, growing businesses & ambitious teams.
@@ -981,7 +1017,7 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
             ))}
           </motion.h2>
           <motion.p className="manifesto-note" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.6 }}>
-            Strategy, product design, engineering, business operations, and launch support move as one connected discipline.
+            Strategy, product design, engineering, business operations, and launch support move as one connected discipline from Pannipitiya, Sri Lanka.
           </motion.p>
         </motion.section>
 
@@ -1661,6 +1697,15 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
                     </a>
                   ))}
                 <a href="/work" onClick={navigateTo('/work')}>View all work<ChevronRight size={16} /></a>
+                {servicePages
+                  .filter((service) => service.path !== activeService.path)
+                  .slice(0, 3)
+                  .map((service) => (
+                    <a key={service.path} href={service.path} onClick={navigateTo(service.path)}>
+                      {service.shortTitle}<ChevronRight size={16} />
+                    </a>
+                  ))}
+                <a href="/contact" onClick={navigateTo('/contact')}>Discuss this service<ChevronRight size={16} /></a>
               </div>
             </section>
 
@@ -1685,6 +1730,137 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
               <p>Share the business context, users, timeline, and what needs to improve first.</p>
               <a className="primary-button" href="/contact" onClick={navigateTo('/contact')}>
                 Discuss your project<ArrowUpRight size={18} />
+              </a>
+            </section>
+          </>
+        )}
+
+        {route === '/software-company-pannipitiya' && (
+          <>
+            <section className="page-hero services-hero page-section particle-page-hero service-detail-hero">
+              <SignalField />
+              <div className="signal-field-shade" aria-hidden="true" />
+              <motion.div variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate="show">
+                <p className="eyebrow">Software company in Pannipitiya</p>
+                <h1>Software Company in Pannipitiya</h1>
+                <p>
+                  TrustCore Labs is based in Pannipitiya, Sri Lanka and helps businesses plan, design, build, and launch practical digital products, websites, mobile apps, ERP systems, and custom software.
+                </p>
+              </motion.div>
+              <motion.div className="page-hero-panel" variants={fadeUp} initial={reduceMotion ? 'show' : 'hidden'} animate="show" transition={{ delay: 0.08 }}>
+                <MapPin size={30} />
+                <strong>Pannipitiya-based software team.</strong>
+                <span>Serving businesses across Sri Lanka and international teams that need clear, maintainable digital solutions.</span>
+              </motion.div>
+            </section>
+
+            <nav className="content-band service-breadcrumbs" aria-label="Breadcrumb">
+              <a href="/" onClick={navigateTo('/')}>Home</a>
+              <ChevronRight size={14} aria-hidden="true" />
+              <span aria-current="page">Software Company in Pannipitiya</span>
+            </nav>
+
+            <section className="content-band service-detail-section" aria-labelledby="local-intro-title">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Introduction</p>
+                <h2 id="local-intro-title">Digital solutions for local businesses and growing teams.</h2>
+                <p>
+                  We work with business owners, operators, and product teams that need useful software rather than disconnected tools. Projects can begin with a focused website or grow into a connected platform with customer portals, admin dashboards, mobile apps, and business-system modules.
+                </p>
+              </div>
+              <div className="mini-grid">
+                {[
+                  ['Local context', 'A Pannipitiya office presence with services for businesses across Sri Lanka.'],
+                  ['Practical delivery', 'Discovery, UI/UX, frontend, backend, deployment, and launch support can move together.'],
+                  ['Connected systems', 'Websites, apps, ERP modules, CRM, POS, and dashboards can be planned around one workflow.'],
+                  ['Clear next steps', 'Start with the highest-value release, then improve with real feedback and operational needs.'],
+                ].map(([title, text]) => (
+                  <article className="mini-card" key={title}>
+                    <Check size={18} />
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band service-detail-section" aria-labelledby="local-services-title">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Services</p>
+                <h2 id="local-services-title">Software services available from our Pannipitiya team.</h2>
+              </div>
+              <div className="detail-grid two">
+                {localServiceSummaries.map((service, index) => (
+                  <a className="detail-card service-directory-link" href={service.href} onClick={navigateTo(service.href)} key={service.href}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <h3>{service.title}</h3>
+                    <p>{service.text}</p>
+                    <span className="service-link-label">Explore {service.title}<ArrowUpRight size={17} /></span>
+                  </a>
+                ))}
+              </div>
+            </section>
+
+            <section className="split-band service-process-section" aria-labelledby="local-why-title">
+              <div className="sticky-copy">
+                <p className="eyebrow">Why businesses choose TrustCore Labs</p>
+                <h2 id="local-why-title">A practical software partner close to the business problem.</h2>
+                <p>
+                  We keep the conversation grounded in users, workflow, data, launch priorities, and maintainability, so each release has a clear business reason behind it.
+                </p>
+              </div>
+              <div className="process-list">
+                {trustReasons.map((reason, index) => (
+                  <article className="process-card" key={reason.title}>
+                    <span>0{index + 1}</span>
+                    <div>
+                      <h3>{reason.title}</h3>
+                      <p>{reason.text}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="content-band compact-band service-detail-section" aria-labelledby="areas-served-title">
+              <div className="section-heading story-heading">
+                <p className="eyebrow">Areas served</p>
+                <h2 id="areas-served-title">Based in Pannipitiya, serving Sri Lanka and beyond.</h2>
+                <p>
+                  TrustCore Labs supports businesses in Pannipitiya, nearby Colombo-area locations, wider Sri Lanka, and international teams that need software delivery, UI/UX, web development, mobile app development, and business systems.
+                </p>
+              </div>
+              <div className="service-related-links" aria-label="Related TrustCore Labs pages">
+                <strong>Helpful links</strong>
+                <a href="/work" onClick={navigateTo('/work')}>View work and case studies<ChevronRight size={16} /></a>
+                <a href="/work/trustcore-labs-website">TrustCore Labs Website case study<ChevronRight size={16} /></a>
+                <a href="/contact" onClick={navigateTo('/contact')}>Contact TrustCore Labs<ChevronRight size={16} /></a>
+              </div>
+            </section>
+
+            <section className="faq-band service-faq" aria-labelledby="local-faq-title">
+              <div className="section-heading">
+                <p className="eyebrow">FAQ</p>
+                <h2 id="local-faq-title">Questions about working with a software company in Pannipitiya.</h2>
+              </div>
+              <div className="faq-list">
+                {localFaqs.map(([question, answer], index) => (
+                  <article className="faq-item" key={question}>
+                    <span>0{index + 1}</span>
+                    <div><h3>{question}</h3><p>{answer}</p></div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="home-final-cta service-final-cta">
+              <span>Start a project in Pannipitiya</span>
+              <h2>Tell us what you need to build, improve, or launch.</h2>
+              <p>Share the business context, required features, users, and timeline so we can help shape a practical next release.</p>
+              <a className="primary-button" href="/contact" onClick={navigateTo('/contact')}>
+                Request a quotation<ArrowUpRight size={18} />
               </a>
             </section>
           </>
@@ -2016,6 +2192,9 @@ function App({ initialPath }: { initialPath?: AppRoute } = {}) {
                   {item.label}
                 </a>
               ))}
+              <a href="/software-company-pannipitiya" onClick={navigateTo('/software-company-pannipitiya')}>
+                Software Company in Pannipitiya
+              </a>
             </div>
             <div>
               <span className="footer-col-title">Services</span>
